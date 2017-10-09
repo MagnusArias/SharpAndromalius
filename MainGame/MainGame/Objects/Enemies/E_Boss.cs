@@ -7,16 +7,15 @@ using System.Threading.Tasks;
 using MainGame.Control;
 using MainGame.Objects;
 using MainGame.Maps.TileMap;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MainGame.Objects.Enemies
 {
     class E_Boss : Enemy
     {
-        public static const String BOSSHPBAR = "/Game/Src/Assets/boss-hp-bar.png";
-	    public static const String BOSSBAROUTLINE = "/Game/Src/Assets/boss-hp-bar-outline.png";
-
-	    private BufferedImage hpBar;
-        private BufferedImage hpBarOutline;
+        
+	    private Texture2D hpBar;
+        private Texture2D hpBarOutline;
         private Boolean active;
         private int eventCount;
 
@@ -60,8 +59,8 @@ namespace MainGame.Objects.Enemies
 
             sprites = Content.EnemyBoss1[0];
 
-            animation.setFrames(sprites);
-            animation.setDelay(4);
+            animation.SetFrames(sprites);
+            animation.SetDelay(4);
 
             tick = 0;
             b = Math.random() * 0.06 + 0.07;
@@ -79,7 +78,7 @@ namespace MainGame.Objects.Enemies
             }
         }
 
-        public void update()
+        public void Update()
         {
             tick++;
             eventCount++;
@@ -106,7 +105,7 @@ namespace MainGame.Objects.Enemies
             {
                 playerCatch = true;
 
-                if (Math.abs(player.getx() - x) < 250)
+                if (Math.Abs(player.getx() - x) < 250)
                 { // jestesmy blisko bossa, to sie oddala od nas
 
                     if (!facingRight)
@@ -126,7 +125,7 @@ namespace MainGame.Objects.Enemies
                         }
                     }
                 }
-                else if (Math.abs(player.getx() - x) > 250 && Math.abs(player.getx() - x) < 400)
+                else if (Math.Abs(player.getx() - x) > 250 && Math.Abs(player.getx() - x) < 400)
                 { // oddalimy sie, ale nas goni
                     if (facingRight)
                     {
@@ -146,7 +145,7 @@ namespace MainGame.Objects.Enemies
                     }
                 }
             }
-            else if (Math.abs(player.getx() - x) > 400 && !playerCatch)
+            else if (Math.Abs(player.getx() - x) > 400 && !playerCatch)
             { // ale jezeli jestesmy daleko, to opuszcza poscig
                 if (dx > 0)
                 {
@@ -169,10 +168,10 @@ namespace MainGame.Objects.Enemies
             else playerCatch = false;
 
             x += dx;
-            y = Math.sin(b * tick) + y;
+            y = Math.Sin(b * tick) + y;
 
             // update animation
-            base.animation.update();
+            base.animation.Update();
 
         }
 

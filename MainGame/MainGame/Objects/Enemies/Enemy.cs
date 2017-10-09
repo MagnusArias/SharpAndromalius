@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
 using MainGame.Control;
 using MainGame.Objects;
@@ -20,7 +21,7 @@ namespace MainGame.Objects.Enemies
         protected int lastBreath;
         protected Player player;
 
-        protected BufferedImage[] sprites;
+        protected Texture2D[] sprites;
 
 
         public Enemy(TileMap tm) : base(tm)

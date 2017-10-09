@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MainGame.Objects;
+using MainGame.Maps.TileMap;
+
 namespace MainGame.Control
 {
-    class DebugInfo
+    class DebugInfo : ParentObject
     {
         private String playerX;
         private String playerY;
@@ -18,35 +21,31 @@ namespace MainGame.Control
         private String playerDash;
 
         private Player p;
-        private Font font;
 
         private void convert()
         {
-            playerX = "X:" + Integer.toString(p.getx());
-            playerY = "Y:" + Integer.toString(p.gety());
-            playerDX = "DX:" + Double.toString(p.getdx());
-            playerDY = "DY:" + Double.toString(p.getdy());
+            playerX = "X:" + p.getx().ToString();
+            playerY = "Y:" + p.gety().ToString();
+            playerDX = "DX:" + p.getdx().ToString();
+            playerDY = "DY:" + p.getdy().ToString();
 
-            playerHealth = Integer.toString(p.getHealth()) + "/" + Integer.toString(p.getMaxHealth());
-            playerMana = Integer.toString(p.getMana()) + "/" + Integer.toString(p.getMaxMana());
-            playerDash = Integer.toString(p.getSta()) + "/" + Integer.toString(p.getMaxSta());
+            playerHealth = p.getHealth().ToString() + "/" + p.getMaxHealth().ToString();
+            playerMana = p.getMana().ToString() + "/" + p.getMaxMana().ToString();
+            playerDash = p.getSta().ToString() + "/" + p.getMaxSta().ToString();
         }
 
-        public DebugInfo(TileMap tm, Player pl)
+        public DebugInfo(TileMap tm, Player pl) : base(tm)
         {
-            super(tm);
             p = pl;
             convert();
             debugReady = false;
-
-            font = new Font("Arial", Font.PLAIN, 10);
         }
 
         public void update()
         {
             convert();
         }
-        public static boolean getStatus()
+        public Boolean getStatus()
         {
             return debugReady;
         }
@@ -61,11 +60,10 @@ namespace MainGame.Control
             {
                 setMapPosition();
                 g.setColor(java.awt.Color.GREEN);
-                g.setFont(font);
-                g.drawString(playerX, GamePanel.WIDTH - 150, 20);
-                g.drawString(playerY, GamePanel.WIDTH - 150, 30);
-                g.drawString(playerDX, GamePanel.WIDTH - 100, 20);
-                g.drawString(playerDY, GamePanel.WIDTH - 100, 30);
+                g.drawString(playerX, Game1.WIDTH - 150, 20);
+                g.drawString(playerY, Game1.WIDTH - 150, 30);
+                g.drawString(playerDX, Game1.WIDTH - 100, 20);
+                g.drawString(playerDY, Game1.WIDTH - 100, 30);
 
                 g.drawString(playerHealth, 20, 25);
                 g.drawString(playerMana, 20, 43);

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Microsoft.Xna.Framework.Graphics;
 namespace MainGame.Control
 {
     class Animation
     {
-        //TO-DO: zastąpić string odpowiednikiem BUfferedImage
-        private String[] frames;
+        private Texture2D[] frames;
         private int currentFrame;
         private int numFrames;
 
@@ -23,7 +22,7 @@ namespace MainGame.Control
             timesPlayed = 0;
         }
 
-        public void SetFrames(String[] frames)
+        public void SetFrames(Texture2D[] frames)
         {
             this.frames = frames;
             currentFrame = 0;
@@ -55,7 +54,7 @@ namespace MainGame.Control
             }
         }
 
-        public String GetImage()
+        public Texture2D GetImage()
         {
             return frames[currentFrame];
         }

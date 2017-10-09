@@ -12,7 +12,7 @@ namespace MainGame.Objects
     class Teleport : ParentObject
     {
         private const String PORTALSPRITEMAP = "/Game/Src/Assets/penis.gif";
-	    private BufferedImage[] sprites;
+	    private Texture2D[] sprites;
 
         public Teleport(TileMap tm) : base(tm)
         {

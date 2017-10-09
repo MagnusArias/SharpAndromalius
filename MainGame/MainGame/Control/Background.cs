@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MainGame;
+using Microsoft.Xna.Framework.Graphics;
+
 namespace MainGame.Control
 {
-    class Background
+    public class Background
     {
-        private BufferedImage image;
+        private Texture2D image;
 
         private double x;
         private double y;
@@ -23,39 +26,30 @@ namespace MainGame.Control
 
         public Background(String s)
         {
-            this(s, 0.1);
+            Setup(s, 0.1, 0.1);
         }
 
         public Background(String s, double d)
         {
-            this(s, d, d);
+            Setup(s, d, d);
         }
 
         public Background(String s, double d1, double d2)
         {
-            try
-            {
-                image = ImageIO.read(getClass().getResourceAsStream(s));
-
-                width = image.getWidth();
-                height = image.getHeight();
-                xscale = d1;
-                yscale = d2;
-
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-
-
+            Setup(s, d1, d2);
         }
 
         public Background(String s, double ms, int x, int y, int w, int h)
         {
+            SetupExtended(s, ms, x, y, w, h);
+        }
+
+ 
+        public void SetupExtended(String s, double ms, int x, int y, int w, int h)
+        {
             try
             {
-                image = ImageIO.read(getClass().getResourceAsStream(s));
+                image = Game1.Background;
                 image = image.getSubimage(x, y, w, h);
                 width = image.getWidth();
                 height = image.getHeight();
@@ -64,40 +58,58 @@ namespace MainGame.Control
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                Console.WriteLine("\nStackTrace ---\n{0}", e.StackTrace);
             }
         }
 
-        public void setPosition(double x, double y)
+        public void Setup(String s, double s1, double s2)
+        {
+            try
+            {
+                image = 
+                width = image.getWidth();
+                height = image.getHeight();
+                xscale = s1;
+                yscale = s2;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("\nStackTrace ---\n{0}", e.StackTrace);
+            }
+
+
+        }
+        public void SetPosition(double x, double y)
         {
             this.x = (x * xscale) % width;
             this.y = (y * yscale) % height;
         }
 
-        public void setVector(double dx, double dy)
+        public void SetVector(double dx, double dy)
         {
             this.dx = dx;
             this.dy = dy;
         }
 
-        public void setScale(double xscale, double yscale)
+        public void SetScale(double xscale, double yscale)
         {
             this.xscale = xscale;
             this.yscale = yscale;
         }
 
-        public void setDimensions(int i1, int i2)
+        public void SetDimensions(int i1, int i2)
         {
             width = i1;
             height = i2;
         }
 
-        public double getx()
+        public double GetX()
         {
             return x;
         }
 
-        public double gety()
+        public double GetY()
         {
             return y;
         }
@@ -112,7 +124,7 @@ namespace MainGame.Control
             while (y >= height) y -= height;
         }
 
-        public void draw(Graphics2D g)
+        public void Draw(Graphics2D g)
         {
             for (int i = 0; i < GamePanel.WIDTH / width * GamePanel.SCALE; i++)
             {

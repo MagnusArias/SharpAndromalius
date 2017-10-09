@@ -7,14 +7,20 @@ namespace MainGame
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        public int WIDTH, HEIGHT;
+       
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            WIDTH = graphics.GraphicsDevice.PresentationParameters.BackBufferWidth;
+            HEIGHT = graphics.GraphicsDevice.PresentationParameters.BackBufferHeight;
+
             Content.RootDirectory = "Content";
         }
 
@@ -27,7 +33,7 @@ namespace MainGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            
             base.Initialize();
         }
 
@@ -40,8 +46,10 @@ namespace MainGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            
         }
+        // TODO: use this.Content to load your game content here
+    
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload

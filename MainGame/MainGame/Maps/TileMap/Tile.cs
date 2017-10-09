@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sharp_Andromalius.GameData.Maps.TileMap
+namespace MainGame.Maps.TileMap
 {
     class Tile
     {

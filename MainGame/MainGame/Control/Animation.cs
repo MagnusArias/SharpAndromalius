@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sharp_Andromalius.GameData.Control
+namespace MainGame.Control
 {
     class Animation
     {

@@ -273,11 +273,15 @@
     <Content Include="Content\Weapons\sword-slash-07-60x30.png" />
     <Content Include="Content\Weapons\sword-slash-08-60x30.png" />
     <Content Include="Icon.ico" />
+    <Content Include="Maps\Level_1\tileset.png" />
+    <Content Include="Maps\Level_2\tileset.png" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
     <None Include="Content\Misc\tlo2.jgc" />
+    <None Include="Maps\Level_1\level1.map" />
+    <None Include="Maps\Level_2\level.map" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

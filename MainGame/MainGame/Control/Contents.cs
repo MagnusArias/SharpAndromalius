@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Sharp_Andromalius.GameData.Control
+namespace MainGame.Control
 {
     class Contents
     {

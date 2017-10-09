@@ -4,29 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MainGame.Control;
+using MainGame.Objects;
+using MainGame.Maps.TileMap;
+
 namespace MainGame.Objects.Enemies
 {
-    class Enemy
+    class Enemy : ParentObject
     {
         protected int health;
         protected int maxHealth;
-        protected boolean dead;
+        protected Boolean dead;
         protected int damage;
-        protected boolean remove;
+        protected Boolean remove;
         protected int lastBreath;
         protected Player player;
 
         protected BufferedImage[] sprites;
 
 
-        public Enemy(TileMap tm)
+        public Enemy(TileMap tm) : base(tm)
         {
-            super(tm);
             remove = false;
             animation = new Animation();
         }
 
-        public boolean isDead()
+        public Boolean isDead()
         {
             return dead;
         }
@@ -36,7 +39,7 @@ namespace MainGame.Objects.Enemies
             return lastBreath;
         }
 
-        public boolean shouldRemove()
+        public Boolean shouldRemove()
         {
             return remove;
         }
@@ -60,7 +63,7 @@ namespace MainGame.Objects.Enemies
 
         public void draw(java.awt.Graphics2D g)
         {
-            super.draw(g);
+            base.draw(g);
         }
     }
 }

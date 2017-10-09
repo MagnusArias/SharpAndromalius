@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MainGame.Control;
+using MainGame.Maps.TileMap;
+
 namespace MainGame.Objects
 {
-    class Teleport
+    class Teleport : ParentObject
     {
-        private static final String PORTALSPRITEMAP = "/Game/Src/Assets/penis.gif";
-	private BufferedImage[] sprites;
+        private const String PORTALSPRITEMAP = "/Game/Src/Assets/penis.gif";
+	    private BufferedImage[] sprites;
 
-        public Teleport(TileMap tm)
+        public Teleport(TileMap tm) : base(tm)
         {
-
-            super(tm);
             animation = new Animation();
 
             facingRight = true;

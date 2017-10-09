@@ -4,34 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MainGame.Control;
+using MainGame.Objects;
+using MainGame.Maps.TileMap;
+
 namespace MainGame.Objects.Enemies
 {
-    class E_Boss
+    class E_Boss : Enemy
     {
-        public static final String BOSSHPBAR = "/Game/Src/Assets/boss-hp-bar.png";
-	    public static final String BOSSBAROUTLINE = "/Game/Src/Assets/boss-hp-bar-outline.png";
+        public static const String BOSSHPBAR = "/Game/Src/Assets/boss-hp-bar.png";
+	    public static const String BOSSBAROUTLINE = "/Game/Src/Assets/boss-hp-bar-outline.png";
 
 	    private BufferedImage hpBar;
         private BufferedImage hpBarOutline;
-        private boolean active;
+        private Boolean active;
         private int eventCount;
 
         private int tick;
         private double a;
         private double b;
         private int currentAction;
-        private boolean playerCatch;
+        private Boolean playerCatch;
         private int szerokosc;
 
         private double hp_max;
         private double hp;
         private double maxHp;
-        private final Font font = new Font("Viner Hand ITC", Font.PLAIN, 18);
+        private const Font font = new Font("Viner Hand ITC", Font.PLAIN, 18);
 
-        public EnemyBoss1(TileMap tm, Player p)
+        public E_Boss(TileMap tm, Player p) : base(tm)
         {
 
-            super(tm);
             player = p;
 
             health = 50;
@@ -169,13 +172,13 @@ namespace MainGame.Objects.Enemies
             y = Math.sin(b * tick) + y;
 
             // update animation
-            animation.update();
+            base.animation.update();
 
         }
 
         public void draw(Graphics2D g)
         {
-            super.draw(g);
+            base.draw(g);
         }
 
         public void drawHPBar(Graphics2D g)

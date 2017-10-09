@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MainGame.Maps.TileMap;
+using MainGame.Control;
+
 namespace MainGame.Objects
 {
     class ParentObject
@@ -19,7 +22,7 @@ namespace MainGame.Objects
         protected double y;
         protected double dx;
         protected double dy;
-        protected boolean facingRight;
+        protected Boolean facingRight;
         protected Animation animation;
 
         // wymiary
@@ -37,17 +40,17 @@ namespace MainGame.Objects
         protected double ydest;
         protected double xtemp;
         protected double ytemp;
-        protected boolean topLeft;
-        protected boolean topRight;
-        protected boolean bottomLeft;
-        protected boolean bottomRight;
+        protected Boolean topLeft;
+        protected Boolean topRight;
+        protected Boolean bottomLeft;
+        protected Boolean bottomRight;
 
         // poruszanie sie
-        protected boolean left;
-        protected boolean right;
-        protected boolean squat;
-        protected boolean jumping;
-        protected boolean falling;
+        protected Boolean left;
+        protected Boolean right;
+        protected Boolean squat;
+        protected Boolean jumping;
+        protected Boolean falling;
 
         // atrybuty poruszania
         protected double moveSpeed;
@@ -59,7 +62,7 @@ namespace MainGame.Objects
         protected double stopJumpSpeed;
 
         //kontrola
-        protected static boolean debugReady;
+        protected Boolean debugReady;
 
 
         public ParentObject(TileMap tm)
@@ -68,26 +71,26 @@ namespace MainGame.Objects
             tileSize = tm.getTileSize();
         }
 
-        public boolean intersects(ParentObject o)
+        public Boolean intersects(ParentObject o)
         {
             Rectangle r1 = getRectangle();
             Rectangle r2 = o.getRectangle();
             return r1.intersects(r2);
         }
 
-        public boolean intersects(Rectangle r)
+        public Boolean intersects(Rectangle r)
         {
             return getRectangle().intersects(r);
         }
 
-        public boolean contains(ParentObject o)
+        public Boolean contains(ParentObject o)
         {
             Rectangle r1 = getRectangle();
             Rectangle r2 = o.getRectangle();
             return r1.contains(r2);
         }
 
-        public boolean contains(Rectangle r)
+        public Boolean contains(Rectangle r)
         {
             return getRectangle().contains(r);
         }
@@ -259,27 +262,27 @@ namespace MainGame.Objects
         }
 
         // USTAWIENIE KLAWISZY
-        public void setLeft(boolean b)
+        public void setLeft(Boolean b)
         {
             left = b;
         }
 
-        public void setRight(boolean b)
+        public void setRight(Boolean b)
         {
             right = b;
         }
 
-        public void setUp(boolean b)
+        public void setUp(Boolean b)
         {
             jumping = b;
         }
 
-        public void setDown(boolean b)
+        public void setDown(Boolean b)
         {
             squat = b;
         }
 
-        public boolean notOnScreen()
+        public Boolean notOnScreen()
         {
             return x + xmap + width < 0 ||
                     x + xmap - width > GamePanel.WIDTH ||

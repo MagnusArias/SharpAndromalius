@@ -4,38 +4,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MainGame.Control;
+using MainGame.Objects.Enemies;
+using MainGame.Maps.TileMap;
+using MainGame.Objects.Items;
+using MainGame.Objects.Projectiles;
+
 namespace MainGame.Objects
 {
-    class Player
+    class Player : ParentObject
     {
         private ArrayList<Enemy> enemies;
         private ArrayList<EnergyParticle> energyParticles;
         private ArrayList<ItemParent> items;
 
-        public static final String PLAYERSPRITEMAP = "/Game/Src/Assets/player-spritemap.png";
-	    public static final String ARMORSPRITEMAP = "/Game/Src/Assets/armor05-spritemap.png";
-	    public static final String ROBESPRITEMAP = "/Game/Src/Assets/robe02-spritemap.png";
-	    public static final String SWORDSPRITEMAP = "/Game/Src/Assets/sword-slash.png";
+        public const String PLAYERSPRITEMAP = "/Game/Src/Assets/player-spritemap.png";
+	    public const String ARMORSPRITEMAP = "/Game/Src/Assets/armor05-spritemap.png";
+	    public const String ROBESPRITEMAP = "/Game/Src/Assets/robe02-spritemap.png";
+	    public const String SWORDSPRITEMAP = "/Game/Src/Assets/sword-slash.png";
 	
 	    // dostepne ruchy
-	    protected boolean hi_attack;
-        protected boolean attack;
-        protected boolean low_attack;
-        private boolean doubleJump;
-        private boolean alreadyDoubleJump;
+	    protected Boolean hi_attack;
+        protected Boolean attack;
+        protected Boolean low_attack;
+        private Boolean doubleJump;
+        private Boolean alreadyDoubleJump;
         private double doubleJumpStart;
-        private boolean teleporting;
-        private boolean dashing;
-        public boolean knockback;
-        private boolean flinching;
+        private Boolean teleporting;
+        private Boolean dashing;
+        public Boolean knockback;
+        private Boolean flinching;
 
-        private boolean skill_doubleJump;
-        private boolean skill_sword;
-        private boolean skill_dash;
-        private boolean skill_fireball;
+        private Boolean skill_doubleJump;
+        private Boolean skill_sword;
+        private Boolean skill_dash;
+        private Boolean skill_fireball;
 
         //stuff do fireballa
-        public static boolean fireballShooted;
+        public Boolean fireballShooted;
         public int fireballCooldown;
         public int maxFireballCooldown;
 
@@ -62,15 +68,15 @@ namespace MainGame.Objects
         private ArrayList<BufferedImage[]> swordSprites;
 
 
-        private final int[] NUMFRAMES = { 1, 1, 1, 8, 4, 4, 4, 1, 8, 1, 6 };
-        private final int[] FRAMEWIDTHS = { 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46 };
-        private final int[] FRAMEHEIGHTS = { 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50 };
-        private final int[] SPRITEDELAYS = { -1, -1, -1, 5, 5, 5, 5, -1, 4, -1, 5 };
+        private const int[] NUMFRAMES = { 1, 1, 1, 8, 4, 4, 4, 1, 8, 1, 6 };
+        private const int[] FRAMEWIDTHS = { 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46 };
+        private const int[] FRAMEHEIGHTS = { 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50 };
+        private const int[] SPRITEDELAYS = { -1, -1, -1, 5, 5, 5, 5, -1, 4, -1, 5 };
 
-        private final int[] swordNUMFRAMES = { 0, 0, 0, 0, 5, 5, 5, 0, 0, 0, 0 };
-        private final int[] swordFRAMEWIDTHS = { 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60 };
-        private final int[] swordFRAMEHEIGHTS = { 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30 };
-        private final int[] swordSPRITEDELAYS = { -1, -1, -1, -1, 5, 5, 5, -1, -1, -1, -1 };
+        private const int[] swordNUMFRAMES = { 0, 0, 0, 0, 5, 5, 5, 0, 0, 0, 0 };
+        private const int[] swordFRAMEWIDTHS = { 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60 };
+        private const int[] swordFRAMEHEIGHTS = { 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30 };
+        private const int[] swordSPRITEDELAYS = { -1, -1, -1, -1, 5, 5, 5, -1, -1, -1, -1 };
 
         //klasy animacji
         protected Animation bodyAnimation = new Animation();
@@ -83,22 +89,20 @@ namespace MainGame.Objects
         private Rectangle alr;
 
         // akcje animacji, spojrz na obrazek
-        private static final int STAND = 0;
-        private static final int JUMPING = 1;
-        private static final int FALLING = 2;
-        private static final int WALKING = 3;
-        private static final int ATTACK = 4;
-        private static final int HIGH_ATTACK = 5;
-        private static final int LOW_ATTACK = 6;
-        private static final int SQUAT = 7;
-        private static final int KNOCKBACK = 8;
-        private static final int DEAD = 9;
-        private static final int TELEPORTING = 10;
+        private const int STAND = 0;
+        private const int JUMPING = 1;
+        private const int FALLING = 2;
+        private const int WALKING = 3;
+        private const int ATTACK = 4;
+        private const int HIGH_ATTACK = 5;
+        private const int LOW_ATTACK = 6;
+        private const int SQUAT = 7;
+        private const int KNOCKBACK = 8;
+        private const int DEAD = 9;
+        private const int TELEPORTING = 10;
 
-        public Player(TileMap tm)
+        public Player(TileMap tm) : base(tm)
         {
-
-            super(tm);
             boost = 1;
             skill_doubleJump = skill_sword = skill_dash = skill_fireball = false;
 
@@ -165,17 +169,17 @@ namespace MainGame.Objects
             doubleJumpStart = -5 * boost;
         }
 
-        public boolean isFireballReady()
+        public Boolean isFireballReady()
         {
             return fireballCooldown >= 100 && (falling || jumping || !left || !right) && !knockback && !dashing;
         }
 
-        public boolean isDashingReady()
+        public Boolean isDashingReady()
         {
             return dashCooldown >= 200 && (falling || jumping || left || right) && !knockback;
         }
 
-        public void setJumping(boolean b)
+        public void setJumping(Boolean b)
         {
             if (knockback) return;
 
@@ -209,12 +213,12 @@ namespace MainGame.Objects
             return dashCooldown;
         }
         public int getMaxSta() { return maxDashCooldown; }
-        public boolean getFacing()
+        public Boolean getFacing()
         {
             return facingRight;
         }
 
-        public void setSkill(int number, boolean state)
+        public void setSkill(int number, Boolean state)
         {
             switch (number)
             {
@@ -246,7 +250,7 @@ namespace MainGame.Objects
             }
         }
 
-        public boolean getSkill(int number)
+        public Boolean getSkill(int number)
         {
             switch (number)
             {
@@ -320,7 +324,7 @@ namespace MainGame.Objects
             left = right = jumping = flinching = dashing = squat = attack = hi_attack = low_attack = false;
         }
 
-        public void setTeleporting(boolean b) { teleporting = b; }
+        public void setTeleporting(Boolean b) { teleporting = b; }
 
         private void getNextPosition()
         {

@@ -24,14 +24,14 @@ namespace MainGame.Control
 
         private void convert()
         {
-            playerX = "X:" + p.getx().ToString();
-            playerY = "Y:" + p.gety().ToString();
-            playerDX = "DX:" + p.getdx().ToString();
-            playerDY = "DY:" + p.getdy().ToString();
+            playerX = "X:" + p.GetX().ToString();
+            playerY = "Y:" + p.GetY().ToString();
+            playerDX = "DX:" + p.GetDX().ToString();
+            playerDY = "DY:" + p.GetDY().ToString();
 
-            playerHealth = p.getHealth().ToString() + "/" + p.getMaxHealth().ToString();
-            playerMana = p.getMana().ToString() + "/" + p.getMaxMana().ToString();
-            playerDash = p.getSta().ToString() + "/" + p.getMaxSta().ToString();
+            playerHealth = p.GetHealth().ToString() + "/" + p.GetMaxHealth().ToString();
+            playerMana = p.GetMana().ToString() + "/" + p.GetMaxMana().ToString();
+            playerDash = p.GetStamina().ToString() + "/" + p.GetMaxStamina().ToString();
         }
 
         public DebugInfo(TileMap tm, Player pl) : base(tm)
@@ -58,7 +58,7 @@ namespace MainGame.Control
         {
             if (debugReady)
             {
-                setMapPosition();
+                SetMapPosition();
                 g.setColor(java.awt.Color.GREEN);
                 g.drawString(playerX, Game1.WIDTH - 150, 20);
                 g.drawString(playerY, Game1.WIDTH - 150, 30);

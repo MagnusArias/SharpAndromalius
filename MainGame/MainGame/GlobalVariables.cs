@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MainGame
 {
-    class GlobalVariables : Game1
+    public static class GlobalVariables : Game1
     {
         public const String SKELETON_SPRITEMAP = "Content/Assets/enemy-skeleton-spritemap.png";
         public const String DEAD_SKELETON_SPRITEMAP = "Content/Assets/enemy-skeleton-dead-spritemap.png";
@@ -28,24 +28,25 @@ namespace MainGame
         public const String BOSSHPBAR = "/Content/Assets/boss-hp-bar.png";
         public const String BOSSBAROUTLINE = "/Content/Assets/boss-hp-bar-outline.png";
 
-        public Texture2D Enemy_Skeleton;
-        public Texture2D Enemy_DeadSkeleton;
-        public Texture2D Enemy_Ghost;
-        public Texture2D Particles;
-        public Texture2D Enemy_Boss1;
+        public static Texture2D[] Enemy_Skeleton;
+        public static Texture2D[] Enemy_DeadSkeleton;
+        public static Texture2D[] Enemy_Ghost;
+        public static Texture2D[] Particles;
+        public static Texture2D[] Enemy_Boss1;
 
-        public Texture2D Item_Sword;
-        public Texture2D Item_DoubleJump;
-        public Texture2D Item_Dash;
-        public Texture2D Item_Fireball;
+        public static Texture2D[] Item_Sword;
+        public static Texture2D[] Item_DoubleJump;
+        public static Texture2D[] Item_Dash;
+        public static Texture2D[] Item_Fireball;
 
-        public Texture2D Player;
-        public Texture2D Background;
+        public static Texture2D[] Player;
+        public static Texture2D[] Background;
 
+        public static Boolean DEBUG_READY;
 
-        public void LoadContentFromSource()
+        public static void LoadContentFromSource()
         {
-            Enemy_Skeleton = this.Content.Load<Texture2D>(GlobalVariables.SKELETON_SPRITEMAP);
+            Enemy_Skeleton = Game1.Content.Load<Texture2D>(GlobalVariables.SKELETON_SPRITEMAP);
             Enemy_DeadSkeleton = this.Content.Load<Texture2D>(GlobalVariables.DEAD_SKELETON_SPRITEMAP);
             Enemy_Ghost = this.Content.Load<Texture2D>(GlobalVariables.GHOST_SPRITEMAP);
             Particles = this.Content.Load<Texture2D>(GlobalVariables.PARTICLES_SPRITEMAP);

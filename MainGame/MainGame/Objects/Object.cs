@@ -60,7 +60,6 @@ namespace MainGame.Objects
         protected double stopJumpSpeed;
 
 
-        // konstruktor
         public Object(TileMap tm)
         {
             tileMap = tm;
@@ -201,10 +200,15 @@ namespace MainGame.Objects
         }
 
         public int GetX() { return (int)x; }
+
         public int GetY() { return (int)y; }
+
         public int GetWidth() { return width; }
+
         public int GetHeight() { return height; }
+
         public int GetCWidth() { return cwidth; }
+
         public int GetCHeight() { return cheight; }
 
         public void SetPosition(double x, double y)
@@ -224,10 +228,12 @@ namespace MainGame.Objects
             ymap = tileMap.gety();
         }
 
-        // USTAWIENIE KLAWISZY
         public void SetLeft(Boolean b) { left = b; }
+
         public void SetRight(Boolean b) { right = b; }
+
         public void SetUp(Boolean b) { jumping = b; }
+
         public void SetDown(Boolean b) { squat = b; }
 
         public Boolean NotOnScreen()

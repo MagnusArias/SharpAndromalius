@@ -13,7 +13,6 @@ namespace MainGame.Objects.Enemies
 {
     class E_Boss : Enemy
     {
-        
 	    private Texture2D hpBar;
         private Texture2D hpBarOutline;
         private Boolean active;
@@ -29,7 +28,6 @@ namespace MainGame.Objects.Enemies
         private double hp_max;
         private double hp;
         private double maxHp;
-        private const Font font = new Font("Viner Hand ITC", Font.PLAIN, 18);
 
         public E_Boss(TileMap tm, Player p) : base(tm)
         {
@@ -57,13 +55,15 @@ namespace MainGame.Objects.Enemies
 
             facingRight = false;
 
-            sprites = Content.EnemyBoss1[0];
+            sprites = GlobalVariables.Enemy_Boss1;
 
             animation.SetFrames(sprites);
             animation.SetDelay(4);
 
+            Random r = new Random();
+            b = r.Next() * 0.06 + 0.07;
+
             tick = 0;
-            b = Math.random() * 0.06 + 0.07;
 
             try
             {
@@ -72,9 +72,8 @@ namespace MainGame.Objects.Enemies
             }
             catch (Exception e)
             {
-                e.printStackTrace();
-                System.out.println("Error loading graphics from BOSS_1.");
-                System.exit(0);
+                Console.WriteLine("\nStackTrace ---\n{0}", e.StackTrace);
+                Environment.Exit(0);
             }
         }
 
@@ -98,14 +97,14 @@ namespace MainGame.Objects.Enemies
                 if (lastBreath <= 0) remove = true;
             }
 
-            facingRight = player.getx() >= x;
+            facingRight = player.GetX() >= x;
 
 
-            if (player.getx() > 2240 && player.gety() > 1530 && player.gety() < 1870)
+            if (player.GetX() > 2240 && player.GetY() > 1530 && player.GetY() < 1870)
             {
                 playerCatch = true;
 
-                if (Math.Abs(player.getx() - x) < 250)
+                if (Math.Abs(player.GetX() - x) < 250)
                 { // jestesmy blisko bossa, to sie oddala od nas
 
                     if (!facingRight)
@@ -125,7 +124,7 @@ namespace MainGame.Objects.Enemies
                         }
                     }
                 }
-                else if (Math.Abs(player.getx() - x) > 250 && Math.Abs(player.getx() - x) < 400)
+                else if (Math.Abs(player.GetX() - x) > 250 && Math.Abs(player.GetX() - x) < 400)
                 { // oddalimy sie, ale nas goni
                     if (facingRight)
                     {
@@ -145,7 +144,7 @@ namespace MainGame.Objects.Enemies
                     }
                 }
             }
-            else if (Math.Abs(player.getx() - x) > 400 && !playerCatch)
+            else if (Math.Abs(player.GetX() - x) > 400 && !playerCatch)
             { // ale jezeli jestesmy daleko, to opuszcza poscig
                 if (dx > 0)
                 {
@@ -171,16 +170,16 @@ namespace MainGame.Objects.Enemies
             y = Math.Sin(b * tick) + y;
 
             // update animation
-            base.animation.Update();
+            animation.Update();
 
         }
 
-        public void draw(Graphics2D g)
+        public void Draw(Graphics2D g)
         {
-            base.draw(g);
+            base.Draw(g);
         }
 
-        public void drawHPBar(Graphics2D g)
+        public void DrawHPBar(Graphics2D g)
         {
             if (dead) return;
 

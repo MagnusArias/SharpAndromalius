@@ -72,7 +72,7 @@ namespace MainGame.Objects.Enemies
         {
             double dist = Math.abs(
                             Math.sqrt(
-                                    Math.pow((x - p.getx()), 2.00) +
+                                    Math.pow((x - p.GetX()), 2.00) +
                                     Math.pow((y - p.gety()), 2.00)
                             )
                         );

@@ -30,27 +30,27 @@ namespace MainGame.Objects.Enemies
             animation = new Animation();
         }
 
-        public Boolean isDead()
+        public Boolean IsDead()
         {
             return dead;
         }
 
-        public int getLastBreath()
+        public int GetLastBreath()
         {
             return lastBreath;
         }
 
-        public Boolean shouldRemove()
+        public Boolean ShouldRemove()
         {
             return remove;
         }
 
-        public int getDamage()
+        public int GetDamage()
         {
             return damage;
         }
 
-        public void hit(int damage)
+        public void Hit(int damage)
         {
             health -= damage;
             if (health < 0) health = 0;
@@ -60,11 +60,11 @@ namespace MainGame.Objects.Enemies
             }
         }
 
-        public void update() { }
+        public void Update() { }
 
-        public void draw(java.awt.Graphics2D g)
+        public void Draw(java.awt.Graphics2D g)
         {
-            base.draw(g);
+            base.Draw(g);
         }
     }
 }

@@ -47,7 +47,7 @@ namespace MainGame.Objects.Items
         public void draw(Graphics2D g)
         {
             super.draw(g);
-            if (player.getSkill(1)) super.drawInHUD(g, 30, 35);
+            if (player.GetSkill(1)) super.drawInHUD(g, 30, 35);
         }
     }
 }

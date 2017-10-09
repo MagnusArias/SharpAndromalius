@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,14 +10,16 @@ using MainGame.Objects.Enemies;
 using MainGame.Maps.TileMap;
 using MainGame.Objects.Items;
 using MainGame.Objects.Projectiles;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MainGame.Objects
 {
     class Player : ParentObject
     {
-        private ArrayList<Enemy> enemies;
-        private ArrayList<EnergyParticle> energyParticles;
-        private ArrayList<ItemParent> items;
+        private ArrayList enemies;
+        private ArrayList energyParticles;
+        private ArrayList items;
 
         public const String PLAYERSPRITEMAP = "/Game/Src/Assets/player-spritemap.png";
 	    public const String ARMORSPRITEMAP = "/Game/Src/Assets/armor05-spritemap.png";
@@ -62,21 +65,21 @@ namespace MainGame.Objects
         private int maxDashCooldown;
 
         // ANIMACJE
-        private ArrayList<BufferedImage[]> sprites;
-        private ArrayList<BufferedImage[]> armorSprites;
-        private ArrayList<BufferedImage[]> robeSprites;
-        private ArrayList<BufferedImage[]> swordSprites;
+        private ArrayList[] sprites;
+        private ArrayList[] armorSprites;
+        private ArrayList[] robeSprites;
+        private ArrayList[] swordSprites;
 
 
-        private const int[] NUMFRAMES = { 1, 1, 1, 8, 4, 4, 4, 1, 8, 1, 6 };
-        private const int[] FRAMEWIDTHS = { 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46 };
-        private const int[] FRAMEHEIGHTS = { 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50 };
-        private const int[] SPRITEDELAYS = { -1, -1, -1, 5, 5, 5, 5, -1, 4, -1, 5 };
+        private readonly int[] NUMFRAMES = { 1, 1, 1, 8, 4, 4, 4, 1, 8, 1, 6 };
+        private readonly int[] FRAMEWIDTHS = { 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46 };
+        private readonly int[] FRAMEHEIGHTS = { 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50 };
+        private readonly int[] SPRITEDELAYS = { -1, -1, -1, 5, 5, 5, 5, -1, 4, -1, 5 };
 
-        private const int[] swordNUMFRAMES = { 0, 0, 0, 0, 5, 5, 5, 0, 0, 0, 0 };
-        private const int[] swordFRAMEWIDTHS = { 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60 };
-        private const int[] swordFRAMEHEIGHTS = { 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30 };
-        private const int[] swordSPRITEDELAYS = { -1, -1, -1, -1, 5, 5, 5, -1, -1, -1, -1 };
+        private readonly int[] swordNUMFRAMES = { 0, 0, 0, 0, 5, 5, 5, 0, 0, 0, 0 };
+        private readonly int[] swordFRAMEWIDTHS = { 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60 };
+        private readonly int[] swordFRAMEHEIGHTS = { 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30 };
+        private readonly int[] swordSPRITEDELAYS = { -1, -1, -1, -1, 5, 5, 5, -1, -1, -1, -1 };
 
         //klasy animacji
         protected Animation bodyAnimation = new Animation();
@@ -107,8 +110,8 @@ namespace MainGame.Objects
             skill_doubleJump = skill_sword = skill_dash = skill_fireball = false;
 
             attackRect = new Rectangle(0, 0, 0, 0);
-            attackRect.width = 20;
-            attackRect.height = 10;
+            attackRect.Width = 20;
+            attackRect.Height = 10;
 
             alr = new Rectangle((int)x - 15, (int)y - 45, 45, 45);
 
@@ -123,12 +126,12 @@ namespace MainGame.Objects
             //atrybuty dasha i fireballa
             maxFireballCooldown = 100;
             fireballShooted = false;
-            setFireballCooldown(maxFireballCooldown);
+            SetFireballCooldown(maxFireballCooldown);
             dashCooldown = 190;
             maxDashCooldown = 200;
 
             //artybuty poruszania sie
-            setParameters(boost);
+            SetParameters(boost);
 
             facingRight = true;
             attack = false;
@@ -138,26 +141,26 @@ namespace MainGame.Objects
             damage = 2;
             health = maxHealth = 50;
 
-            loadGraphics();
+            LoadGraphics();
 
-            energyParticles = new ArrayList<EnergyParticle>();
-            setAnimation(STAND);
+            energyParticles = new ArrayList();
+            SetAnimation(STAND);
         }
 
-        public void init(ArrayList<Enemy> enemies, ArrayList<EnergyParticle> energyParticles, ArrayList<ItemParent> items)
+        public void Init(ArrayList enemies, ArrayList energyParticles, ArrayList items)
         {
             this.enemies = enemies;
             this.energyParticles = energyParticles;
             this.items = items;
         }
 
-        public void setFireballCooldown(int x)
+        public void SetFireballCooldown(int x)
         {
             fireballCooldown = x;
             fireballShooted = true;
         }
 
-        private void setParameters(int boost)
+        private void SetParameters(int boost)
         {
             moveSpeed = 0.5 * boost;
             maxSpeed = 2.8 * boost;
@@ -169,17 +172,17 @@ namespace MainGame.Objects
             doubleJumpStart = -5 * boost;
         }
 
-        public Boolean isFireballReady()
+        public Boolean IsFireballReady()
         {
             return fireballCooldown >= 100 && (falling || jumping || !left || !right) && !knockback && !dashing;
         }
 
-        public Boolean isDashingReady()
+        public Boolean IsDashingReady()
         {
             return dashCooldown >= 200 && (falling || jumping || left || right) && !knockback;
         }
 
-        public void setJumping(Boolean b)
+        public void SetJumping(Boolean b)
         {
             if (knockback) return;
 
@@ -192,33 +195,48 @@ namespace MainGame.Objects
 
         }
 
-        public void setDead()
+        public void SetDead()
         {
             health = 0;
-            stop();
+            Stop();
         }
 
-        public int getHealth()
+        public int GetHealth()
         {
             return health;
         }
-        public int getMaxHealth() { return maxHealth; }
-        public int getMana()
+
+        public int GetMaxHealth()
+        {
+            return maxHealth;
+        }
+
+        public int GetMana()
         {
             return fireballCooldown;
         }
-        public int getMaxMana() { return maxFireballCooldown; }
-        public int getSta()
+
+        public int GetMaxMana()
+        {
+            return maxFireballCooldown;
+        }
+
+        public int GetStamina()
         {
             return dashCooldown;
         }
-        public int getMaxSta() { return maxDashCooldown; }
-        public Boolean getFacing()
+
+        public int GetMaxStamina()
+        {
+            return maxDashCooldown;
+        }
+
+        public Boolean GetFacing()
         {
             return facingRight;
         }
 
-        public void setSkill(int number, Boolean state)
+        public void SetSkill(int number, Boolean state)
         {
             switch (number)
             {
@@ -250,7 +268,7 @@ namespace MainGame.Objects
             }
         }
 
-        public Boolean getSkill(int number)
+        public Boolean GetSkill(int number)
         {
             switch (number)
             {
@@ -270,7 +288,7 @@ namespace MainGame.Objects
             }
         }
 
-        public void setAttacking()
+        public void SetAttacking()
         {
             if (knockback) return;
             if (dashing) return;
@@ -298,7 +316,7 @@ namespace MainGame.Objects
             }
         }
 
-        public void setDashing()
+        public void SetDashing()
         {
             if (knockback) return;
             if (skill_dash)
@@ -311,22 +329,25 @@ namespace MainGame.Objects
             }
         }
 
-        public void reset()
+        public void Reset()
         {
             facingRight = true;
             currentAction = -1;
             health = maxHealth;
-            stop();
+            Stop();
         }
 
-        public void stop()
+        public void Stop()
         {
             left = right = jumping = flinching = dashing = squat = attack = hi_attack = low_attack = false;
         }
 
-        public void setTeleporting(Boolean b) { teleporting = b; }
+        public void SetTeleporting(Boolean b)
+        {
+            teleporting = b;
+        }
 
-        private void getNextPosition()
+        private void GetNextPosition()
         {
 
             if (knockback)
@@ -392,7 +413,7 @@ namespace MainGame.Objects
                     dx = moveSpeed * (10 - dashTimer * 0.04);
                     for (int i = 0; i < 6; i++)
                     {
-                        energyParticles.add(new EnergyParticle(tileMap, x, y + cheight / 4, EnergyParticle.LEFT));
+                        energyParticles.add(new P_Player(tileMap, x, y + cheight / 4, P_Player.LEFT));
                     }
                 }
                 else
@@ -426,43 +447,43 @@ namespace MainGame.Objects
             }
         }
 
-        private void setAnimation(int i)
+        private void SetAnimation(int i)
         {
             currentAction = i;
 
-            bodyAnimation.setFrames(sprites.get(currentAction));
-            bodyAnimation.setDelay(SPRITEDELAYS[currentAction]);
+            bodyAnimation.SetFrames(sprites.get(currentAction));
+            bodyAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
-            armorAnimation.setFrames(armorSprites.get(currentAction));
-            armorAnimation.setDelay(SPRITEDELAYS[currentAction]);
+            armorAnimation.SetFrames(armorSprites.get(currentAction));
+            armorAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
-            robeAnimation.setFrames(robeSprites.get(currentAction));
-            robeAnimation.setDelay(SPRITEDELAYS[currentAction]);
+            robeAnimation.SetFrames(robeSprites.get(currentAction));
+            robeAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
-            swordAnimation.setFrames(swordSprites.get(currentAction));
-            swordAnimation.setDelay(swordSPRITEDELAYS[currentAction]);
+            swordAnimation.SetFrames(swordSprites.get(currentAction));
+            swordAnimation.SetDelay(swordSPRITEDELAYS[currentAction]);
 
             width = FRAMEWIDTHS[currentAction];
             height = FRAMEHEIGHTS[currentAction];
         }
 
-        public int setViewLeftRight()
+        public int SetViewLeftRight()
         {
             if (facingRight) return 1;
             else return -1;
         }
 
-        public int setViewDown()
+        public int SetViewDown()
         {
             if (squat) return 1;
             else return 0;
         }
 
-        public void hit(int damage)
+        public void Hit(int damage)
         {
             if (flinching) return;
 
-            stop();
+            Stop();
             health -= damage;
             if (health < 0) health = 0;
             flinching = true;
@@ -476,20 +497,20 @@ namespace MainGame.Objects
             jumping = false;
         }
 
-        public void update()
+        public void Update()
         {
 
-            getNextPosition();
-            checkTileMapCollision();
-            setPosition(xtemp, ytemp);
+            GetNextPosition();
+            CheckTileMapCollision();
+            SetPosition(xtemp, ytemp);
 
             if (DebugInfo.debugReady)
             {
-                setSkill(666, true);
+                SetSkill(666, true);
                 boost = 2;
             }
             else boost = 1;
-            setParameters(boost);
+            SetParameters(boost);
 
             if (teleporting) energyParticles.add(new EnergyParticle(tileMap, x, y, EnergyParticle.UP));
 
@@ -544,10 +565,10 @@ namespace MainGame.Objects
                 }
             }
 
-            checkEnemyCollision();
-            checkItemCollision();
+            CheckEnemyCollision();
+            CheckItemCollision();
 
-            checkAnimations();
+            CheckAnimations();
 
             bodyAnimation.update();
             armorAnimation.update();
@@ -563,15 +584,15 @@ namespace MainGame.Objects
         }
 
 
-        public void draw(Graphics2D g)
+        public void Draw(Graphics2D g)
         {
 
-            setMapPosition();
+            SetMapPosition();
 
 
-            for (int i = 0; i < energyParticles.size(); i++)
+            for (int i = 0; i < energyParticles.Count; i++)
             {
-                energyParticles.get(i).draw(g);
+                energyParticles[i].Draw(g);
             }
             if (flinching && !knockback)
             {
@@ -601,7 +622,7 @@ namespace MainGame.Objects
                             new_y = y + ymap - height / 2;
                         }
 
-                        if (getSkill(2)) g.drawImage(swordAnimation.getImage(), (int)(x + xmap - width / 2), (int)(new_y), null);
+                        if (GetSkill(2)) g.drawImage(swordAnimation.getImage(), (int)(x + xmap - width / 2), (int)(new_y), null);
                     }
                 }
             }
@@ -628,235 +649,244 @@ namespace MainGame.Objects
                             new_y = y + ymap - height / 2;
                         }
 
-                        if (getSkill(2)) g.drawImage(swordAnimation.getImage(), (int)(x + xmap - width / 2 + width), (int)(new_y), -60, 30, null);
+                        if (GetSkill(2)) g.drawImage(swordAnimation.getImage(), (int)(x + xmap - width / 2 + width), (int)(new_y), -60, 30, null);
                     }
                 }
             }
 
             if (DebugInfo.debugReady)
             {
-                Rectangle r = getRectangle();
-                r.x += xmap;
-                r.y += ymap;
+                Rectangle r = GetRectangle();
+                r.X += (int)xmap;
+                r.Y += (int)ymap;
                 g.draw(r);
             }
         }
 
-        private void loadGraphics()
+        private void LoadGraphics()
         {
             try
             {
 
-                BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream(PLAYERSPRITEMAP));
-                BufferedImage spritesheet2 = ImageIO.read(getClass().getResourceAsStream(ARMORSPRITEMAP));
-                BufferedImage spritesheet3 = ImageIO.read(getClass().getResourceAsStream(SWORDSPRITEMAP));
-                BufferedImage spritesheet4 = ImageIO.read(getClass().getResourceAsStream(ROBESPRITEMAP));
+                Texture2D spritesheet = ImageIO.read(getClass().getResourceAsStream(PLAYERSPRITEMAP));
+                Texture2D spritesheet2 = ImageIO.read(getClass().getResourceAsStream(ARMORSPRITEMAP));
+                Texture2D spritesheet3 = ImageIO.read(getClass().getResourceAsStream(SWORDSPRITEMAP));
+                Texture2D spritesheet4 = ImageIO.read(getClass().getResourceAsStream(ROBESPRITEMAP));
 
                 //tutaj częśc dla człowieczka
                 int count = 0;
-                sprites = new ArrayList<BufferedImage[]>();
-                for (int i = 0; i < NUMFRAMES.length; i++)
+                sprites = new ArrayList[]();
+                for (int i = 0; i < NUMFRAMES.Length; i++)
                 {
-                    BufferedImage[] bi = new BufferedImage[NUMFRAMES[i]];
+                    Texture2D[] bi = new Texture2D[NUMFRAMES[i]];
                     for (int j = 0; j < NUMFRAMES[i]; j++) { bi[j] = spritesheet.getSubimage(j * FRAMEWIDTHS[i], count, FRAMEWIDTHS[i], FRAMEHEIGHTS[i]); }
-                    sprites.add(bi);
+                    sprites.Add(bi);
                     count += FRAMEHEIGHTS[i];
                 }
 
                 // tutaj część dla zbroi
                 count = 0;
-                armorSprites = new ArrayList<BufferedImage[]>();
-                for (int i = 0; i < NUMFRAMES.length; i++)
+                armorSprites = new ArrayList[]();
+                for (int i = 0; i < NUMFRAMES.Length; i++)
                 {
-                    BufferedImage[] bi = new BufferedImage[NUMFRAMES[i]];
+                    Texture2D[] bi = new Texture2D[NUMFRAMES[i]];
                     for (int j = 0; j < NUMFRAMES[i]; j++) { bi[j] = spritesheet2.getSubimage(j * FRAMEWIDTHS[i], count, FRAMEWIDTHS[i], FRAMEHEIGHTS[i]); }
-                    armorSprites.add(bi);
+                    armorSprites.Add(bi);
                     count += FRAMEHEIGHTS[i];
                 }
 
                 // tutaj czesc dla miecza
                 count = 0;
-                swordSprites = new ArrayList<BufferedImage[]>();
-                for (int i = 0; i < swordNUMFRAMES.length; i++)
+                swordSprites = new ArrayList[]();
+                for (int i = 0; i < swordNUMFRAMES.Length; i++)
                 {
-                    BufferedImage[] bi = new BufferedImage[swordNUMFRAMES[i]];
+                    Texture2D[] bi = new Texture2D[swordNUMFRAMES[i]];
                     for (int j = 0; j < swordNUMFRAMES[i]; j++) { bi[j] = spritesheet3.getSubimage(j * swordFRAMEWIDTHS[i], count, swordFRAMEWIDTHS[i], swordFRAMEHEIGHTS[i]); }
-                    swordSprites.add(bi);
+                    swordSprites.Add(bi);
                     count += swordFRAMEHEIGHTS[i];
                 }
 
                 count = 0;
-                robeSprites = new ArrayList<BufferedImage[]>();
-                for (int i = 0; i < NUMFRAMES.length; i++)
+                robeSprites = new ArrayList[]();
+                for (int i = 0; i < NUMFRAMES.Length; i++)
                 {
-                    BufferedImage[] bi = new BufferedImage[NUMFRAMES[i]];
+                    Texture2D[] bi = new Texture2D[NUMFRAMES[i]];
                     for (int j = 0; j < NUMFRAMES[i]; j++) { bi[j] = spritesheet4.getSubimage(j * FRAMEWIDTHS[i], count, FRAMEWIDTHS[i], FRAMEHEIGHTS[i]); }
-                    robeSprites.add(bi);
+                    robeSprites.Add(bi);
                     count += FRAMEHEIGHTS[i];
                 }
             }
             catch (Exception e)
             {
-                e.printStackTrace();
-                System.out.println("Error loading graphics for PLAYER.");
-                System.exit(0);
+                Console.WriteLine("\nStackTrace ---\n{0}", e.StackTrace);
+                Environment.Exit(0);
             }
         }
-
-        private void checkItemCollision()
+        
+        private void CheckItemCollision()
         {
-            for (int i = 0; i < items.size(); i++)
+            for (int i = 0; i < items.Count; i++)
             {
 
-                ItemParent e = items.get(i);
+                Item e = (Item)items[i];
 
-                if (intersects(e))
+                if (Intersects(e))
                 {
-                    if (e instanceof ItemDoubleJump) {
-                setSkill(0, true);
-                e.canBeRemoved();
-            }
-            if (e instanceof ItemDash) {
-                setSkill(1, true);
-                e.canBeRemoved();
-            }
-            if (e instanceof ItemSword) {
-                setSkill(2, true);
-                e.canBeRemoved();
-            }
-            if (e instanceof ItemFireball) {
-                setSkill(3, true);
-                e.canBeRemoved();
+                    if (e is I_DJump)
+                    {
+                        SetSkill(0, true);
+                        e.CanBeRemoved();
+                    }
+
+                    if (e is I_Dash)
+                    {
+                        SetSkill(1, true);
+                        e.CanBeRemoved();
+                    }
+
+                    if (e is I_Sword)
+                    {
+                        SetSkill(2, true);
+                        e.CanBeRemoved();
+                    }
+
+                    if (e is I_Fireball)
+                    {
+                        SetSkill(3, true);
+                        e.CanBeRemoved();
+                    }
+                }
             }
         }
     
-    private void checkEnemyCollision()
-    {
-        for (int i = 0; i < enemies.size(); i++)
+        private void CheckEnemyCollision()
         {
-
-            Enemy e = enemies.get(i);
-
-            if (currentAction == HIGH_ATTACK)
+            for (int i = 0; i < enemies.Count; i++)
             {
-                if (e.intersects(attackRect))
+
+                Enemy e = (Enemy)enemies[i];
+
+                if (currentAction == HIGH_ATTACK)
                 {
-                    e.hit(damage);
+                    if (e.Intersects(attackRect))
+                    {
+                        e.Hit(damage);
+                    }
                 }
-            }
-            if (currentAction == ATTACK)
-            {
-                if (e.intersects(attackRect))
+                if (currentAction == ATTACK)
                 {
-                    e.hit(damage);
+                    if (e.Intersects(attackRect))
+                    {
+                        e.Hit(damage);
+                    }
                 }
-            }
-            else if (currentAction == LOW_ATTACK)
-            {
-                if (e.intersects(attackRect))
+                else if (currentAction == LOW_ATTACK)
                 {
-                    e.hit(damage);
+                    if (e.Intersects(attackRect))
+                    {
+                        e.Hit(damage);
+                    }
                 }
-            }
 
-            if (!e.isDead() && intersects(e))
-            {
-                hit(e.getDamage());
-            }
+                if (!e.IsDead() && Intersects(e))
+                {
+                    Hit(e.GetDamage());
+                }
 
+            }
         }
-    }
-        private void checkAnimations()
+
+        private void CheckAnimations()
         {
             if (teleporting)
             {
                 if (currentAction != TELEPORTING)
                 {
-                    setAnimation(TELEPORTING);
+                    SetAnimation(TELEPORTING);
                 }
             }
             else if (knockback)
             {
                 if (currentAction != KNOCKBACK)
                 {
-                    setAnimation(KNOCKBACK);
+                    SetAnimation(KNOCKBACK);
                 }
             }
             else if (health == 0)
             {
                 if (currentAction != DEAD)
                 {
-                    setAnimation(DEAD);
+                    SetAnimation(DEAD);
                 }
             }
             else if (hi_attack)
             {
                 if (currentAction != HIGH_ATTACK)
                 {
-                    setAnimation(HIGH_ATTACK);
-                    attackRect.y = (int)y - 16;
-                    if (facingRight) attackRect.x = (int)x + 10;
-                    else attackRect.x = (int)x - 35;
+                    SetAnimation(HIGH_ATTACK);
+                    attackRect.Y = (int)y - 16;
+                    if (facingRight) attackRect.X = (int)x + 10;
+                    else attackRect.X = (int)x - 35;
                 }
             }
             else if (attack)
             {
                 if (currentAction != ATTACK)
                 {
-                    setAnimation(ATTACK);
-                    attackRect.y = (int)y - 16;
-                    if (facingRight) attackRect.x = (int)x + 10;
-                    else attackRect.x = (int)x - 35;
+                    SetAnimation(ATTACK);
+                    attackRect.Y = (int)y - 16;
+                    if (facingRight) attackRect.X = (int)x + 10;
+                    else attackRect.X = (int)x - 35;
                 }
             }
             else if (low_attack)
             {
                 if (currentAction != LOW_ATTACK)
                 {
-                    setAnimation(LOW_ATTACK);
-                    attackRect.y = (int)y;
-                    if (facingRight) attackRect.x = (int)x + 10;
-                    else attackRect.x = (int)x - 35;
+                    SetAnimation(LOW_ATTACK);
+                    attackRect.Y = (int)y;
+                    if (facingRight) attackRect.X = (int)x + 10;
+                    else attackRect.X = (int)x - 35;
                 }
             }
             else if (dy < 0)
             {
                 if (currentAction != JUMPING)
                 {
-                    setAnimation(JUMPING);
+                    SetAnimation(JUMPING);
                 }
             }
             else if (dy > 0)
             {
                 if (currentAction != FALLING)
                 {
-                    setAnimation(FALLING);
+                    SetAnimation(FALLING);
                 }
             }
             else if (dashing)
             {
                 if (currentAction != WALKING)
                 {
-                    setAnimation(WALKING);
+                    SetAnimation(WALKING);
                 }
             }
             else if (left || right)
             {
                 if (currentAction != WALKING)
                 {
-                    setAnimation(WALKING);
+                    SetAnimation(WALKING);
                 }
             }
             else if (squat)
             {
                 if (currentAction != SQUAT)
                 {
-                    setAnimation(SQUAT);
+                    SetAnimation(SQUAT);
                 }
             }
             else if (currentAction != STAND)
             {
-                setAnimation(STAND);
+                SetAnimation(STAND);
             }
         }
     }

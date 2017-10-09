@@ -1,40 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MainGame.Control;
+using MainGame.Maps.TileMap;
+using Microsoft.Xna.Framework.Graphics;
+
+using System;
+
 
 namespace MainGame.Objects.Items
 {
-    class Item
+    class Item : ParentObject
     {
-        protected boolean remove;
-        protected BufferedImage[] sprites;
+        protected Boolean remove;
+        protected Texture2D[] sprites;
 
-        public ItemParent(TileMap tm)
+        public Item(TileMap tm) : base(tm)
         {
-            super(tm);
             remove = false;
             animation = new Animation();
         }
 
-        public boolean shouldRemove()
+        public Boolean ShouldRemove()
         {
             return remove;
         }
 
-        public void canBeRemoved()
+        public void CanBeRemoved()
         {
             remove = true;
         }
 
-        public void update() { }
+        public void Update() { }
 
-        public void draw(java.awt.Graphics2D g)
+        public void Draw(java.awt.Graphics2D g)
         {
-            super.draw(g);
+            base.Draw(g);
         }
-        public void drawInHUD(java.awt.Graphics2D g, int x, int y)
+
+        public void DrawInHUD(java.awt.Graphics2D g, int x, int y)
         {
             g.drawImage(animation.getImage(), x, y, null);
         }

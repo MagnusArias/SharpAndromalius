@@ -12,7 +12,7 @@ namespace MainGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public int WIDTH, HEIGHT;
+        public static int WIDTH, HEIGHT;
        
 
         public Game1()

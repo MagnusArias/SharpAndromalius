@@ -1,26 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MainGame.Control;
+using MainGame.Maps.TileMap;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+
 
 namespace MainGame.Objects.Projectiles
 {
-    class Fireball
+    class Fireball : ParentObject
     {
-        public static final String FIREBALLSPRITEMAP = "/Game/Src/Assets/fireball-spriteset.png";
+        public const String FIREBALLSPRITEMAP = "/Game/Src/Assets/fireball-spriteset.png";
 
-	private boolean hit;
-        private boolean remove;
-        private BufferedImage[] sprites;
-        private BufferedImage[] hitSprites;
+	    private Boolean hit;
+        private Boolean remove;
+        private Texture2D[] sprites;
+        private Texture2D[] hitSprites;
         private Rectangle attackRect;
         private int damage;
 
-        public FireBall(TileMap tm, boolean right)
+        public Fireball(TileMap tm, Boolean right) : base(tm)
         {
-
-            super(tm);
 
             animation = new Animation();
 
@@ -35,19 +34,19 @@ namespace MainGame.Objects.Projectiles
             cheight = 14;
 
             attackRect = new Rectangle(0, 0, 0, 0);
-            attackRect.width = 28;
-            attackRect.height = 14;
+            attackRect.Width = 28;
+            attackRect.Height = 14;
 
             // load sprites
             try
             {
 
-                BufferedImage spritesheet = ImageIO.read(
+                Texture2D spritesheet = ImageIO.read(
                     getClass().getResourceAsStream(FIREBALLSPRITEMAP)
                 );
 
-                sprites = new BufferedImage[12];
-                for (int i = 0; i < sprites.length; i++)
+                sprites = new Texture2D[12];
+                for (int i = 0; i < sprites.Length; i++)
                 {
                     sprites[i] = spritesheet.getSubimage(
                         i * width,
@@ -57,8 +56,8 @@ namespace MainGame.Objects.Projectiles
                     );
                 }
 
-                hitSprites = new BufferedImage[3];
-                for (int i = 0; i < hitSprites.length; i++)
+                hitSprites = new Texture2D[3];
+                for (int i = 0; i < hitSprites.Length; i++)
                 {
                     hitSprites[i] = spritesheet.getSubimage(
                         i * width,
@@ -68,13 +67,13 @@ namespace MainGame.Objects.Projectiles
                     );
                 }
 
-                animation.setFrames(sprites);
-                animation.setDelay(4);
+                animation.SetFrames(sprites);
+                animation.SetDelay(4);
 
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                Console.WriteLine("\nStackTrace ---\n{0}", e.StackTrace);
             }
 
         }

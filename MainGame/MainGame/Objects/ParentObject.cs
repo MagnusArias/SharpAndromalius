@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using MainGame.Maps.TileMap;
 using MainGame.Control;
+using Microsoft.Xna.Framework;
 
 namespace MainGame.Objects
 {
@@ -64,38 +65,37 @@ namespace MainGame.Objects
         //kontrola
         protected Boolean debugReady;
 
-
         public ParentObject(TileMap tm)
         {
             tileMap = tm;
             tileSize = tm.getTileSize();
         }
 
-        public Boolean intersects(ParentObject o)
+        public Boolean Intersects(ParentObject o)
         {
-            Rectangle r1 = getRectangle();
-            Rectangle r2 = o.getRectangle();
-            return r1.intersects(r2);
+            Rectangle r1 = GetRectangle();
+            Rectangle r2 = o.GetRectangle();
+            return r1.Intersects(r2);
         }
 
-        public Boolean intersects(Rectangle r)
+        public Boolean Intersects(Rectangle r)
         {
-            return getRectangle().intersects(r);
+            return GetRectangle().Intersects(r);
         }
 
-        public Boolean contains(ParentObject o)
+        public Boolean Contains(ParentObject o)
         {
-            Rectangle r1 = getRectangle();
-            Rectangle r2 = o.getRectangle();
-            return r1.contains(r2);
+            Rectangle r1 = GetRectangle();
+            Rectangle r2 = o.GetRectangle();
+            return r1.Contains(r2);
         }
 
-        public Boolean contains(Rectangle r)
+        public Boolean Contains(Rectangle r)
         {
-            return getRectangle().contains(r);
+            return GetRectangle().Contains(r);
         }
 
-        public Rectangle getRectangle()
+        public Rectangle GetRectangle()
         {
             return new Rectangle(
                     (int)x - cwidth / 2,
@@ -105,7 +105,7 @@ namespace MainGame.Objects
             );
         }
 
-        public void calculateCorners(double x, double y)
+        public void CalculateCorners(double x, double y)
         {
             int leftTile = (int)(x - cwidth / 2) / tileSize;
             int rightTile = (int)(x + cwidth / 2 - 1) / tileSize;
@@ -126,7 +126,7 @@ namespace MainGame.Objects
             bottomRight = br == Tile.SOLID;
         }
 
-        public void checkTileMapCollision()
+        public void CheckTileMapCollision()
         {
 
             currCol = (int)x / tileSize;
@@ -138,7 +138,7 @@ namespace MainGame.Objects
             xtemp = x;
             ytemp = y;
 
-            calculateCorners(x, ydest);
+            CalculateCorners(x, ydest);
 
             if (dy < 0)
             {
@@ -166,7 +166,7 @@ namespace MainGame.Objects
                 }
             }
 
-            calculateCorners(xdest, y);
+            CalculateCorners(xdest, y);
 
             if (dx < 0)
             {
@@ -195,7 +195,7 @@ namespace MainGame.Objects
 
             if (!falling)
             {
-                calculateCorners(x, ydest + 1);
+                CalculateCorners(x, ydest + 1);
                 if (!bottomLeft && !bottomRight)
                 {
                     falling = true;
@@ -204,95 +204,95 @@ namespace MainGame.Objects
 
         }
 
-        public int getx()
+        public int GetX()
         {
             return (int)x;
         }
 
-        public int gety()
+        public int GetY()
         {
             return (int)y;
         }
 
-        public double getdx()
+        public double GetDX()
         {
             return dx;
         }
 
-        public double getdy()
+        public double GetDY()
         {
             return dy;
         }
 
-        public int getWidth()
+        public int GetWidth()
         {
             return width;
         }
 
-        public int getHeight()
+        public int GetHeight()
         {
             return height;
         }
 
-        public int getCWidth()
+        public int GetCWidth()
         {
             return cwidth;
         }
 
-        public int getCHeight()
+        public int GetCHeight()
         {
             return cheight;
         }
 
-        public void setPosition(double x, double y)
+        public void SetPosition(double x, double y)
         {
             this.x = x;
             this.y = y;
         }
-        public void setVector(double dx, double dy)
+
+        public void SetVector(double dx, double dy)
         {
             this.dx = dx;
             this.dy = dy;
         }
 
-        public void setMapPosition()
+        public void SetMapPosition()
         {
             xmap = tileMap.getx();
             ymap = tileMap.gety();
         }
 
-        // USTAWIENIE KLAWISZY
-        public void setLeft(Boolean b)
+        public void SetLeft(Boolean b)
         {
             left = b;
         }
 
-        public void setRight(Boolean b)
+        public void SetRight(Boolean b)
         {
             right = b;
         }
 
-        public void setUp(Boolean b)
+        public void SetUp(Boolean b)
         {
             jumping = b;
         }
 
-        public void setDown(Boolean b)
+        public void SetDown(Boolean b)
         {
             squat = b;
         }
 
-        public Boolean notOnScreen()
+        public Boolean NotOnScreen()
         {
             return x + xmap + width < 0 ||
-                    x + xmap - width > GamePanel.WIDTH ||
+                    x + xmap - width > Game1.WIDTH ||
                     y + ymap + height < 0 ||
-                    y + ymap - height > GamePanel.HEIGHT;
+                    y + ymap - height > Game1.HEIGHT;
         }
 
-        public void draw(java.awt.Graphics2D g)
+        public void Draw(java.awt.Graphics2D g)
         {
-            setMapPosition();
+            SetMapPosition();
             if (facingRight)
             {
                 g.drawImage(animation.getImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
@@ -303,11 +303,11 @@ namespace MainGame.Objects
             }
 
             // draw collision box
-            if (DebugInfo.debugReady)
+            if (GlobalVariables.DEBUG_READY)
             {
-                Rectangle r = getRectangle();
-                r.x += xmap;
-                r.y += ymap;
+                Rectangle r = GetRectangle();
+                r.X += (int)xmap;
+                r.Y += (int)ymap;
                 g.draw(r);
             }
         }

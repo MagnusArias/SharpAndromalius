@@ -13,8 +13,7 @@ namespace MainGame.Objects.Enemies
 {
     class E_Boss : Enemy
     {
-	    private Texture2D hpBar;
-        private Texture2D hpBarOutline;
+	    
         private Boolean active;
         private int eventCount;
 
@@ -31,7 +30,6 @@ namespace MainGame.Objects.Enemies
 
         public E_Boss(TileMap tm, Player p) : base(tm)
         {
-
             player = p;
 
             health = 50;
@@ -186,11 +184,10 @@ namespace MainGame.Objects.Enemies
             if (playerCatch)
             {
 
-                g.drawImage(hpBar, 72, 122, (int)((GamePanel.WIDTH - 142) * hp_max), 14, null);
-                g.drawImage(hpBarOutline, 0 + 70, 0 + 120, GamePanel.WIDTH - 140, 16, null);
+                g.drawImage(hpBar, 72, 122, (int)((GlobalVariables.WIDTH - 142) * hp_max), 14, null);
+                g.drawImage(hpBarOutline, 0 + 70, 0 + 120, GlobalVariables.WIDTH - 140, 16, null);
 
-                g.setFont(font);
-                g.drawString("Andromalius", GamePanel.WIDTH / 2 - 20, 105);
+                g.drawString("Andromalius", GlobalVariables.WIDTH / 2 - 20, 105);
             }
         }
     }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using MainGame.Objects;
 using MainGame.Maps.TileMap;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MainGame.Control
 {
@@ -22,7 +23,14 @@ namespace MainGame.Control
 
         private Player p;
 
-        private void convert()
+        public DebugInfo(TileMap tm, Player pl) : base(tm)
+        {
+            p = pl;
+            Convert();
+            debugReady = false;
+        }
+
+        private void Convert()
         {
             playerX = "X:" + p.GetX().ToString();
             playerY = "Y:" + p.GetY().ToString();
@@ -34,36 +42,29 @@ namespace MainGame.Control
             playerDash = p.GetStamina().ToString() + "/" + p.GetMaxStamina().ToString();
         }
 
-        public DebugInfo(TileMap tm, Player pl) : base(tm)
+        public void Update()
         {
-            p = pl;
-            convert();
-            debugReady = false;
+            Convert();
         }
-
-        public void update()
-        {
-            convert();
-        }
-        public Boolean getStatus()
+        public Boolean GetStatus()
         {
             return debugReady;
         }
 
-        public void setReady()
+        public void SetReady()
         {
             debugReady = !debugReady;
         }
-        public void draw(Graphics2D g)
+        public void Draw(GraphicsDevice g)
         {
             if (debugReady)
             {
                 SetMapPosition();
                 g.setColor(java.awt.Color.GREEN);
-                g.drawString(playerX, Game1.WIDTH - 150, 20);
-                g.drawString(playerY, Game1.WIDTH - 150, 30);
-                g.drawString(playerDX, Game1.WIDTH - 100, 20);
-                g.drawString(playerDY, Game1.WIDTH - 100, 30);
+                g.drawString(playerX, GlobalVariables.WIDTH - 150, 20);
+                g.drawString(playerY, GlobalVariables.WIDTH - 150, 30);
+                g.drawString(playerDX, GlobalVariables.WIDTH - 100, 20);
+                g.drawString(playerDY, GlobalVariables.WIDTH - 100, 30);
 
                 g.drawString(playerHealth, 20, 25);
                 g.drawString(playerMana, 20, 43);

@@ -30,12 +30,12 @@ namespace MainGame.Objects.Items
 
         public void Update() { }
 
-        public void Draw(java.awt.Graphics2D g)
+        public void Draw(GraphicsDevice g)
         {
             base.Draw(g);
         }
 
-        public void DrawInHUD(java.awt.Graphics2D g, int x, int y)
+        public void DrawInHUD(GraphicsDevice g, int x, int y)
         {
             g.drawImage(animation.getImage(), x, y, null);
         }

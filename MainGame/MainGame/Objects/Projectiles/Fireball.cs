@@ -1,9 +1,10 @@
 ﻿using MainGame.Control;
 using MainGame.Maps.TileMap;
+using MainGame.Objects.Enemies;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-
+using System.Collections;
 
 namespace MainGame.Objects.Projectiles
 {
@@ -78,7 +79,7 @@ namespace MainGame.Objects.Projectiles
 
         }
 
-        public void shootFireball(double startX, double startY, boolean facing)
+        public void ShootFireball(double startX, double startY, Boolean facing)
         {
             x = startX;
             y = startY;
@@ -88,68 +89,68 @@ namespace MainGame.Objects.Projectiles
             else dx = -moveSpeed;
         }
 
-        public void setHit()
+        public void SetHit()
         {
             if (hit) return;
             hit = true;
-            animation.setFrames(hitSprites);
-            animation.setDelay(4);
+            animation.SetFrames(hitSprites);
+            animation.SetDelay(4);
             dx = 0;
         }
 
-        public boolean isHit()
+        public Boolean IsHit()
         {
             return hit;
         }
 
-        public boolean shouldRemove()
+        public Boolean ShouldRemove()
         {
             return remove;
         }
 
-        public void update(ArrayList<Enemy> enemies)
+        public void Update(ArrayList enemies)
         {
 
-            checkTileMapCollision();
-            setPosition(xtemp, ytemp);
+            CheckTileMapCollision();
+            SetPosition(xtemp, ytemp);
 
             if (dx == 0 && !hit)
             {
-                setHit();
+                SetHit();
             }
 
-            for (int i = 0; i < enemies.size(); i++)
+            for (int i = 0; i < enemies.Count; i++)
             {
 
-                Enemy e = enemies.get(i);
+                Enemy e = (Enemy)enemies[i];
 
                 // sprawdzenie ataku, zadajemy obrazenia wrogowi
 
-                if (e.intersects(attackRect))
+                if (e.Intersects(attackRect))
                 {
-                    e.hit(damage);
+                    e.Hit(damage);
                     hit = true;
                 }
 
             }
             if (!hit)
             {
-                attackRect.y = (int)y - 7;
-                if (facingRight) attackRect.x = (int)x - 7;
-                else attackRect.x = (int)x - 20;
+                attackRect.Y = (int)y - 7;
+                if (facingRight) attackRect.X = (int)x - 7;
+                else attackRect.X = (int)x - 20;
             }
 
-            animation.update();
-            if (hit && animation.hasPlayedOnce())
+            animation.Update();
+            if (hit && animation.HasPlayedOnce())
             {
                 remove = true;
             }
 
         }
 
-        public void draw(Graphics2D g)
+        public void Draw(Graphics2D g)
         {
-            super.draw(g);
+            base.Draw(g);
         }
     }
 }

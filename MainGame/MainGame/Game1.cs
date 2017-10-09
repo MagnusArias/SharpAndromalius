@@ -17,6 +17,7 @@ namespace MainGame
             graphics = new GraphicsDeviceManager(this);
             GlobalVariables.WIDTH = graphics.GraphicsDevice.PresentationParameters.BackBufferWidth;
             GlobalVariables.HEIGHT = graphics.GraphicsDevice.PresentationParameters.BackBufferHeight;
+            GlobalVariables.SCALE = 1;
 
             Content.RootDirectory = "Content";
         }

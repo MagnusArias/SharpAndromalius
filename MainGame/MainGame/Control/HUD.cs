@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MainGame.Maps.TileMap;
+using MainGame.Objects;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,23 +9,12 @@ using System.Threading.Tasks;
 
 namespace MainGame.Control
 {
-    class HUD
+    class HUD : ParentObject
     {
-        private BufferedImage hpBar = null;
-        private BufferedImage mpBar = null;
-        private BufferedImage staBar = null;
-        private BufferedImage hudBar = null;
-
-        private static  String HPBAR = "/Game/Src/Assets/hp-bar.png";
-        private static  String FIREBAR = "/Game/Src/Assets/fireball-bar.png";
-        private static  String DASHBAR = "/Game/Src/Assets/dash-bar.png";
-        private static  String HUD = "/Game/Src/Assets/hud.png";
-
         private Player player;
-        public HUD(TileMap tm)
-        {
-            super(tm);
 
+        public HUD(TileMap tm) : base(tm)
+        {
             try
             {
                 hpBar = ImageIO.read(getClass().getResourceAsStream(HPBAR));
@@ -32,22 +24,21 @@ namespace MainGame.Control
             }
             catch (Exception e)
             {
-                e.printStackTrace();
-                System.out.println("Error loading graphics from HUD.");
-                System.exit(0);
+                Console.WriteLine("\nStackTrace ---\n{0}", e.StackTrace);
+                Environment.Exit(0);
             }
         }
 
-        public void init(Player p)
+        public void Init(Player p)
         {
             player = p;
         }
 
-        public void draw(Graphics2D g)
+        public void Draw(Graphics2D g)
         {
-            g.drawImage(hpBar, (player.getHealth() * 2) - 75, 15, null);
-            g.drawImage(mpBar, (player.getMana()) - 75, 15 + 16, null);
-            g.drawImage(staBar, (player.getSta() / 2) - 75, 15 + 32, null);
+            g.drawImage(hpBar, (player.GetHealth() * 2) - 75, 15, null);
+            g.drawImage(mpBar, (player.GetMana()) - 75, 15 + 16, null);
+            g.drawImage(staBar, (player.GetStamina() / 2) - 75, 15 + 32, null);
             g.drawImage(hudBar, 0, 13, null);
         }
     }

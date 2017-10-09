@@ -49,7 +49,7 @@ namespace MainGame.Control
         {
             try
             {
-                image = Game1.Background;
+                image = GlobalVariables.Background;
                 image = image.getSubimage(x, y, w, h);
                 width = image.getWidth();
                 height = image.getHeight();
@@ -66,7 +66,6 @@ namespace MainGame.Control
         {
             try
             {
-                image = 
                 width = image.getWidth();
                 height = image.getHeight();
                 xscale = s1;
@@ -126,9 +125,9 @@ namespace MainGame.Control
 
         public void Draw(Graphics2D g)
         {
-            for (int i = 0; i < GamePanel.WIDTH / width * GamePanel.SCALE; i++)
+            for (int i = 0; i < GlobalVariables.WIDTH / width * GlobalVariables.SCALE; i++)
             {
-                for (int j = 0; j < GamePanel.HEIGHT / height * GamePanel.SCALE; j++)
+                for (int j = 0; j < GlobalVariables.HEIGHT / height * GlobalVariables.SCALE; j++)
                 {
                     g.drawImage(image,
                             (int)(x + width * i),
@@ -139,19 +138,19 @@ namespace MainGame.Control
 
             if (x < 0)
             {
-                g.drawImage(image, (int)x + GamePanel.WIDTH, (int)y, null);
+                g.drawImage(image, (int)x + GlobalVariables.WIDTH, (int)y, null);
             }
             if (x > 0)
             {
-                g.drawImage(image, (int)x - GamePanel.WIDTH, (int)y, null);
+                g.drawImage(image, (int)x - GlobalVariables.WIDTH, (int)y, null);
             }
             if (y < 0)
             {
-                g.drawImage(image, (int)x, (int)y + GamePanel.HEIGHT, null);
+                g.drawImage(image, (int)x, (int)y + GlobalVariables.HEIGHT, null);
             }
             if (y > 0)
             {
-                g.drawImage(image, (int)x, (int)y - GamePanel.HEIGHT, null);
+                g.drawImage(image, (int)x, (int)y - GlobalVariables.HEIGHT, null);
             }
         }
     }

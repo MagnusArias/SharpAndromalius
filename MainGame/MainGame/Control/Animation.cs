@@ -59,7 +59,7 @@ namespace MainGame.Control
             return frames[currentFrame];
         }
 
-        public Boolean HasPlayesOnce()
+        public Boolean HasPlayedOnce()
         {
             return timesPlayed > 0;
         }

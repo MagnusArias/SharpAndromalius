@@ -41,7 +41,37 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Control\Animation.cs" />
+    <Compile Include="Control\Background.cs" />
+    <Compile Include="Control\Contents.cs" />
+    <Compile Include="Control\DebugInfo.cs" />
+    <Compile Include="Control\HUD.cs" />
+    <Compile Include="Control\Keys.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Maps\GameState.cs" />
+    <Compile Include="Maps\GameStateManager.cs" />
+    <Compile Include="Maps\Level_1\Level_1.cs" />
+    <Compile Include="Maps\Level_2\Level_2.cs" />
+    <Compile Include="Maps\MenuState.cs" />
+    <Compile Include="Maps\PauseState.cs" />
+    <Compile Include="Maps\TileMap\Tile.cs" />
+    <Compile Include="Maps\TileMap\TileMap.cs" />
+    <Compile Include="Objects\Enemies\Enemy.cs" />
+    <Compile Include="Objects\Enemies\E_Boss.cs" />
+    <Compile Include="Objects\Enemies\E_Ghost.cs" />
+    <Compile Include="Objects\Enemies\E_Skeleton.cs" />
+    <Compile Include="Objects\Items\Item.cs" />
+    <Compile Include="Objects\Items\I_Dash.cs" />
+    <Compile Include="Objects\Items\I_DJump.cs" />
+    <Compile Include="Objects\Items\I_Fireball.cs" />
+    <Compile Include="Objects\Items\I_Sword.cs" />
+    <Compile Include="Objects\Object.cs" />
+    <Compile Include="Objects\ParentObject.cs" />
+    <Compile Include="Objects\Player.cs" />
+    <Compile Include="Objects\Projectiles\Fireball.cs" />
+    <Compile Include="Objects\Projectiles\P_Enemy.cs" />
+    <Compile Include="Objects\Projectiles\P_Player.cs" />
+    <Compile Include="Objects\Teleport.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

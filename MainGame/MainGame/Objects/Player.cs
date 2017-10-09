@@ -583,7 +583,7 @@ namespace MainGame.Objects
             }
         }
 
-        public void Draw(Graphics2D g)
+        public void Draw(SpriteBatch g)
         {
 
             SetMapPosition();

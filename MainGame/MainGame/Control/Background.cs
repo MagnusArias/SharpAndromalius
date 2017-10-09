@@ -123,7 +123,7 @@ namespace MainGame.Control
             while (y >= height) y -= height;
         }
 
-        public void Draw(Graphics2D g)
+        public void Draw(SpriteBatch g)
         {
             for (int i = 0; i < GlobalVariables.WIDTH / width * GlobalVariables.SCALE; i++)
             {

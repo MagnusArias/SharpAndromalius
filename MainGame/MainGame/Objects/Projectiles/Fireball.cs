@@ -148,7 +148,7 @@ namespace MainGame.Objects.Projectiles
 
         }
 
-        public void Draw(Graphics2D g)
+        public void Draw(SpriteBatch g)
         {
             base.Draw(g);
         }

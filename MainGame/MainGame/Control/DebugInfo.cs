@@ -55,7 +55,7 @@ namespace MainGame.Control
         {
             debugReady = !debugReady;
         }
-        public void Draw(GraphicsDevice g)
+        public void Draw(SpriteBatch g)
         {
             if (debugReady)
             {

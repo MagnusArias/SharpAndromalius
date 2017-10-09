@@ -1,39 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MainGame.Maps.TileMap;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace MainGame.Objects.Projectiles
 {
-    class P_Enemy
+    abstract class P_Enemy : ParentObject
     {
-        protected boolean hit;
-        protected boolean remove;
+        protected Boolean hit;
+        protected Boolean remove;
         protected int damage;
 
-        public EnemyProjectile(TileMap tm)
+        public P_Enemy(TileMap tm) : base(tm)
         {
-            super(tm);
+            
         }
 
-        public int getDamage()
+        public int GetDamage()
         {
             return damage;
         }
 
-        public boolean shouldRemove()
+        public Boolean ShouldRemove()
         {
             return remove;
         }
 
-        public abstract void setHit();
+        public abstract void SetHit();
 
-        public abstract void update();
+        public abstract void Update();
 
-        public void draw(Graphics2D g)
+        public void Draw(SpriteBatch g)
         {
-            super.draw(g);
+            base.Draw(g);
         }
     }
 }

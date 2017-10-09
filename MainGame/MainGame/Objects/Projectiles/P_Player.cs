@@ -1,34 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MainGame.Control;
+using MainGame.Maps.TileMap;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+
 
 namespace MainGame.Objects.Projectiles
 {
-    class P_Player
+    class P_Player : ParentObject
     {
         private int count;
-        private boolean remove;
+        private Boolean remove;
 
-        private BufferedImage[] sprites;
+        private Texture2D[] sprites;
 
         public static int UP = 0;
         public static int LEFT = 1;
         public static int DOWN = 2;
         public static int RIGHT = 3;
 
-        public EnergyParticle(TileMap tm, double x, double y, int dir)
+        public P_Player(TileMap tm, double x, double y, int dir) : base(tm)
         {
-
-            super(tm);
             animation = new Animation();
 
             facingRight = true;
             this.x = x;
             this.y = y;
-            double d1 = Math.random() * 2.5 - 1.25;
-            double d2 = -Math.random() - 0.8;
+
+            Random r = new Random();
+            double d1 = r.Next() * 2.5 - 1.25;
+            double d2 = -r.Next() - 0.8;
+
             if (dir == UP)
             {
                 dx = d1;
@@ -52,11 +53,12 @@ namespace MainGame.Objects.Projectiles
 
             count = 0;
             sprites = Content.EnergyParticle[0];
-            animation.setFrames(sprites);
-            animation.setDelay(-1);
+
+            animation.SetFrames(sprites);
+            animation.SetDelay(-1);
         }
 
-        public void update()
+        public void Update()
         {
             x += dx;
             y += dy;
@@ -64,11 +66,11 @@ namespace MainGame.Objects.Projectiles
             if (count == 25) remove = true;
         }
 
-        public boolean shouldRemove() { return remove; }
+        public Boolean ShouldRemove() { return remove; }
 
-        public void draw(Graphics2D g)
+        public void Draw(SpriteBatch g)
         {
-            super.draw(g);
+            base.Draw(g);
         }
     }
 }

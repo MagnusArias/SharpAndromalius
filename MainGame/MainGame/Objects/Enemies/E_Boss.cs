@@ -172,12 +172,12 @@ namespace MainGame.Objects.Enemies
 
         }
 
-        public void Draw(Graphics2D g)
+        public void Draw(SpriteBatch g)
         {
             base.Draw(g);
         }
 
-        public void DrawHPBar(Graphics2D g)
+        public void DrawHPBar(SpriteBatch g)
         {
             if (dead) return;
 

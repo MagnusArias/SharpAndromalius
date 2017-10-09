@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MainGame.Maps.TileMap;
 using MainGame.Control;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MainGame.Objects
 {
@@ -290,17 +291,18 @@ namespace MainGame.Objects
                     y + ymap - height > GlobalVariables.HEIGHT;
         }
 
-        public void Draw(java.awt.Graphics2D g)
+        public void Draw(SpriteBatch g)
         {
             SetMapPosition();
 
             if (facingRight)
             {
-                g.drawImage(animation.GetImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
+                g.Draw(animation.GetImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
             }
             else
             {
-                g.drawImage(animation.GetImage(), (int)(x + xmap - width / 2 + width), (int)(y + ymap - height / 2), -width, height, null);
+                //g.Draw(Texture2D texture, Vector2 position, Rectangle sourceRecangle, Color color, float rotation, Vector2 origin, SpriteEffects effects, float layerDepth)
+                g.Draw(animation.GetImage(), (int)(x + xmap - width / 2 + width), (int)(y + ymap - height / 2), -width, height, null);
             }
 
             // draw collision box

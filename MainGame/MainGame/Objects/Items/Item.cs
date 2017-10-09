@@ -30,12 +30,12 @@ namespace MainGame.Objects.Items
 
         public void Update() { }
 
-        public void Draw(GraphicsDevice g)
+        public void Draw(SpriteBatch g)
         {
             base.Draw(g);
         }
 
-        public void DrawInHUD(GraphicsDevice g, int x, int y)
+        public void DrawInHUD(SpriteBatch g, int x, int y)
         {
             g.drawImage(animation.getImage(), x, y, null);
         }

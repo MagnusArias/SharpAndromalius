@@ -62,7 +62,7 @@ namespace MainGame.Objects.Enemies
 
         public void Update() { }
 
-        public void Draw(java.awt.Graphics2D g)
+        public void Draw(SpriteBatch g)
         {
             base.Draw(g);
         }

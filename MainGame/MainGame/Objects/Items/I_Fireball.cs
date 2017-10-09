@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MainGame.Maps.TileMap;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,16 +8,15 @@ using System.Threading.Tasks;
 
 namespace MainGame.Objects.Items
 {
-    class I_Fireball
+    class I_Fireball : Item
     {
         private int tick;
         private double b;
 
         private Player player;
 
-        public ItemFireball(TileMap tm, Player pl)
+        public I_Fireball(TileMap tm, Player pl) : base(tm)
         {
-            super(tm);
             player = pl;
             facingRight = true;
 
@@ -27,27 +28,28 @@ namespace MainGame.Objects.Items
 
             sprites = Content.Fireball[0];
 
-            animation.setFrames(sprites);
-            animation.setDelay(-1);
+            animation.SetFrames(sprites);
+            animation.SetDelay(-1);
 
             tick = 0;
-            b = Math.random() * 0.06 + 0.07;
+            Random r = new Random();
+            b = r.Next() * 0.06 + 0.07;
         }
 
-        public void update()
+        public void Update()
         {
             tick++;
 
-            y = Math.sin(b * tick) + y;
+            y = Math.Sin(b * tick) + y;
 
             // update animation
-            animation.update();
+            animation.Update();
         }
 
-        public void draw(Graphics2D g)
+        public void Draw(SpriteBatch g)
         {
-            super.draw(g);
-            if (player.GetSkill(3)) super.drawInHUD(g, 30, 15);
+            base.Draw(g);
+            if (player.GetSkill(3)) base.DrawInHUD(g, 30, 15);
         }
     }
 }

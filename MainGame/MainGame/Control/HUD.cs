@@ -34,7 +34,7 @@ namespace MainGame.Control
             player = p;
         }
 
-        public void Draw(Graphics2D g)
+        public void Draw(SpriteBatch g)
         {
             g.drawImage(hpBar, (player.GetHealth() * 2) - 75, 15, null);
             g.drawImage(mpBar, (player.GetMana()) - 75, 15 + 16, null);

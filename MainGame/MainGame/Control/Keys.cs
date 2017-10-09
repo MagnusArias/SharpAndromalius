@@ -10,8 +10,8 @@ namespace MainGame.Control
     {
         private const int NUM_KEYS = 16;
 
-        public Boolean keyState[] = new Boolean[NUM_KEYS];
-        private Boolean prevKeyState[] = new Boolean[NUM_KEYS];
+        public static Boolean[] keyState = new Boolean[NUM_KEYS];
+        private static Boolean[] prevKeyState = new Boolean[NUM_KEYS];
 
         public static int UP = 0;
         public static int LEFT = 1;
@@ -24,7 +24,7 @@ namespace MainGame.Control
         public static int ENTER = 8;
         public static int ESCAPE = 9;
 
-        public static void keySet(int i, Boolean b)
+        public static void KeySet(int i, Boolean b)
         {
             if (i == KeyEvent.VK_UP) keyState[UP] = b;
             else if (i == KeyEvent.VK_LEFT) keyState[LEFT] = b;
@@ -38,7 +38,7 @@ namespace MainGame.Control
             else if (i == KeyEvent.VK_ESCAPE) keyState[ESCAPE] = b;
         }
 
-        public static void update()
+        public static void Update()
         {
             for (int i = 0; i < NUM_KEYS; i++)
             {
@@ -46,12 +46,12 @@ namespace MainGame.Control
             }
         }
 
-        public Boolean isPressed(int i)
+        public Boolean IsPressed(int i)
         {
             return keyState[i] && !prevKeyState[i];
         }
 
-        public Boolean anyKeyPress()
+        public Boolean AnyKeyPress()
         {
             for (int i = 0; i < NUM_KEYS; i++)
             {

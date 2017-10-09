@@ -3,6 +3,7 @@
 using MainGame.Maps.TileMap;
 using MainGame.Control;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MainGame.Objects
 {
@@ -244,7 +245,7 @@ namespace MainGame.Objects
                     y + ymap - height > GlobalVariables.HEIGHT;
         }
 
-        public void Draw(java.awt.Graphics2D g)
+        public void Draw(SpriteBatch g)
         {
             SetMapPosition();
             if (facingRight)

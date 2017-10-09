@@ -239,9 +239,9 @@ namespace MainGame.Objects
         public Boolean NotOnScreen()
         {
             return x + xmap + width < 0 ||
-                    x + xmap - width > GamePanel.WIDTH ||
+                    x + xmap - width > GlobalVariables.WIDTH ||
                     y + ymap + height < 0 ||
-                    y + ymap - height > GamePanel.HEIGHT;
+                    y + ymap - height > GlobalVariables.HEIGHT;
         }
 
         public void Draw(java.awt.Graphics2D g)
@@ -257,10 +257,10 @@ namespace MainGame.Objects
             }
 
             // draw collision box
-            /*Rectangle r = getRectangle();
-            r.x += xmap;
-            r.y += ymap;
-            g.draw(r);*/
+            Rectangle r = GetRectangle();
+            r.X += (int)xmap;
+            r.Y += (int)ymap;
+            g.Draw(r);
         }
     }
 }

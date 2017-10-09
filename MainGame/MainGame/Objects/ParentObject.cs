@@ -285,9 +285,9 @@ namespace MainGame.Objects
         public Boolean NotOnScreen()
         {
             return x + xmap + width < 0 ||
-                    x + xmap - width > Game1.WIDTH ||
+                    x + xmap - width > GlobalVariables.WIDTH ||
                     y + ymap + height < 0 ||
-                    y + ymap - height > Game1.HEIGHT;
+                    y + ymap - height > GlobalVariables.HEIGHT;
         }
 
         public void Draw(java.awt.Graphics2D g)

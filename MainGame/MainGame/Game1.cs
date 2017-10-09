@@ -12,14 +12,11 @@ namespace MainGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public static int WIDTH, HEIGHT;
-       
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            WIDTH = graphics.GraphicsDevice.PresentationParameters.BackBufferWidth;
-            HEIGHT = graphics.GraphicsDevice.PresentationParameters.BackBufferHeight;
+            GlobalVariables.WIDTH = graphics.GraphicsDevice.PresentationParameters.BackBufferWidth;
+            GlobalVariables.HEIGHT = graphics.GraphicsDevice.PresentationParameters.BackBufferHeight;
 
             Content.RootDirectory = "Content";
         }

@@ -504,7 +504,7 @@ namespace MainGame.Objects
             CheckTileMapCollision();
             SetPosition(xtemp, ytemp);
 
-            if (DebugInfo.debugReady)
+            if (GlobalVariables.DEBUG_READY)
             {
                 SetSkill(666, true);
                 boost = 2;
@@ -583,7 +583,6 @@ namespace MainGame.Objects
             }
         }
 
-
         public void Draw(Graphics2D g)
         {
 
@@ -654,7 +653,7 @@ namespace MainGame.Objects
                 }
             }
 
-            if (DebugInfo.debugReady)
+            if (GlobalVariables.DEBUG_READY)
             {
                 Rectangle r = GetRectangle();
                 r.X += (int)xmap;

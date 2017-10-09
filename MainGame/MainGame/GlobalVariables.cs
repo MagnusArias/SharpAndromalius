@@ -8,8 +8,11 @@ using System.Threading.Tasks;
 
 namespace MainGame
 {
-    public static class GlobalVariables : Game1
+    public static class GlobalVariables
     {
+        public static int WIDTH;
+        public static int HEIGHT;
+
         public const String SKELETON_SPRITEMAP = "Content/Assets/enemy-skeleton-spritemap.png";
         public const String DEAD_SKELETON_SPRITEMAP = "Content/Assets/enemy-skeleton-dead-spritemap.png";
         public const String GHOST_SPRITEMAP = "Content/Assets/enemy-ghost-spritemap.png";

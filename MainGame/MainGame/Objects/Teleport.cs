@@ -31,9 +31,7 @@ namespace MainGame.Objects
                 sprites = new Texture2D[4];
                 for (int i = 0; i < sprites.Length; i++)
                 {
-                    sprites[i] = spritesheet.getSubimage(
-                            i * width, 0, width, height
-                    );
+                    sprites[i] = spritesheet.getSubimage(i * width, 0, width, height);
                 }
 
                 animation.SetFrames(sprites);

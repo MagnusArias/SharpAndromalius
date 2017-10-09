@@ -61,14 +61,14 @@ namespace MainGame.Control
             {
                 SetMapPosition();
                 g.setColor(java.awt.Color.GREEN);
-                g.drawString(playerX, GlobalVariables.WIDTH - 150, 20);
-                g.drawString(playerY, GlobalVariables.WIDTH - 150, 30);
-                g.drawString(playerDX, GlobalVariables.WIDTH - 100, 20);
-                g.drawString(playerDY, GlobalVariables.WIDTH - 100, 30);
+                g.DrawString(playerX, GlobalVariables.WIDTH - 150, 20);
+                g.DrawString(playerY, GlobalVariables.WIDTH - 150, 30);
+                g.DrawString(playerDX, GlobalVariables.WIDTH - 100, 20);
+                g.DrawString(playerDY, GlobalVariables.WIDTH - 100, 30);
 
-                g.drawString(playerHealth, 20, 25);
-                g.drawString(playerMana, 20, 43);
-                g.drawString(playerDash, 20, 60);
+                g.DrawString(playerHealth, 20, 25);
+                g.DrawString(playerMana, 20, 43);
+                g.DrawString(playerDash, 20, 60);
             }
         }
     }

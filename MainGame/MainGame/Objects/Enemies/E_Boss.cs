@@ -53,7 +53,7 @@ namespace MainGame.Objects.Enemies
 
             facingRight = false;
 
-            sprites = GlobalVariables.Enemy_Boss1;
+            sprites = GlobalVariables.Enemy_Boss1[0];
 
             animation.SetFrames(sprites);
             animation.SetDelay(4);
@@ -184,10 +184,10 @@ namespace MainGame.Objects.Enemies
             if (playerCatch)
             {
 
-                g.drawImage(hpBar, 72, 122, (int)((GlobalVariables.WIDTH - 142) * hp_max), 14, null);
-                g.drawImage(hpBarOutline, 0 + 70, 0 + 120, GlobalVariables.WIDTH - 140, 16, null);
+                g.Draw(hpBar, 72, 122, (int)((GlobalVariables.WIDTH - 142) * hp_max), 14, null);
+                g.Draw(hpBarOutline, 0 + 70, 0 + 120, GlobalVariables.WIDTH - 140, 16, null);
 
-                g.drawString("Andromalius", GlobalVariables.WIDTH / 2 - 20, 105);
+                g.DrawString("Andromalius", GlobalVariables.WIDTH / 2 - 20, 105);
             }
         }
     }

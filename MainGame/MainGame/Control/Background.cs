@@ -129,28 +129,25 @@ namespace MainGame.Control
             {
                 for (int j = 0; j < GlobalVariables.HEIGHT / height * GlobalVariables.SCALE; j++)
                 {
-                    g.drawImage(image,
-                            (int)(x + width * i),
-                            (int)(y + height * j),
-                            null);
+                    g.Draw(image, (int)(x + width * i), (int)(y + height * j), null);
                 }
             }
 
             if (x < 0)
             {
-                g.drawImage(image, (int)x + GlobalVariables.WIDTH, (int)y, null);
+                g.Draw(image, (int)x + GlobalVariables.WIDTH, (int)y, null);
             }
             if (x > 0)
             {
-                g.drawImage(image, (int)x - GlobalVariables.WIDTH, (int)y, null);
+                g.Draw(image, (int)x - GlobalVariables.WIDTH, (int)y, null);
             }
             if (y < 0)
             {
-                g.drawImage(image, (int)x, (int)y + GlobalVariables.HEIGHT, null);
+                g.Draw(image, (int)x, (int)y + GlobalVariables.HEIGHT, null);
             }
             if (y > 0)
             {
-                g.drawImage(image, (int)x, (int)y - GlobalVariables.HEIGHT, null);
+                g.Draw(image, (int)x, (int)y - GlobalVariables.HEIGHT, null);
             }
         }
     }

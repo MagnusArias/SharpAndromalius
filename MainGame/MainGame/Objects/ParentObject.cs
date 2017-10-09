@@ -20,6 +20,7 @@ namespace MainGame.Objects
         protected double ymap;
 
         // pozycja i wektor
+        protected Vector2 V2_xy;
         protected double x;
         protected double y;
         protected double dx;
@@ -99,8 +100,8 @@ namespace MainGame.Objects
         public Rectangle GetRectangle()
         {
             return new Rectangle(
-                    (int)x - cwidth / 2,
-                    (int)y - cheight / 2,
+                    (int)V2_xy.X - cwidth / 2,
+                    (int)V2_xy.Y - cheight / 2,
                     cwidth,
                     cheight
             );
@@ -108,10 +109,10 @@ namespace MainGame.Objects
 
         public void CalculateCorners(double x, double y)
         {
-            int leftTile = (int)(x - cwidth / 2) / tileSize;
-            int rightTile = (int)(x + cwidth / 2 - 1) / tileSize;
-            int topTile = (int)(y - cheight / 2) / tileSize;
-            int bottomTile = (int)(y + cheight / 2 - 1) / tileSize;
+            int leftTile = (int)(V2_xy.X - cwidth / 2) / tileSize;
+            int rightTile = (int)(V2_xy.X + cwidth / 2 - 1) / tileSize;
+            int topTile = (int)(V2_xy.Y - cheight / 2) / tileSize;
+            int bottomTile = (int)(V2_xy.Y + cheight / 2 - 1) / tileSize;
             if (topTile < 0 || bottomTile >= tileMap.getNumRows() || leftTile < 0 || rightTile >= tileMap.getNumCols())
             {
                 topLeft = topRight = bottomLeft = bottomRight = false;
@@ -130,16 +131,16 @@ namespace MainGame.Objects
         public void CheckTileMapCollision()
         {
 
-            currCol = (int)x / tileSize;
-            currRow = (int)y / tileSize;
+            currCol = (int)V2_xy.X / tileSize;
+            currRow = (int)V2_xy.Y / tileSize;
 
-            xdest = x + dx;
-            ydest = y + dy;
+            xdest = V2_xy.X + dx;
+            ydest = V2_xy.Y + dy;
 
-            xtemp = x;
-            ytemp = y;
+            xtemp = V2_xy.X;
+            ytemp = V2_xy.Y;
 
-            CalculateCorners(x, ydest);
+            CalculateCorners(V2_xy.X, ydest);
 
             if (dy < 0)
             {
@@ -167,7 +168,7 @@ namespace MainGame.Objects
                 }
             }
 
-            CalculateCorners(xdest, y);
+            CalculateCorners(xdest, V2_xy.Y);
 
             if (dx < 0)
             {
@@ -196,7 +197,7 @@ namespace MainGame.Objects
 
             if (!falling)
             {
-                CalculateCorners(x, ydest + 1);
+                CalculateCorners(V2_xy.X, ydest + 1);
                 if (!bottomLeft && !bottomRight)
                 {
                     falling = true;
@@ -207,12 +208,12 @@ namespace MainGame.Objects
 
         public int GetX()
         {
-            return (int)x;
+            return (int)V2_xy.X;
         }
 
         public int GetY()
         {
-            return (int)y;
+            return (int)V2_xy.Y;
         }
 
         public double GetDX()
@@ -247,8 +248,8 @@ namespace MainGame.Objects
 
         public void SetPosition(double x, double y)
         {
-            this.x = x;
-            this.y = y;
+            this.V2_xy.X = (float)x;
+            this.V2_xy.Y = (float)y;
         }
 
         public void SetVector(double dx, double dy)
@@ -285,10 +286,15 @@ namespace MainGame.Objects
 
         public Boolean NotOnScreen()
         {
-            return x + xmap + width < 0 ||
-                    x + xmap - width > GlobalVariables.WIDTH ||
-                    y + ymap + height < 0 ||
-                    y + ymap - height > GlobalVariables.HEIGHT;
+            return V2_xy.X + xmap + width < 0 ||
+                    V2_xy.X + xmap - width > GlobalVariables.WIDTH ||
+                    V2_xy.Y + ymap + height < 0 ||
+                    V2_xy.Y + ymap - height > GlobalVariables.HEIGHT;
+        }
+
+        public Vector2 Origin
+        {
+            get { return new Vector2(width / 2.0f, height); }
         }
 
         public void Draw(SpriteBatch g)
@@ -297,12 +303,12 @@ namespace MainGame.Objects
 
             if (facingRight)
             {
-                g.Draw(animation.GetImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
+                g.Draw(animation.GetImage(), V2_xy, new Rectangle(0,0, width, height), Color.White, 0.0f, Origin, 1.0f, null, 0.0f );
             }
             else
             {
                 //g.Draw(Texture2D texture, Vector2 position, Rectangle sourceRecangle, Color color, float rotation, Vector2 origin, SpriteEffects effects, float layerDepth)
-                g.Draw(animation.GetImage(), (int)(x + xmap - width / 2 + width), (int)(y + ymap - height / 2), -width, height, null);
+                g.Draw(animation.GetImage(), V2_xy, new Rectangle(0, 0, width, height), Color.White, 0.0f, Origin, 1.0f, null, 0.0f);
             }
 
             // draw collision box
@@ -311,7 +317,7 @@ namespace MainGame.Objects
                 Rectangle r = GetRectangle();
                 r.X += (int)xmap;
                 r.Y += (int)ymap;
-                g.draw(r);
+                g.Draw(r);
             }
         }
     }

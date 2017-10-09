@@ -36,10 +36,10 @@ namespace MainGame.Control
 
         public void Draw(SpriteBatch g)
         {
-            g.drawImage(hpBar, (player.GetHealth() * 2) - 75, 15, null);
-            g.drawImage(mpBar, (player.GetMana()) - 75, 15 + 16, null);
-            g.drawImage(staBar, (player.GetStamina() / 2) - 75, 15 + 32, null);
-            g.drawImage(hudBar, 0, 13, null);
+            g.Draw(hpBar, (player.GetHealth() * 2) - 75, 15, null);
+            g.Draw(mpBar, (player.GetMana()) - 75, 15 + 16, null);
+            g.Draw(staBar, (player.GetStamina() / 2) - 75, 15 + 32, null);
+            g.Draw(hudBar, 0, 13, null);
         }
     }
 }

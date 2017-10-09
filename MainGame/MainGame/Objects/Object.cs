@@ -16,6 +16,7 @@ namespace MainGame.Objects
         protected double ymap;
 
         // pozycja i wektor
+        protected Vector2 Vector2_xy;
         protected double x;
         protected double y;
         protected double dx;
@@ -59,7 +60,6 @@ namespace MainGame.Objects
         protected double maxFallSpeed;
         protected double jumpStart;
         protected double stopJumpSpeed;
-
 
         public Object(TileMap tm)
         {
@@ -250,11 +250,11 @@ namespace MainGame.Objects
             SetMapPosition();
             if (facingRight)
             {
-                g.drawImage(animation.GetImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
+                g.Draw(animation.GetImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
             }
             else
             {
-                g.drawImage(animation.GetImage(), (int)(x + xmap - width / 2 + width), (int)(y + ymap - height / 2), -width, height, null);
+                g.Draw(animation.GetImage(), (int)(x + xmap - width / 2 + width), (int)(y + ymap - height / 2), -width, height, null);
             }
 
             // draw collision box

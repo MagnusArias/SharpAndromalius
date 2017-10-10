@@ -17,9 +17,9 @@ namespace MainGame.Objects
 {
     class Player : ParentObject
     {
-        private ArrayList enemies;
-        private ArrayList energyParticles;
-        private ArrayList items;
+        private List<Enemy> enemies;
+        private List<P_Player> energyParticles;
+        private List<Item> items;
 
         public const String PLAYERSPRITEMAP = "/Game/Src/Assets/player-spritemap.png";
 	    public const String ARMORSPRITEMAP = "/Game/Src/Assets/armor05-spritemap.png";
@@ -65,10 +65,10 @@ namespace MainGame.Objects
         private int maxDashCooldown;
 
         // ANIMACJE
-        private ArrayList[] sprites;
-        private ArrayList[] armorSprites;
-        private ArrayList[] robeSprites;
-        private ArrayList[] swordSprites;
+        private List<Texture2D>[] sprites;
+        private List<Texture2D>[] armorSprites;
+        private List<Texture2D>[] robeSprites;
+        private List<Texture2D>[] swordSprites;
 
 
         private readonly int[] NUMFRAMES = { 1, 1, 1, 8, 4, 4, 4, 1, 8, 1, 6 };
@@ -109,9 +109,7 @@ namespace MainGame.Objects
             boost = 1;
             skill_doubleJump = skill_sword = skill_dash = skill_fireball = false;
 
-            attackRect = new Rectangle(0, 0, 0, 0);
-            attackRect.Width = 20;
-            attackRect.Height = 10;
+            attackRect = new Rectangle(0, 0, 20, 10);
 
             alr = new Rectangle((int)V2_xy.X - 15, (int)V2_xy.Y - 45, 45, 45);
 
@@ -143,11 +141,11 @@ namespace MainGame.Objects
 
             LoadGraphics();
 
-            energyParticles = new ArrayList();
+            energyParticles = new List<P_Player>();
             SetAnimation(STAND);
         }
 
-        public void Init(ArrayList enemies, ArrayList energyParticles, ArrayList items)
+        public void Init(List<Enemy> enemies, List<P_Player> energyParticles, List<Item> items)
         {
             this.enemies = enemies;
             this.energyParticles = energyParticles;

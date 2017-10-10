@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MainGame.Objects;
 using MainGame.Maps.Tiles;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace MainGame.Control
 {
@@ -22,6 +23,7 @@ namespace MainGame.Control
         private String playerDash;
 
         private Player p;
+        private SpriteFont font;
 
         public DebugInfo(TileMap tm, Player pl) : base(tm)
         {
@@ -46,6 +48,7 @@ namespace MainGame.Control
         {
             Convert();
         }
+
         public Boolean GetStatus()
         {
             return debugReady;
@@ -55,20 +58,22 @@ namespace MainGame.Control
         {
             debugReady = !debugReady;
         }
-        public void Draw(SpriteBatch g)
+
+        public new void Draw(SpriteBatch g)
         {
             if (debugReady)
             {
                 SetMapPosition();
+                //g.DrawString(spriteFont, text, position, color);
 
-                g.DrawString(playerX, GlobalVariables.WIDTH - 150, 20);
-                g.DrawString(playerY, GlobalVariables.WIDTH - 150, 30);
-                g.DrawString(playerDX, GlobalVariables.WIDTH - 100, 20);
-                g.DrawString(playerDY, GlobalVariables.WIDTH - 100, 30);
+                g.DrawString(font, playerX, new Vector2(GlobalVariables.WIDTH - 150, 20), Color.Green);
+                g.DrawString(font, playerY, new Vector2(GlobalVariables.WIDTH - 150, 30), Color.Green);
+                g.DrawString(font, playerDX, new Vector2(GlobalVariables.WIDTH - 100, 20), Color.Green);
+                g.DrawString(font, playerDY, new Vector2(GlobalVariables.WIDTH - 100, 30), Color.Green);
 
-                g.DrawString(playerHealth, 20, 25);
-                g.DrawString(playerMana, 20, 43);
-                g.DrawString(playerDash, 20, 60);
+                g.DrawString(font, playerHealth, new Vector2(20, 25), Color.Green);
+                g.DrawString(font, playerMana, new Vector2(20, 43), Color.Green);
+                g.DrawString(font, playerDash, new Vector2(20, 60), Color.Green);
             }
         }
     }

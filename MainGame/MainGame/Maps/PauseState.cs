@@ -17,9 +17,7 @@ namespace MainGame.Maps
 
         public PauseState(GameStateManager gsm) : base(gsm)
         {
-            // fonts
-            font = new SpriteFont("Century Gothic", PLAIN, 14);
-            
+            // fonts           
         }
 
         public override void Init() { }

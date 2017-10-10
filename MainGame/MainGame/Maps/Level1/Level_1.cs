@@ -4,10 +4,11 @@ using MainGame.Objects;
 using MainGame.Objects.Enemies;
 using MainGame.Objects.Items;
 using MainGame.Objects.Projectiles;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections;
-
+using System.Collections.Generic;
 
 namespace MainGame.Maps.Level1
 {
@@ -19,13 +20,13 @@ namespace MainGame.Maps.Level1
 	    private const String BACKGROUND = "/Game/Src/AsSets/tlo.png";
 
 	    private Background back;
-        private ArrayList rec_tb;
+        private List<Rectangle> rec_tb;
         private Player player;
         private TileMap tileMap;
-        private ArrayList enemies;
-        private ArrayList fireballs;
-        private ArrayList energyParticles;
-        private ArrayList items;
+        private List<Enemy> enemies;
+        private List<Fireball> fireballs;
+        private List<P_Player> energyParticles;
+        private List<Item> items;
         private HUD hud;
         private Teleport teleport;
 
@@ -57,14 +58,14 @@ namespace MainGame.Maps.Level1
             player = new Player(tileMap);
             player.SetPosition(180, 1115);
 
-            items = new ArrayList();
+            items = new List<Item>();
             PutHereItems();
 
-            enemies = new ArrayList();
+            enemies = new List<Enemy>();
             PopulateEnemies();
 
-            fireballs = new ArrayList();
-            energyParticles = new ArrayList();
+            fireballs = new List<Fireball>();
+            energyParticles = new List<P_Player>();
 
             teleport = new Teleport(tileMap);
             teleport.SetPosition(3100, 2300);
@@ -76,7 +77,7 @@ namespace MainGame.Maps.Level1
             hud.Init(player);
 
             eventStart = true;
-            rec_tb = new ArrayList();
+            rec_tb = new List<Rectangle>();
             eventStart();
         }
 
@@ -130,42 +131,42 @@ namespace MainGame.Maps.Level1
 
             es = new E_Skeleton(tileMap, player);
             es.SetPosition(660, 1175);
-            enemies.add(es);
+            enemies.Add(es);
 
             es = new E_Skeleton(tileMap, player);
             es.SetPosition(1035, 1118);
-            enemies.add(es);
+            enemies.Add(es);
 
             es = new E_Skeleton(tileMap, player);
             es.SetPosition(808, 1118);
-            enemies.add(es);
+            enemies.Add(es);
 
             es = new E_Skeleton(tileMap, player);
             es.SetPosition(340, 200);
-            enemies.add(es);
+            enemies.Add(es);
 
             es = new E_Skeleton(tileMap, player);
             es.SetPosition(1764, 1088);
-            enemies.add(es);
+            enemies.Add(es);
 
 
             eg = new E_Ghost(tileMap, player);
             eg.SetPosition(1464, 1088);
-            enemies.add(eg);
+            enemies.Add(eg);
 
             eg = new E_Ghost(tileMap, player);
             eg.SetPosition(1956, 1088);
-            enemies.add(eg);
+            enemies.Add(eg);
 
             eg = new E_Ghost(tileMap, player);
             eg.SetPosition(1720, 2250);
-            enemies.add(eg);
+            enemies.Add(eg);
 
 
 
             eb = new E_Boss(tileMap, player);
             eb.SetPosition(2550, 1750);
-            enemies.add(eb);
+            enemies.Add(eb);
         }
 
         public override void Update()
@@ -217,34 +218,34 @@ namespace MainGame.Maps.Level1
                 }
             }
 
-            for (int i = 0; i < items.size(); i++)
+            for (int i = 0; i < items.Count; i++)
             {
-                ItemParent e = items.get(i);
-                e.update();
-                if (e.shouldRemove())
+                Item e = items[i];
+                e.Update();
+                if (e.ShouldRemove())
                 {
-                    items.remove(i);
+                    items.Remove(i);
                     i--;
                 }
             }
 
-            for (int i = 0; i < enemies.size(); i++)
+            for (int i = 0; i < enemies.Count; i++)
             {
-                Enemy e = enemies.get(i);
-                e.update();
-                if (e.shouldRemove())
+                Enemy e = enemies[i];
+                e.Update();
+                if (e.ShouldRemove())
                 {
-                    enemies.remove(i);
+                    enemies.Remove(i);
                     i--;
                 }
             }
-            teleport.update();
-            debug.update();
+            teleport.Update();
+            debug.Update();
         }
 
         public override void HandleInput()
         {
-            FireBall fb;
+            Fireball fb;
 
             if (!blockInput)
             {
@@ -253,24 +254,24 @@ namespace MainGame.Maps.Level1
                 player.SetRight(Keys.keyState[Keys.RIGHT]);
                 player.SetDown(Keys.keyState[Keys.DOWN]);
 
-                if (Keys.isPressed(Keys.BUTTON3)) player.SetAttacking();
-                if (Keys.isPressed(Keys.BUTTON4)) debug.SetReady();
-                if (Keys.isPressed(Keys.ENTER)) Reset();
+                if (Keys.IsPressed(Keys.BUTTON3)) player.SetAttacking();
+                if (Keys.IsPressed(Keys.BUTTON4)) debug.SetReady();
+                if (Keys.IsPressed(Keys.ENTER)) Reset();
 
-                if (Keys.isPressed(Keys.ESCAPE)) gsm.SetPaused(true);
+                if (Keys.IsPressed(Keys.ESCAPE)) gsm.SetPaused(true);
 
-                if (Keys.isPressed(Keys.BUTTON2))
+                if (Keys.IsPressed(Keys.BUTTON2))
                 {
-                    if (player.isDashingReady() && player.getSkill(1)) player.SetDashing();
+                    if (player.IsDashingReady() && player.GetSkill(1)) player.SetDashing();
                 }
 
-                if (Keys.isPressed(Keys.BUTTON1))
+                if (Keys.IsPressed(Keys.BUTTON1))
                 {
-                    if (player.isFireballReady() && player.getSkill(3))
+                    if (player.IsFireballReady() && player.GetSkill(3))
                     {
-                        fb = new FireBall(tileMap, player.getFacing());
-                        fb.shootFireball(player.GetX(), player.GetY(), player.getFacing());
-                        fireballs.add(fb);
+                        fb = new Fireball(tileMap, player.GetFacing());
+                        fb.ShootFireball(player.GetX(), player.GetY(), player.GetFacing());
+                        fireballs.Add(fb);
 
                         player.SetAttacking();
                         player.SetFireballCooldown(0);
@@ -285,30 +286,27 @@ namespace MainGame.Maps.Level1
             Rectangle r = new Rectangle(0, 0, GlobalVariables.WIDTH, GlobalVariables.HEIGHT);
             g.fill(r);
 
-            back.draw(g);
+            back.Draw(g);
 
-            player.draw(g);
-            teleport.draw(g);
+            player.Draw(g);
+            teleport.Draw(g);
 
-            for (int i = 0; i < fireballs.size(); i++) fireballs.get(i).draw(g);
+            for (int i = 0; i < fireballs.Count; i++) fireballs[i].Draw(g);
 
-            for (int i = 0; i < enemies.size(); i++) enemies.get(i).draw(g);
+            for (int i = 0; i < enemies.Count; i++) enemies[i].Draw(g);
 
-            tileMap.draw(g);
+            tileMap.Draw(g);
 
-            hud.draw(g);
-            for (int i = 0; i < items.size(); i++) items.get(i).draw(g);
+            hud.Draw(g);
+            for (int i = 0; i < items.Count; i++) items[i].Draw(g);
 
-
-
-
-            debug.draw(g);
-            eb.drawHPBar(g);
+            debug.Draw(g);
+            eb.DrawHPBar(g);
 
             g.SetColor(java.awt.Color.BLACK);
-            for (int i = 0; i < rec_tb.size(); i++)
+            for (int i = 0; i < rec_tb.Count; i++)
             {
-                g.fill(rec_tb.get(i));
+                g.fill(rec_tb[i]);
             }
         }
 

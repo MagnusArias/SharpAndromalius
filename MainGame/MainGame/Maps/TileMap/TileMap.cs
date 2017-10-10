@@ -1,11 +1,6 @@
-﻿using MainGame.Control;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MainGame.Maps.Tiles
 {
@@ -17,7 +12,6 @@ namespace MainGame.Maps.Tiles
         // krawedzie
         private Vector2 xy_min;
         private Vector2 xy_max;
-
         private double tween;
 
         // mapa
@@ -56,9 +50,7 @@ namespace MainGame.Maps.Tiles
             try
             {
 
-                tileset = ImageIO.read(
-                    getClass().getResourceAsStream(s)
-                );
+                tileset = ImageIO.read(getClass().getResourceAsStream(s));
 
                 numTilesAcross = tileset.getWidth() / tileSize;
                 tiles = new Tile[6][numTilesAcross];
@@ -66,7 +58,7 @@ namespace MainGame.Maps.Tiles
                 Texture2D subimage;
                 for (int col = 0; col < numTilesAcross; col++)
                 {
-                    subimage = tileset.getSubimage(col * tileSize, tileSize * 0, tileSize, tileSize);
+                    subimage = tileset.GetData<Texture2D>(new Rectangle(col * tileSize, tileSize * 0, tileSize, tileSize));
                     tiles[0][col] = new Tile(subimage, Tile.AIR);
 
                     subimage = tileset.getSubimage(col * tileSize, tileSize * 1, tileSize, tileSize);
@@ -98,8 +90,8 @@ namespace MainGame.Maps.Tiles
             try
             {
 
-                InputStream in = getClass().getResourceAsStream(s);
-                BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                InputStream ins = getClass().getResourceAsStream(s);
+                BufferedReader br = new BufferedReader(new InputStreamReader(ins));
 
                 numCols = Integer.parseInt(br.readLine());
                 numRows = Integer.parseInt(br.readLine());

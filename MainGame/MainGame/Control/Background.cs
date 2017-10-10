@@ -50,8 +50,8 @@ namespace MainGame.Control
             {
                 image = GlobalVariables.Background;
                 image = image.getSubimage(x, y, w, h);
-                width = image.getWidth();
-                height = image.getHeight();
+                width = image.Width;
+                height = image.Height;
                 xscale = ms;
                 yscale = ms;
             }
@@ -65,8 +65,8 @@ namespace MainGame.Control
         {
             try
             {
-                width = image.getWidth();
-                height = image.getHeight();
+                width = image.Width;
+                height = image.Height;
                 xscale = s1;
                 yscale = s2;
 

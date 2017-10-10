@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MainGame.Maps.Tiles;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace MainGame.Objects.Enemies
 {
-    class E_Skeleton
+    class E_Skeleton : Enemy
     {
-        private boolean active;
+        private Boolean active;
 
-        private boolean isDeadSet;
+        private Boolean isDeadSet;
 
-        public EnemySkeleton(TileMap tm, Player p)
+        public E_Skeleton(TileMap tm, Player p) : base(tm)
         {
 
-            super(tm);
             player = p;
             lastBreath = 40;
 
@@ -28,59 +25,59 @@ namespace MainGame.Objects.Enemies
             cheight = 45;
 
             damage = 10;
-            moveSpeed = 0.8;
-            fallSpeed = 0.15;
-            maxFallSpeed = 4.0;
+            moveSpeed = 0.8f;
+            fallSpeed = 0.15f;
+            maxFallSpeed = 4.0f;
             jumpStart = -5;
 
             left = false;
             facingRight = true;
 
-            sprites = Content.EnemySkeleton[0];
+            sprites = GlobalVariables.E_SkeletonGreenWalk;
 
-            animation.setFrames(sprites);
-            animation.setDelay(4);
+            animation.SetFrames(sprites);
+            animation.SetDelay(4);
         }
 
-        private void getNextPosition()
+        private void GetNextPosition()
         {
             if (!dead)
             {
-                if (left) dx = -moveSpeed;
-                else if (right) dx = moveSpeed;
-                else dx = 0;
+                if (left) V2_dxy.X = -moveSpeed;
+                else if (right) V2_dxy.X = moveSpeed;
+                else V2_dxy.X = 0;
                 if (falling)
                 {
-                    dy += fallSpeed;
-                    if (dy > maxFallSpeed) dy = maxFallSpeed;
+                    V2_dxy.Y += fallSpeed;
+                    if (V2_dxy.Y > maxFallSpeed) V2_dxy.Y = maxFallSpeed;
                 }
                 if (jumping && !falling)
                 {
-                    dy = jumpStart;
+                    V2_dxy.Y = jumpStart;
                 }
             }
             else
             {
-                dx = 0;
-                dy = 0;
+                V2_dxy.X = 0;
+                V2_dxy.Y = 0;
             }
         }
 
-        public void update()
+        public void Update()
         {
 
             if (dead)
             {
                 if (!isDeadSet)
                 {
-                    sprites = Content.EnemySkeletonDead[0];
+                    sprites = GlobalVariables.E_SkeletonGreenDead;
                     isDeadSet = true;
-                    animation.setFrames(sprites);
-                    animation.setDelay(4);
+                    animation.SetFrames(sprites);
+                    animation.SetDelay(4);
                 }
                 lastBreath--;
 
-                animation.update();
+                animation.Update();
 
                 if (lastBreath <= 0) remove = true;
             }
@@ -88,13 +85,13 @@ namespace MainGame.Objects.Enemies
             {
                 if (!active)
                 {
-                    if (Math.abs(player.getx() - x) < GamePanel.WIDTH) active = true;
+                    if (Math.Abs(player.GetX() - V2_xy.X) < GlobalVariables.GAME_WINDOW_WIDTH) active = true;
                     return;
                 }
 
-                getNextPosition();
-                checkTileMapCollision();
-                calculateCorners(x, ydest + 1);
+                GetNextPosition();
+                CheckTileMapCollision();
+                CalculateCorners(V2_xy.X, xy_dest.Y + 1);
 
                 if (!bottomLeft)
                 {
@@ -106,9 +103,10 @@ namespace MainGame.Objects.Enemies
                     left = true;
                     right = facingRight = false;
                 }
-                setPosition(xtemp, ytemp);
 
-                if (dx == 0 && !dead)
+                SetPosition(xy_temp.X, xy_temp.Y);
+
+                if (V2_dxy.X == 0 && !dead)
                 {
                     left = !left;
                     right = !right;
@@ -116,13 +114,13 @@ namespace MainGame.Objects.Enemies
                 }
 
                 // update animation
-                animation.update();
+                animation.Update();
             }
         }
 
-        public void draw(Graphics2D g)
+        public void Draw(SpriteBatch g)
         {
-            super.draw(g);
+            base.Draw(g);
         }
     }
 }

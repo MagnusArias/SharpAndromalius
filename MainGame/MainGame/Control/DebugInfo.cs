@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using MainGame.Objects;
+﻿using MainGame.Objects;
 using MainGame.Maps.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MainGame.Control
 {
@@ -44,20 +39,11 @@ namespace MainGame.Control
             playerDash = p.GetStamina().ToString() + "/" + p.GetMaxStamina().ToString();
         }
 
-        public void Update()
-        {
-            Convert();
-        }
+        public void Update() => Convert();
 
-        public Boolean GetStatus()
-        {
-            return debugReady;
-        }
+        public Boolean GetStatus() => debugReady;
 
-        public void SetReady()
-        {
-            debugReady = !debugReady;
-        }
+        public void SetReady() => debugReady = !debugReady;
 
         public new void Draw(SpriteBatch g)
         {
@@ -66,10 +52,10 @@ namespace MainGame.Control
                 SetMapPosition();
                 //g.DrawString(spriteFont, text, position, color);
 
-                g.DrawString(font, playerX, new Vector2(GlobalVariables.WIDTH - 150, 20), Color.Green);
-                g.DrawString(font, playerY, new Vector2(GlobalVariables.WIDTH - 150, 30), Color.Green);
-                g.DrawString(font, playerDX, new Vector2(GlobalVariables.WIDTH - 100, 20), Color.Green);
-                g.DrawString(font, playerDY, new Vector2(GlobalVariables.WIDTH - 100, 30), Color.Green);
+                g.DrawString(font, playerX, new Vector2(GlobalVariables.GAME_WINDOW_WIDTH - 150, 20), Color.Green);
+                g.DrawString(font, playerY, new Vector2(GlobalVariables.GAME_WINDOW_WIDTH - 150, 30), Color.Green);
+                g.DrawString(font, playerDX, new Vector2(GlobalVariables.GAME_WINDOW_WIDTH - 100, 20), Color.Green);
+                g.DrawString(font, playerDY, new Vector2(GlobalVariables.GAME_WINDOW_WIDTH - 100, 30), Color.Green);
 
                 g.DrawString(font, playerHealth, new Vector2(20, 25), Color.Green);
                 g.DrawString(font, playerMana, new Vector2(20, 43), Color.Green);

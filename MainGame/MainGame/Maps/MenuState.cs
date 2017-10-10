@@ -31,7 +31,7 @@ namespace MainGame.Maps
 
             tick = 0;
             b = Math.random() * 0.06 + 0.07;
-            yPos = (GlobalVariables.HEIGHT / 2 - 100);
+            yPos = (GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 100);
         }
 
         public override void Init() { }
@@ -49,26 +49,26 @@ namespace MainGame.Maps
 
             Color myColour = new Color(0, 0, 0, 32);
             g.setColor(myColour);
-            g.fillRect(0, 0, GlobalVariables.WIDTH, GlobalVariables.HEIGHT);
+            g.fillRect(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT);
 
             // draw title
             g.setColor(titleColor);
             g.setFont(titleFont);
-            g.DrawString("ANDROMALIUS", GlobalVariables.WIDTH / 2 - 150, (int)yPos);
+            g.DrawString("ANDROMALIUS", GlobalVariables.GAME_WINDOW_WIDTH / 2 - 150, (int)yPos);
 
             // draw menu options
             g.setFont(font);
             g.setColor(Color.WHITE);
-            g.DrawString("Graj", GlobalVariables.WIDTH / 2 - 100, GlobalVariables.HEIGHT / 2);
-            g.DrawString("Zakoncz", GlobalVariables.WIDTH / 2 - 100, GlobalVariables.HEIGHT / 2 + 30);
+            g.DrawString("Graj", GlobalVariables.GAME_WINDOW_WIDTH / 2 - 100, GlobalVariables.GAME_WINDOW_HEIGHT / 2);
+            g.DrawString("Zakoncz", GlobalVariables.GAME_WINDOW_WIDTH / 2 - 100, GlobalVariables.GAME_WINDOW_HEIGHT / 2 + 30);
 
             // draw point
-            if (currentChoice == 0) g.fillRect(GlobalVariables.WIDTH / 2 - 120, GlobalVariables.HEIGHT / 2 - 5, 5, 5);
-            else if (currentChoice == 1) g.fillRect(GlobalVariables.WIDTH / 2 - 120, GlobalVariables.HEIGHT / 2 - 5 + 30, 5, 5);
+            if (currentChoice == 0) g.fillRect(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 120, GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 5, 5, 5);
+            else if (currentChoice == 1) g.fillRect(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 120, GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 5 + 30, 5, 5);
 
             // other
             g.setFont(font2);
-            g.DrawString("2017, Copyright Przemyslaw Debiec, MIT license", 10, GlobalVariables.HEIGHT - 50);
+            g.DrawString("2017, Copyright Przemyslaw Debiec, MIT license", 10, GlobalVariables.GAME_WINDOW_HEIGHT - 50);
 
         }
 

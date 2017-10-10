@@ -7,7 +7,6 @@ using MainGame.Objects.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace MainGame.Maps.Level1
@@ -53,7 +52,7 @@ namespace MainGame.Maps.Level1
             tileMap.LoadTiles(TILESet);
             tileMap.LoadMap(LEVEL);
             tileMap.SetPosition(0, 0);
-            tileMap.SetTween(0.025);
+            tileMap.SetTween(0.025f);
 
             player = new Player(tileMap);
             player.SetPosition(180, 1115);
@@ -78,7 +77,7 @@ namespace MainGame.Maps.Level1
 
             eventStart = true;
             rec_tb = new List<Rectangle>();
-            eventStart();
+            EventStart();
         }
 
         private void PutHereItems()
@@ -180,9 +179,9 @@ namespace MainGame.Maps.Level1
 
             if (player.GetHealth() == 0 || player.GetY() > tileMap.GetHeight()) { eventDead = blockInput = true; }
 
-            if (eventStart) eventStart();
-            if (eventDead) eventDead();
-            if (eventFinish) eventFinish();
+            if (eventStart) EventStart();
+            if (eventDead) EventDead();
+            if (eventFinish) EventFinish();
 
             back.SetPosition(tileMap.GetX(), tileMap.GetY());
 
@@ -191,17 +190,16 @@ namespace MainGame.Maps.Level1
             if (player.GetX() > 2240 && player.GetY() > 1530 && player.GetY() < 1870)
             {
                 tileMap.SetPosition(
-                    GlobalVariables.WIDTH / 2 - player.GetX() - 200,
-                    GlobalVariables.HEIGHT / 2 - player.GetY() + 100
+                    GlobalVariables.GAME_WINDOW_WIDTH / 2 - player.GetX() - 200,
+                    GlobalVariables.GAME_WINDOW_HEIGHT / 2 - player.GetY() + 100
                 );
             }
             else
             {
                 tileMap.SetPosition(
-                        GlobalVariables.WIDTH / 2 - player.GetX() - (70 * player.SetViewLeftRight()),
-                        GlobalVariables.HEIGHT / 2 - player.GetY() - (150 * player.SetViewDown()) + 10
+                        GlobalVariables.GAME_WINDOW_WIDTH / 2 - player.GetX() - (70 * player.SetViewLeftRight()),
+                        GlobalVariables.GAME_WINDOW_HEIGHT / 2 - player.GetY() - (150 * player.SetViewDown()) + 10
                 );
-
             }
 
             tileMap.Update();
@@ -213,7 +211,7 @@ namespace MainGame.Maps.Level1
                 f.Update(enemies);
                 if (f.IsHit())
                 {
-                    fireballs.Remove(i);
+                    fireballs.RemoveAt(i);
                     i--;
                 }
             }
@@ -224,7 +222,7 @@ namespace MainGame.Maps.Level1
                 e.Update();
                 if (e.ShouldRemove())
                 {
-                    items.Remove(i);
+                    items.RemoveAt(i);
                     i--;
                 }
             }
@@ -235,7 +233,7 @@ namespace MainGame.Maps.Level1
                 e.Update();
                 if (e.ShouldRemove())
                 {
-                    enemies.Remove(i);
+                    enemies.RemoveAt(i);
                     i--;
                 }
             }
@@ -283,7 +281,7 @@ namespace MainGame.Maps.Level1
         public override void Draw(SpriteBatch g)
         {
             g.SetColor(java.awt.Color.GREEN);
-            Rectangle r = new Rectangle(0, 0, GlobalVariables.WIDTH, GlobalVariables.HEIGHT);
+            Rectangle r = new Rectangle(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT);
             g.fill(r);
 
             back.Draw(g);
@@ -321,59 +319,58 @@ namespace MainGame.Maps.Level1
             eventCount = 0;
             tileMap.SetShaking(false, 0);
             eventStart = true;
-            eventStart();
+            EventStart();
         }
 
-        private void eventStart()
+        private void EventStart()
         {
             eventCount++;
             if (eventCount == 1)
             {
-                rec_tb.clear();
-                rec_tb.add(new Rectangle(0, 0, GlobalVariables.WIDTH, GlobalVariables.HEIGHT / 2));
-                rec_tb.add(new Rectangle(0, 0, GlobalVariables.WIDTH / 2, GlobalVariables.HEIGHT));
-                rec_tb.add(new Rectangle(0, GlobalVariables.HEIGHT / 2, GlobalVariables.WIDTH, GlobalVariables.HEIGHT / 2));
-                rec_tb.add(new Rectangle(GlobalVariables.WIDTH / 2, 0, GlobalVariables.WIDTH / 2, GlobalVariables.HEIGHT));
+                rec_tb.Clear();
+                rec_tb.Add(new Rectangle(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT / 2));
+                rec_tb.Add(new Rectangle(0, 0, GlobalVariables.GAME_WINDOW_WIDTH / 2, GlobalVariables.GAME_WINDOW_HEIGHT));
+                rec_tb.Add(new Rectangle(0, GlobalVariables.GAME_WINDOW_HEIGHT / 2, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT / 2));
+                rec_tb.Add(new Rectangle(GlobalVariables.GAME_WINDOW_WIDTH / 2, 0, GlobalVariables.GAME_WINDOW_WIDTH / 2, GlobalVariables.GAME_WINDOW_HEIGHT));
             }
             if (eventCount > 1 && eventCount < 60)
             {
-                rec_tb.get(0).height -= 4;
-                rec_tb.get(1).width -= 6;
-                rec_tb.get(2).y += 4;
-                rec_tb.get(3).x += 6;
+                rec_tb[0].Height -= 4;
+                rec_tb[1].Width -= 6;
+                rec_tb[2].Y += 4;
+                rec_tb[3].X += 6;
             }
             if (eventCount == 60)
             {
                 eventStart = false;
                 eventCount = 0;
-                rec_tb.clear();
+                rec_tb.Clear();
             }
         }
 
-        private void eventDead()
+        private void EventDead()
         {
             eventCount++;
             if (eventCount == 1)
             {
                 player.SetDead();
-                player.stop();
+                player.Stop();
             }
             if (eventCount == 60)
             {
-                rec_tb.clear();
-                rec_tb.add(new Rectangle(
-                    GlobalVariables.WIDTH / 2, GlobalVariables.HEIGHT / 2, 0, 0));
+                rec_tb.Clear();
+                rec_tb.Add(new Rectangle(GlobalVariables.GAME_WINDOW_WIDTH / 2, GlobalVariables.GAME_WINDOW_HEIGHT / 2, 0, 0));
             }
             else if (eventCount > 60)
             {
-                rec_tb.get(0).x -= 6;
-                rec_tb.get(0).y -= 4;
-                rec_tb.get(0).width += 12;
-                rec_tb.get(0).height += 8;
+                rec_tb[0].X -= 6;
+                rec_tb[0].Y -= 4;
+                rec_tb[0].Width += 12;
+                rec_tb[0].Height += 8;
             }
             if (eventCount >= 120)
             {
-                if (player.getHealth() == 0)
+                if (player.GetHealth() == 0)
                 {
                     gsm.SetState(GameStateManager.MENUSTATE);
                 }
@@ -386,33 +383,30 @@ namespace MainGame.Maps.Level1
             }
         }
 
-        private void eventFinish()
+        private void EventFinish()
         {
             eventCount++;
             if (eventCount == 30)
             {
                 player.SetTeleporting(true);
-                player.stop();
+                player.Stop();
             }
             else if (eventCount == 45)
             {
-                rec_tb.clear();
-                rec_tb.add(new Rectangle(
-                        GlobalVariables.WIDTH / 2, GlobalVariables.HEIGHT / 2, 0, 0));
+                rec_tb.Clear();
+                rec_tb.Add(new Rectangle(GlobalVariables.GAME_WINDOW_WIDTH / 2, GlobalVariables.GAME_WINDOW_HEIGHT / 2, 0, 0));
             }
             else if (eventCount > 60)
             {
-                rec_tb.get(0).x -= 6;
-                rec_tb.get(0).y -= 4;
-                rec_tb.get(0).width += 12;
-                rec_tb.get(0).height += 8;
+                rec_tb[0].X -= 6;
+                rec_tb[0].Y -= 4;
+                rec_tb[0].Width += 12;
+                rec_tb[0].Height += 8;
             }
             if (eventCount == 120)
             {
-
                 gsm.SetState(GameStateManager.LEVEL2);
             }
-
         }
     }
 }

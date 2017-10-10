@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MainGame.Control;
 using MainGame.Maps.Tiles;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace MainGame.Objects
 {
@@ -25,11 +26,18 @@ namespace MainGame.Objects
 
             try
             {
-                Texture2D spritesheet = ImageIO.read(getClass().getResourceAsStream(PORTALSPRITEMAP));
-
+                Texture2D spritesheet = GlobalVariables.Teleport;
                 sprites = new Texture2D[4];
                 for (int i = 0; i < sprites.Length; i++)
                 {
+                    Rectangle rec = new Rectangle
+                    {
+                        X = i * width,
+                        Y = 0,
+                        Width = width,
+                        Height = height
+                    };
+                    sprites[i] = spritesheet.GetData<Rectangle>(new Rectangle(0,0,30,30));
                     sprites[i] = spritesheet.getSubimage(i * width, 0, width, height);
                 }
 

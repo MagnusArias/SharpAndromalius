@@ -15,9 +15,10 @@ namespace MainGame
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            GlobalVariables.WIDTH = graphics.GraphicsDevice.PresentationParameters.BackBufferWidth;
-            GlobalVariables.HEIGHT = graphics.GraphicsDevice.PresentationParameters.BackBufferHeight;
-            GlobalVariables.SCALE = 1;
+            GlobalVariables.GAME_WINDOW_WIDTH = graphics.GraphicsDevice.PresentationParameters.BackBufferWidth;
+            GlobalVariables.GAME_WINDOW_HEIGHT = graphics.GraphicsDevice.PresentationParameters.BackBufferHeight;
+            GlobalVariables.GAME_WINDOW_SCALE = 1;
+            
 
             Content.RootDirectory = "Content";
         }
@@ -43,8 +44,12 @@ namespace MainGame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            GlobalVariables.fontTitle = Content.Load<SpriteFont>(GlobalVariables.FONT_TITLE);
+            GlobalVariables.E_SkeletonGreenWalk = Content.Load<Texture2D>(GlobalVariables.SKELETON_GREEN_WALK);
+            GlobalVariables.E_SkeletonGreenDead = Content.Load<Texture2D>(GlobalVariables.SKELETON_GREEN_DEAD);
+            GlobalVariables.E_GhostBlueWalk = Content.Load<Texture2D>(GlobalVariables.GHOST_BLUE_WALK);
+            GlobalVariables.E_Boss = Content.Load<Texture2D>(GlobalVariables.BOSS_WALK);
 
-            
         }
         // TODO: use this.Content to load your game content here
     

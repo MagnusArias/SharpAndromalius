@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using MainGame.Maps.Tiles;
+﻿using MainGame.Maps.Tiles;
 using MainGame.Control;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace MainGame.Objects
 {
-    class ParentObject
+    abstract class ParentObject
     {
         // bajery do tilemapy
         protected TileMap tileMap;
@@ -23,7 +18,6 @@ namespace MainGame.Objects
         protected Vector2 V2_dxy;
         protected Boolean facingRight;
         protected Animation animation;
-        protected Vector2 V2_draw;
 
         // wymiary
         protected int width;
@@ -32,6 +26,7 @@ namespace MainGame.Objects
         // "collision box"
         protected int cwidth;
         protected int cheight;
+        protected Boolean debugReady;
 
         // collision
         protected int currRow;
@@ -46,21 +41,19 @@ namespace MainGame.Objects
         // poruszanie sie
         protected Boolean left;
         protected Boolean right;
+        protected Boolean up;
         protected Boolean squat;
         protected Boolean jumping;
         protected Boolean falling;
 
         // atrybuty poruszania
-        protected double moveSpeed;
-        protected double maxSpeed;
-        protected double stopSpeed;
-        protected double fallSpeed;
-        protected double maxFallSpeed;
-        protected double jumpStart;
-        protected double stopJumpSpeed;
-
-        //kontrola
-        protected Boolean debugReady;
+        protected float moveSpeed;
+        protected float maxSpeed;
+        protected float stopSpeed;
+        protected float fallSpeed;
+        protected float maxFallSpeed;
+        protected float jumpStart;
+        protected float stopJumpSpeed;
 
         public ParentObject(TileMap tm)
         {
@@ -92,22 +85,19 @@ namespace MainGame.Objects
             return GetRectangle().Contains(r);
         }
 
-        public Rectangle GetRectangle()
-        {
-            return new Rectangle(
+        public Rectangle GetRectangle() => new Rectangle(
                     (int)V2_xy.X - cwidth / 2,
                     (int)V2_xy.Y - cheight / 2,
                     cwidth,
                     cheight
             );
-        }
 
-        public void CalculateCorners(double x, double y)
+        public void CalculateCorners(float x, float y)
         {
-            int leftTile =      (int)(V2_xy.X - cwidth / 2)     / tileSize;
-            int rightTile =     (int)(V2_xy.X + cwidth / 2 - 1) / tileSize;
-            int topTile =       (int)(V2_xy.Y - cheight / 2)    / tileSize;
-            int bottomTile =    (int)(V2_xy.Y + cheight / 2 - 1)/ tileSize;
+            int leftTile = (int)(x - cwidth / 2) / tileSize;
+            int rightTile = (int)(x + cwidth / 2 - 1) / tileSize;
+            int topTile = (int)(y - cheight / 2) / tileSize;
+            int bottomTile = (int)(y + cheight / 2 - 1) / tileSize;
 
             if (topTile < 0 || bottomTile >= tileMap.GetNumRows() || leftTile < 0 || rightTile >= tileMap.GetNumCols())
             {
@@ -168,28 +158,28 @@ namespace MainGame.Objects
 
             CalculateCorners(xy_dest.X, V2_xy.Y);
 
-            if (V2_dxy.X < 0)
+            if (V2_dxy.Y < 0)
             {
                 if (topLeft || bottomLeft)
                 {
-                    V2_dxy.X = 0;
+                    V2_dxy.Y = 0;
                     xy_temp.X = currCol * tileSize + cwidth / 2;
                 }
                 else
                 {
-                    xy_temp.X += V2_dxy.X;
+                    xy_temp.X += V2_dxy.Y;
                 }
             }
-            if (V2_dxy.X > 0)
+            if (V2_dxy.Y > 0)
             {
                 if (topRight || bottomRight)
                 {
-                    V2_dxy.X = 0;
+                    V2_dxy.Y = 0;
                     xy_temp.X = (currCol + 1) * tileSize - cwidth / 2;
                 }
                 else
                 {
-                    xy_temp.X += V2_dxy.X;
+                    xy_temp.X += V2_dxy.Y;
                 }
             }
 
@@ -203,125 +193,82 @@ namespace MainGame.Objects
             }
 
         }
-        
-        public int GetX()
+
+        public int GetX() => (int)V2_xy.X;
+
+        public int GetY() => (int)V2_xy.Y;
+
+        public int GetDX() => (int)V2_dxy.X;
+
+        public int GetDY() => (int)V2_dxy.Y;
+
+        public int GetWidth() => width;
+
+        public int GetHeight() => height;
+
+        public int GetCWidth() => cwidth;
+
+        public int GetCHeight() => cheight;
+
+        public void SetPosition(float x, float y)
         {
-            return (int)V2_xy.X;
-            
+            V2_xy.X = x;
+            V2_xy.Y = y;
         }
 
-        public int GetY()
+        public void SetVector(float dx, float dy)
         {
-            return (int)V2_xy.Y;
-        }
-
-        public double GetDX()
-        {
-            return V2_dxy.X;
-        }
-
-        public double GetDY()
-        {
-            return V2_dxy.Y;
-        }
-
-        public int GetWidth()
-        {
-            return width;
-        }
-
-        public int GetHeight()
-        {
-            return height;
-        }
-
-        public int GetCWidth()
-        {
-            return cwidth;
-        }
-
-        public int GetCHeight()
-        {
-            return cheight;
-        }
-
-        public void SetPosition(double x, double y)
-        {
-            this.V2_xy.X = (float)x;
-            this.V2_xy.Y = (float)y;
-        }
-
-        public void SetVector(double dx, double dy)
-        {
-            this.V2_dxy.X = (float)dx;
-            this.V2_dxy.Y = (float)dy;
+            V2_dxy.X = dx;
+            V2_dxy.Y = dy;
         }
 
         public void SetMapPosition()
         {
-            V2_mapxy.X = (float)tileMap.GetX();
-            V2_mapxy.Y = (float)tileMap.GetY();
+            V2_mapxy.X = tileMap.GetX();
+            V2_mapxy.Y = tileMap.GetY();
         }
 
-        public void SetLeft(Boolean b)
-        {
-            left = b;
-        }
+        public void SetLeft(Boolean b) => left = b;
 
-        public void SetRight(Boolean b)
-        {
-            right = b;
-        }
+        public void SetRight(Boolean b) => right = b;
 
-        public void SetUp(Boolean b)
-        {
-            jumping = b;
-        }
+        public void SetUp(Boolean b) => jumping = b;
 
-        public void SetDown(Boolean b)
-        {
-            squat = b;
-        }
+        public void SetDown(Boolean b) => squat = b;
 
         public Boolean NotOnScreen()
         {
             return V2_xy.X + V2_mapxy.X + width < 0 ||
-                    V2_xy.X + V2_mapxy.X - width > GlobalVariables.WIDTH ||
-                    V2_xy.Y + V2_mapxy.Y + height < 0 ||
-                    V2_xy.Y + V2_mapxy.Y - height > GlobalVariables.HEIGHT;
-        }
-
-        public Vector2 Origin
-        {
-            get { return new Vector2(width / 2.0f, height / 2.0f); }
+                V2_xy.X + V2_mapxy.X - width > GlobalVariables.GAME_WINDOW_WIDTH ||
+                V2_xy.Y + V2_mapxy.Y + height < 0 ||
+                V2_xy.Y + V2_mapxy.Y - height > GlobalVariables.GAME_WINDOW_HEIGHT;
         }
 
         public void Draw(SpriteBatch g)
         {
+            SpriteEffects spriteEffect;
+            if (facingRight) spriteEffect = SpriteEffects.None;
+            else spriteEffect = SpriteEffects.FlipVertically;
+
             SetMapPosition();
-            Rectangle source = new Rectangle(0, 0, animation.GetImage().Width, animation.GetImage().Height);
 
-            V2_draw.X = V2_xy.X + V2_mapxy.X - (width / 2.0f);
-            V2_draw.Y = V2_xy.Y + V2_mapxy.Y - (height / 2.0f);
-
-            if (facingRight)
-            {
-                g.Draw(animation.GetImage(), V2_draw, source, Color.White, 0.0f, Origin, 1.0f, SpriteEffects.None, 0.0f);
-            }
-            else
-            {
-                g.Draw(animation.GetImage(), V2_draw, source, Color.White, 0.0f, Origin, 1.0f, SpriteEffects.FlipVertically, 0.0f);
-            }
-
+            g.Draw(
+                animation.GetImage(),
+                new Vector2(V2_xy.X + V2_mapxy.X + (width / 2.0f), V2_xy.Y + V2_mapxy.Y + (height / 2.0f)),
+                new Rectangle(0, 0, animation.GetImage().Width, animation.GetImage().Height), 
+                Color.White, 
+                0.0f,
+                new Vector2(width / 2.0f, height / 2.0f), 
+                1.0f, 
+                spriteEffect, 
+                0.0f);
+           
             // draw collision box
             /*
-            if (GlobalVariables.DEBUG_READY)
-            {
-                Rectangle r = GetRectangle();
-                r.X += (int)xmap;
-                r.Y += (int)ymap;
-                g.Draw(r);
-            }
+            Rectangle r = GetRectangle();
+            r.X += (int)V2_mapxy.X;
+            r.Y += (int)V2_mapxy.Y;
+            g.Draw(r);
             */
         }
     }

@@ -7,7 +7,6 @@ using MainGame.Objects.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace MainGame.Maps.Level2
@@ -53,7 +52,7 @@ namespace MainGame.Maps.Level2
             tileMap.LoadTiles(TILESET);
             tileMap.LoadMap(LEVEL);
             tileMap.SetPosition(0, 0);
-            tileMap.SetTween(0.025);
+            tileMap.SetTween(0.025f);
 
             //player
             player = new Player(tileMap);
@@ -88,7 +87,6 @@ namespace MainGame.Maps.Level2
             enemies.Clear();
             E_Skeleton e_s;
             E_Ghost e_g;
-
         }
 
         public override void Update()
@@ -112,8 +110,8 @@ namespace MainGame.Maps.Level2
 
 
             tileMap.SetPosition(
-                    GlobalVariables.WIDTH / 2 - player.GetX() - (70 * player.SetViewLeftRight()),
-                    GlobalVariables.HEIGHT / 2 - player.GetY() - (150 * player.SetViewDown()) + 10
+                    GlobalVariables.GAME_WINDOW_WIDTH / 2 - player.GetX() - (70 * player.SetViewLeftRight()),
+                    GlobalVariables.GAME_WINDOW_HEIGHT / 2 - player.GetY() - (150 * player.SetViewDown()) + 10
             );
 
 
@@ -126,7 +124,7 @@ namespace MainGame.Maps.Level2
                 f.Update(enemies);
                 if (f.IsHit())
                 {
-                    fireballs.Remove(i);
+                    fireballs.RemoveAt(i);
                     i--;
                 }
             }
@@ -137,7 +135,7 @@ namespace MainGame.Maps.Level2
                 e.Update();
                 if (e.ShouldRemove())
                 {
-                    enemies.Remove(i);
+                    enemies.RemoveAt(i);
                     i--;
                 }
             }
@@ -181,8 +179,7 @@ namespace MainGame.Maps.Level2
 
         public override void Draw(SpriteBatch g)
         {
-            g.setColor(Color.Green);
-            Rectangle r = new Rectangle(0, 0, GlobalVariables.WIDTH, GlobalVariables.HEIGHT);
+            Rectangle r = new Rectangle(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT);
             g.fill(r);
 
             back.Draw(g);
@@ -231,17 +228,17 @@ namespace MainGame.Maps.Level2
             if (eventCount == 1)
             {
                 rec_tb.Clear();
-                rec_tb.Add(new Rectangle(0, 0, GlobalVariables.WIDTH, GlobalVariables.HEIGHT / 2));
-                rec_tb.Add(new Rectangle(0, 0, GlobalVariables.WIDTH / 2, GlobalVariables.HEIGHT));
-                rec_tb.Add(new Rectangle(0, GlobalVariables.HEIGHT / 2, GlobalVariables.WIDTH, GlobalVariables.HEIGHT / 2));
-                rec_tb.Add(new Rectangle(GlobalVariables.WIDTH / 2, 0, GlobalVariables.WIDTH / 2, GlobalVariables.HEIGHT));
+                rec_tb.Add(new Rectangle(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT / 2));
+                rec_tb.Add(new Rectangle(0, 0, GlobalVariables.GAME_WINDOW_WIDTH / 2, GlobalVariables.GAME_WINDOW_HEIGHT));
+                rec_tb.Add(new Rectangle(0, GlobalVariables.GAME_WINDOW_HEIGHT / 2, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT / 2));
+                rec_tb.Add(new Rectangle(GlobalVariables.GAME_WINDOW_WIDTH / 2, 0, GlobalVariables.GAME_WINDOW_WIDTH / 2, GlobalVariables.GAME_WINDOW_HEIGHT));
             }
             if (eventCount > 1 && eventCount < 60)
             { 
                 rec_tb[0].Height -= 4;
                 rec_tb[1].Width -= 6;
-                rec_tb[2].y += 4;
-                rec_tb[3].x += 6;
+                rec_tb[2].Y += 4;
+                rec_tb[3].X += 6;
             }
             if (eventCount == 60)
             {
@@ -262,7 +259,7 @@ namespace MainGame.Maps.Level2
             if (eventCount == 60)
             {
                 rec_tb.Clear();
-                rec_tb.Add(new Rectangle(GlobalVariables.WIDTH / 2, GlobalVariables.HEIGHT / 2, 0, 0));
+                rec_tb.Add(new Rectangle(GlobalVariables.GAME_WINDOW_WIDTH / 2, GlobalVariables.GAME_WINDOW_HEIGHT / 2, 0, 0));
             }
             else if (eventCount > 60)
             {
@@ -297,14 +294,14 @@ namespace MainGame.Maps.Level2
             else if (eventCount == 5)
             {
                 rec_tb.Clear();
-                rec_tb.Add(new Rectangle(GlobalVariables.WIDTH / 2, GlobalVariables.HEIGHT / 2, 0, 0));
+                rec_tb.Add(new Rectangle(GlobalVariables.GAME_WINDOW_WIDTH / 2, GlobalVariables.GAME_WINDOW_HEIGHT / 2, 0, 0));
             }
             else if (eventCount > 10)
             {
-                rec_tb[0].x -= 6;
-                rec_tb[0].y -= 4;
-                rec_tb[0].width += 12;
-                rec_tb[0].height += 8;
+                rec_tb[0].X -= 6;
+                rec_tb[0].Y -= 4;
+                rec_tb[0].Width += 12;
+                rec_tb[0].Height += 8;
             }
             if (eventCount == 20)
             {

@@ -12,7 +12,7 @@ namespace MainGame.Maps.Tiles
         // krawedzie
         private Vector2 xy_min;
         private Vector2 xy_max;
-        private double tween;
+        private float tween;
 
         // mapa
         private int[][] map;
@@ -40,9 +40,9 @@ namespace MainGame.Maps.Tiles
         public TileMap(int tileSize)
         {
             this.tileSize = tileSize;
-            numRowsToDraw = GlobalVariables.HEIGHT / tileSize + 2;
-            numColsToDraw = GlobalVariables.WIDTH / tileSize + 2;
-            tween = 0.07;
+            numRowsToDraw = GlobalVariables.GAME_WINDOW_HEIGHT / tileSize + 2;
+            numColsToDraw = GlobalVariables.GAME_WINDOW_WIDTH / tileSize + 2;
+            tween = 0.07F;
         }
 
         public void LoadTiles(String s)
@@ -52,7 +52,7 @@ namespace MainGame.Maps.Tiles
 
                 tileset = ImageIO.read(getClass().getResourceAsStream(s));
 
-                numTilesAcross = tileset.getWidth() / tileSize;
+                numTilesAcross = tileset.Width / tileSize;
                 tiles = new Tile[6][numTilesAcross];
 
                 Texture2D subimage;
@@ -93,27 +93,27 @@ namespace MainGame.Maps.Tiles
                 InputStream ins = getClass().getResourceAsStream(s);
                 BufferedReader br = new BufferedReader(new InputStreamReader(ins));
 
-                numCols = Integer.parseInt(br.readLine());
-                numRows = Integer.parseInt(br.readLine());
+                numCols = int.Parse(br.readLine());
+                numRows = int.Parse(br.readLine());
 
                 map = new int[numRows][numCols];
                 width = numCols * tileSize;
                 height = numRows * tileSize;
 
 
-                xy_min.X = GlobalVariables.WIDTH - width;
+                xy_min.X = GlobalVariables.GAME_WINDOW_WIDTH - width;
                 xy_max.X = 0;
-                xy_min.Y = GlobalVariables.HEIGHT - height;
+                xy_min.Y = GlobalVariables.GAME_WINDOW_HEIGHT - height;
                 xy_max.Y = 0;
 
-                String delims = "\\s+";
+                char delims = ' ';
                 for (int row = 0; row < numRows; row++)
                 {
                     String line = br.readLine();
                     String[] tokens = line.Split(delims);
                     for (int col = 0; col < numCols; col++)
                     {
-                        map[row][col] = Integer.parseInt(tokens[col]);
+                        map[row][col] = int.Parse(tokens[col]);
                     }
                 }
 
@@ -129,12 +129,12 @@ namespace MainGame.Maps.Tiles
             return tileSize;
         }
 
-        public double GetX()
+        public float GetX()
         {
             return V2_xy.X;
         }
 
-        public double GetY()
+        public float GetY()
         {
             return V2_xy.Y;
         }
@@ -178,23 +178,23 @@ namespace MainGame.Maps.Tiles
             return tiles[r][c].GetTileType();
         }
 
-        public void SetTween(double d)
+        public void SetTween(float d)
         {
             tween = d;
         }
 
         public void SetBounds(int i1, int i2, int i3, int i4)
         {
-            xy_min.X = GlobalVariables.WIDTH - i1;
-            xy_min.Y = GlobalVariables.WIDTH - i2;
+            xy_min.X = GlobalVariables.GAME_WINDOW_WIDTH - i1;
+            xy_min.Y = GlobalVariables.GAME_WINDOW_WIDTH - i2;
             xy_max.X = i3;
             xy_max.Y = i4;
         }
 
         public void SetPosition(float x, float y)
         {
-            this.V2_xy.X += (x - this.V2_xy.X) * (float)tween;
-            this.V2_xy.Y += (y - this.V2_xy.Y) * (float)tween;
+            this.V2_xy.X += (x - this.V2_xy.X) * tween;
+            this.V2_xy.Y += (y - this.V2_xy.Y) * tween;
 
             FixBounds();
 
@@ -239,9 +239,19 @@ namespace MainGame.Maps.Tiles
                     int r = rc / numTilesAcross;
                     int c = rc % numTilesAcross;
                     // tile, position as V2_Xy, scale as tileSize
-                    g.Draw(tiles[r][c].GetImage(), (int)x + col * tileSize, (int)y + row * tileSize, null);
+                    g.Draw(
+                        tiles[r][c].GetImage(), 
+                        new Vector2(V2_xy.X + col * tileSize, V2_xy.Y + row * tileSize), 
+                        new Rectangle(0, 0, width, height), 
+                        Color.White, 
+                        0.0f, 
+                        new Vector2(width / 2, height / 2), 
+                        1.0f, 
+                        SpriteEffects.None, 
+                        0.0f
+                        );
 
-                    Rectangle rec = new Rectangle((int)x + col * tileSize, (int)y + row * tileSize, 30, 30);
+                    Rectangle rec = new Rectangle((int)V2_xy.X + col * tileSize, (int)V2_xy.Y + row * tileSize, 30, 30);
                     if (GlobalVariables.DEBUG_READY && rc > 59) g.Draw(rec);
 
                 }

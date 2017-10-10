@@ -10,38 +10,106 @@ namespace MainGame
 {
     public static class GlobalVariables
     {
-        public static int WIDTH;
-        public static int HEIGHT;
-        public static int SCALE;
+        public static int GAME_WINDOW_WIDTH;
+        public static int GAME_WINDOW_HEIGHT;
+        public static int GAME_WINDOW_SCALE;
+        
+        //
+        //
+        //  
+        //          PLAYER SPRITES
+        //
+        public const String PLAYER_MAIN = "Content/Player/player-main.png";
+        public const String PLAYER_RED = "Content/Player/player-spritemap-red.png";
+        public const String PLAYER_BLUE = "Content/Player/player-spritemap-blue.png";
+        public const String PLAYER_GREEN = "Content/Player/player-spritemap-green.png";
+        public const String PLAYER_GREY = "Content/Player/player-spritemap-grey.png";
+        //
+        //
+        //  
+        //          ARMOR SPRITES
+        //
+        public const String ARMOR_RED = "Content/Arnor/Armor/red.png";
+        //
+        //
+        //  
+        //          ROBE SPRITES
+        //
+        public const String ROBE_BLACK = "Content/Armor/Robe/black.png";
+        //
+        //
+        //  
+        //          ENEMY SPRITES
+        //
+        //             
+        //  Skeletons:  36  48
+        public static Texture2D E_SkeletonGreenWalk;
+        public const String SKELETON_GREEN_WALK = "Content/Enemies/Skeleton/green-walk.png";
+        public static Texture2D E_SkeletonGreenDead;
+        public const String SKELETON_GREEN_DEAD = "Content/Enemies/Skeleton/green-dead.png";
+        //
+        //  Ghosts:     25  40
+        public static Texture2D E_GhostBlueWalk;
+        public const String GHOST_BLUE_WALK = "Content/Enemies/Ghost/blue-walk.png";
+        //
+        //  Boss 1:     114 176
+        public static Texture2D E_Boss;
+        public const String BOSS_WALK = "Content/Enemies/Bosses/boss-1.png";
+        //
+        //
+        //  
+        //          ITEMS SPRITES
+        //
+        public const String SWORD = "Content/Assets/Icons/sword3.png";
+        public const String DOUBLE_JUMP = "Content/Assets/Icons/armor5.png";
+        public const String DASH = "Content/Assets/Icons/robe2.png";
+        public const String FIREBALL = "Content/Assets/Icons/book7.png";
+        //
+        //
+        //  
+        //          PROJECTILE SPRITES
+        //
+        public const String PARTICLES_SPRITEMAP = "Content/energy-particle.png";
+        //
+        //
+        //  
+        //          TILESETS SPRITES
+        //
+        public const String TILESET_L1 = "Content/Tilesets/tileset.png";
+        //
+        //
+        //  
+        //          BACKGROUND SPRITES
+        //
+        public const String BACKGROUND = "Content/Assets/Misc/background.png";
+        //
+        //
+        //  
+        //          MISC SPRITES
+        //
+        public const String BOSSHPBAR = "/Content/Assets/boss-hp-bar.png";
+        public const String BOSSBAROUTLINE = "/Content/Assets/boss-hp-bar-outline.png";
+        public const String HPBAR = "/Content/Assets/hp-bar.png";
+        public const String FIREBAR = "/Content/Assets/fireball-bar.png";
+        public const String DASHBAR = "/Content/Assets/dash-bar.png";
+        public const String HUD = "/Content/Assets/hud.png";
+        public const String PORTALSPRITEMAP = "/Content/Assets/penis.gif";
 
-        public const String SKELETON_SPRITEMAP =            "Content/Assets/enemy-skeleton-spritemap.png";
-        public const String DEAD_SKELETON_SPRITEMAP =       "Content/Assets/enemy-skeleton-dead-spritemap.png";
-        public const String GHOST_SPRITEMAP =               "Content/Assets/enemy-ghost-spritemap.png";
-        public const String PARTICLES_SPRITEMAP =           "Content/Assets/energy-particle.png";
-        public const String BOSS1_SPRITEMAP =               "Content/Assets/boss-1.png";
 
-        public const String SWORD =                         "Content/Assets/Icons/sword3.png";
-        public const String DOUBLE_JUMP =                   "Content/Assets/Icons/armor5.png";
-        public const String DASH =                          "Content/Assets/Icons/robe2.png";
-        public const String FIREBALL =                      "Content/Assets/Icons/book7.png";
+        public const String FONT_TITLE = "/Content/font";
+        public static SpriteFont fontTitle;
 
-        public const String PLAYER =                        "Content/Assets/Player/player-spritemap-v9.png";
+        public const String FONT_SIMPLE = "/Content/font_simple";
+        public static SpriteFont fontSimple;
 
-        public const String BACKGROUND =                    "Content/Assets/Misc/background.png";
 
-        public const String BOSSHPBAR =                     "/Content/Assets/boss-hp-bar.png";
-        public const String BOSSBAROUTLINE =                "/Content/Assets/boss-hp-bar-outline.png";
-        public const String HPBAR =                         "/Game/Src/Assets/hp-bar.png";
-        public const String FIREBAR =                       "/Game/Src/Assets/fireball-bar.png";
-        public const String DASHBAR =                       "/Game/Src/Assets/dash-bar.png";
-        public const String HUD =                           "/Game/Src/Assets/hud.png";
-        public const String PORTALSPRITEMAP =               "/Content/Assets/penis.gif";
 
-        public static Texture2D Enemy_Skeleton;
-        public static Texture2D Enemy_DeadSkeleton;
-        public static Texture2D Enemy_Ghost;
+
+        
+        
+        
         public static Texture2D Particles;
-        public static Texture2D Enemy_Boss1;
+        
 
         public static Texture2D Item_Sword;
         public static Texture2D Item_DoubleJump;
@@ -53,30 +121,12 @@ namespace MainGame
         public static Texture2D hudBar;
         public static Texture2D Player;
         public static Texture2D Background;
+        public static Texture2D Teleport;
 
         public static Texture2D bossHPBar;
         public static Texture2D bossHPBarOutline;
 
         public static Boolean DEBUG_READY;
 
-        public static void LoadContentFromSource()
-        {
-            Enemy_Skeleton = Content.Load<Texture2D>(GlobalVariables.SKELETON_SPRITEMAP);
-            Enemy_DeadSkeleton = this.Content.Load<Texture2D>(GlobalVariables.DEAD_SKELETON_SPRITEMAP);
-            Enemy_Ghost = this.Content.Load<Texture2D>(GlobalVariables.GHOST_SPRITEMAP);
-            Particles = this.Content.Load<Texture2D>(GlobalVariables.PARTICLES_SPRITEMAP);
-            Enemy_Boss1 = this.Content.Load<Texture2D>(GlobalVariables.BOSS1_SPRITEMAP);
-
-            Item_Sword = this.Content.Load<Texture2D>(GlobalVariables.SWORD);
-            Item_Dash = this.Content.Load<Texture2D>(GlobalVariables.DASH);
-            Item_DoubleJump = this.Content.Load<Texture2D>(GlobalVariables.DOUBLE_JUMP);
-            Item_Fireball = this.Content.Load<Texture2D>(GlobalVariables.FIREBALL);
-
-            Player = this.Content.Load<Texture2D>(GlobalVariables.PLAYER);
-            Background = this.Content.Load<Texture2D>(GlobalVariables.BACKGROUND);
-
-            hpBar = ImageIO.read(getClass().getResourceAsStream(BOSSHPBAR));
-            hpBarOutline = ImageIO.read(getClass().getResourceAsStream(BOSSBAROUTLINE));
-        }
     }
 }

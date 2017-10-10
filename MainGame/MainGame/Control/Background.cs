@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using MainGame;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MainGame.Control
 {
@@ -75,8 +69,6 @@ namespace MainGame.Control
             {
                 Console.WriteLine("\nStackTrace ---\n{0}", e.StackTrace);
             }
-
-
         }
         public void SetPosition(double x, double y)
         {
@@ -112,7 +104,7 @@ namespace MainGame.Control
             return xy.Y;
         }
 
-        public void update()
+        public void Update()
         {
             xy.X += d_xy.X;
             while (xy.X <= -width) xy.X += width;
@@ -124,29 +116,29 @@ namespace MainGame.Control
 
         public void Draw(SpriteBatch g)
         {
-            for (int i = 0; i < GlobalVariables.WIDTH / width * GlobalVariables.SCALE; i++)
+            for (int i = 0; i < GlobalVariables.GAME_WINDOW_WIDTH / width * GlobalVariables.GAME_WINDOW_SCALE; i++)
             {
-                for (int j = 0; j < GlobalVariables.HEIGHT / height * GlobalVariables.SCALE; j++)
+                for (int j = 0; j < GlobalVariables.GAME_WINDOW_HEIGHT / height * GlobalVariables.GAME_WINDOW_SCALE; j++)
                 {
-                    g.Draw(image, (int)(x + width * i), (int)(y + height * j), null);
+                    g.Draw(image, new Vector2(xy.X + width * i, xy.Y + height * j), new Rectangle(0,0,width,height), Color.White, 0.0f, new Vector2(width/2, height/2), 1.0f, SpriteEffects.None, 0.0f);
                 }
             }
 
             if (xy.X < 0)
             {
-                g.Draw(image, (int)x + GlobalVariables.WIDTH, (int)y, null);
+                g.Draw(image, new Vector2(xy.X + GlobalVariables.GAME_WINDOW_WIDTH, xy.Y), new Rectangle(0, 0, width, height), Color.White, 0.0f, new Vector2(width / 2, height / 2), 1.0f, SpriteEffects.None, 0.0f);
             }
             if (xy.X > 0)
             {
-                g.Draw(image, (int)x - GlobalVariables.WIDTH, (int)y, null);
+                g.Draw(image, new Vector2(xy.X - GlobalVariables.GAME_WINDOW_WIDTH, xy.Y), new Rectangle(0, 0, width, height), Color.White, 0.0f, new Vector2(width / 2, height / 2), 1.0f, SpriteEffects.None, 0.0f);
             }
             if (xy.Y < 0)
             {
-                g.Draw(image, (int)x, (int)y + GlobalVariables.HEIGHT, null);
+                g.Draw(image, new Vector2(xy.X, xy.Y + GlobalVariables.GAME_WINDOW_HEIGHT), new Rectangle(0, 0, width, height), Color.White, 0.0f, new Vector2(width / 2, height / 2), 1.0f, SpriteEffects.None, 0.0f);
             }
             if (xy.Y > 0)
             {
-                g.Draw(image, (int)x, (int)y - GlobalVariables.HEIGHT, null);
+                g.Draw(image, new Vector2(xy.X, xy.Y - GlobalVariables.GAME_WINDOW_HEIGHT), new Rectangle(0, 0, width, height), Color.White, 0.0f, new Vector2(width / 2, height / 2), 1.0f, SpriteEffects.None, 0.0f);
             }
         }
     }

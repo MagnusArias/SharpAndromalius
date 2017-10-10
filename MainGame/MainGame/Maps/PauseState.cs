@@ -1,4 +1,5 @@
 ﻿using MainGame.Control;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
@@ -30,16 +31,14 @@ namespace MainGame.Maps
         public override void Draw(SpriteBatch g)
         {
             Color myColour = new Color(0, 0, 0, 32);
-            g.setColor(myColour);
-            g.fillRect(0, 0, GlobalVariables.WIDTH, GlobalVariables.HEIGHT);
 
-            g.setFont(font);
-            g.setColor(Color.WHITE);
-            g.DrawString("Wroc do gry", GlobalVariables.WIDTH / 2 - 100, GlobalVariables.HEIGHT / 2);
-            g.DrawString("Wyjdz z gry ", GlobalVariables.WIDTH / 2 - 100, GlobalVariables.HEIGHT / 2 + 30);
+            g.fillRect(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT);
 
-            if (currentChoice == 0) g.fillRect(GlobalVariables.WIDTH / 2 - 120, GlobalVariables.HEIGHT / 2 - 5, 5, 5);
-            else if (currentChoice == 1) g.fillRect(GlobalVariables.WIDTH / 2 - 120, GlobalVariables.HEIGHT / 2 - 5 + 30, 5, 5);
+            g.DrawString(GlobalVariables.fontTitle, "Wroc do gry", new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 100, GlobalVariables.GAME_WINDOW_HEIGHT / 2), myColour);
+            g.DrawString(GlobalVariables.fontTitle, "Wyjdz z gry ", new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 100, GlobalVariables.GAME_WINDOW_HEIGHT / 2 + 30), myColour);
+
+            if (currentChoice == 0) g.fillRect(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 120, GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 5, 5, 5);
+            else if (currentChoice == 1) g.fillRect(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 120, GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 5 + 30, 5, 5);
 
         }
 

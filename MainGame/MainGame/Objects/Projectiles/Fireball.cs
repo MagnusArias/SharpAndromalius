@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace MainGame.Objects.Projectiles
 {
@@ -24,7 +25,7 @@ namespace MainGame.Objects.Projectiles
 
             animation = new Animation();
 
-            moveSpeed = 3.8;
+            moveSpeed = 3.8f;
             hit = false;
             remove = false;
             damage = 5;
@@ -34,9 +35,7 @@ namespace MainGame.Objects.Projectiles
             cwidth = 28;
             cheight = 14;
 
-            attackRect = new Rectangle(0, 0, 0, 0);
-            attackRect.Width = 28;
-            attackRect.Height = 14;
+            attackRect = new Rectangle(0, 0, 28, 14);
 
             // load sprites
             try
@@ -79,14 +78,14 @@ namespace MainGame.Objects.Projectiles
 
         }
 
-        public void ShootFireball(double startX, double startY, Boolean facing)
+        public void ShootFireball(float startX, float startY, Boolean facing)
         {
-            x = startX;
-            y = startY;
+            V2_xy.X = startX;
+            V2_xy.Y = startY;
             facingRight = facing;
 
-            if (facingRight) dx = moveSpeed;
-            else dx = -moveSpeed;
+            if (facingRight) V2_dxy.X = moveSpeed;
+            else V2_dxy.X = -moveSpeed;
         }
 
         public void SetHit()
@@ -95,7 +94,7 @@ namespace MainGame.Objects.Projectiles
             hit = true;
             animation.SetFrames(hitSprites);
             animation.SetDelay(4);
-            dx = 0;
+            V2_dxy.X = 0;
         }
 
         public Boolean IsHit()
@@ -108,13 +107,13 @@ namespace MainGame.Objects.Projectiles
             return remove;
         }
 
-        public void Update(ArrayList enemies)
+        public void Update(List<Enemy> enemies)
         {
 
             CheckTileMapCollision();
-            SetPosition(xtemp, ytemp);
+            SetPosition(xy_temp.X, xy_temp.Y);
 
-            if (dx == 0 && !hit)
+            if (V2_dxy.X == 0 && !hit)
             {
                 SetHit();
             }
@@ -122,7 +121,7 @@ namespace MainGame.Objects.Projectiles
             for (int i = 0; i < enemies.Count; i++)
             {
 
-                Enemy e = (Enemy)enemies[i];
+                Enemy e = enemies[i];
 
                 // sprawdzenie ataku, zadajemy obrazenia wrogowi
 
@@ -135,9 +134,9 @@ namespace MainGame.Objects.Projectiles
             }
             if (!hit)
             {
-                attackRect.Y = (int)y - 7;
-                if (facingRight) attackRect.X = (int)x - 7;
-                else attackRect.X = (int)x - 20;
+                attackRect.Y = (int)V2_xy.Y - 7;
+                if (facingRight) attackRect.X = (int)V2_xy.X - 7;
+                else attackRect.X = (int)V2_xy.X - 20;
             }
 
             animation.Update();

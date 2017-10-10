@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework.Graphics;
-
-using MainGame.Control;
-using MainGame.Objects;
+﻿using MainGame.Control;
 using MainGame.Maps.Tiles;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace MainGame.Objects.Enemies
 {
@@ -15,14 +9,14 @@ namespace MainGame.Objects.Enemies
     {
         protected int health;
         protected int maxHealth;
-        protected Boolean dead;
-        protected int damage;
-        protected Boolean remove;
         protected int lastBreath;
+        protected int damage;
+
+        protected Boolean dead;
+        protected Boolean remove;
+        
         protected Player player;
-
-        protected Texture2D[] sprites;
-
+        protected Texture2D sprites;
 
         public Enemy(TileMap tm) : base(tm)
         {
@@ -61,7 +55,6 @@ namespace MainGame.Objects.Enemies
         }
 
         public void Update() { }
-
         
         public void Draw(SpriteBatch g)
         {

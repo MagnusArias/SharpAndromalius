@@ -8,6 +8,7 @@ using MainGame.Control;
 using MainGame.Objects;
 using MainGame.Maps.Tiles;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace MainGame.Objects.Enemies
 {
@@ -47,9 +48,9 @@ namespace MainGame.Objects.Enemies
 
             playerCatch = false;
 
-            moveSpeed = 0.1;
-            maxSpeed = 1.8;
-            stopSpeed = 0.1;
+            moveSpeed = 0.1f;
+            maxSpeed = 1.8f;
+            stopSpeed = 0.1f;
 
             facingRight = false;
 
@@ -107,18 +108,18 @@ namespace MainGame.Objects.Enemies
 
                     if (!facingRight)
                     {
-                        dx += moveSpeed;
-                        if (dx > maxSpeed)
+                        V2_dxy.X += moveSpeed;
+                        if (V2_dxy.X > maxSpeed)
                         {
-                            dx = maxSpeed;
+                            V2_dxy.X = maxSpeed;
                         }
                     }
                     else
                     {
-                        dx -= moveSpeed;
-                        if (dx < -maxSpeed)
+                        V2_dxy.X -= moveSpeed;
+                        if (V2_dxy.X < -maxSpeed)
                         {
-                            dx = -maxSpeed;
+                            V2_dxy.X = -maxSpeed;
                         }
                     }
                 }
@@ -126,45 +127,44 @@ namespace MainGame.Objects.Enemies
                 { // oddalimy sie, ale nas goni
                     if (facingRight)
                     {
-                        dx += moveSpeed;
-                        if (dx > maxSpeed)
+                        V2_dxy.X += moveSpeed;
+                        if (V2_dxy.X > maxSpeed)
                         {
-                            dx = maxSpeed;
+                            V2_dxy.X = maxSpeed;
                         }
                     }
                     else
                     {
-                        dx -= moveSpeed;
-                        if (dx < -maxSpeed)
+                        V2_dxy.X -= moveSpeed;
+                        if (V2_dxy.X < -maxSpeed)
                         {
-                            dx = -maxSpeed;
+                            V2_dxy.X = -maxSpeed;
                         }
                     }
                 }
             }
             else if (Math.Abs(player.GetX() - V2_xy.X) > 400 && !playerCatch)
             { // ale jezeli jestesmy daleko, to opuszcza poscig
-                if (dx > 0)
+                if (V2_dxy.X > 0)
                 {
-                    dx -= stopSpeed;
-                    if (dx < 0)
+                    V2_dxy.X -= stopSpeed;
+                    if (V2_dxy.X < 0)
                     {
-                        dx = 0;
-
+                        V2_dxy.X = 0;
                     }
                 }
-                else if (dx < 0)
+                else if (V2_dxy.X < 0)
                 {
-                    dx += stopSpeed;
-                    if (dx > 0)
+                    V2_dxy.X += stopSpeed;
+                    if (V2_dxy.X > 0)
                     {
-                        dx = 0;
+                        V2_dxy.X = 0;
                     }
                 }
             }
             else playerCatch = false;
 
-            V2_xy.X += (float)dx;
+            V2_xy.X += V2_dxy.X;
             V2_xy.Y = (float)Math.Sin(b * tick) + V2_xy.Y;
 
             // update animation
@@ -184,10 +184,10 @@ namespace MainGame.Objects.Enemies
             if (playerCatch)
             {
 
-                g.Draw(hpBar, 72, 122, (int)((GlobalVariables.WIDTH - 142) * hp_max), 14, null);
-                g.Draw(hpBarOutline, 0 + 70, 0 + 120, GlobalVariables.WIDTH - 140, 16, null);
+                g.Draw(GlobalVariables.bossHPBar, 72, 122, (int)((GlobalVariables.GAME_WINDOW_WIDTH - 142) * hp_max), 14, null);
+                g.Draw(GlobalVariables.bossHPBarOutline, 0 + 70, 0 + 120, GlobalVariables.GAME_WINDOW_WIDTH - 140, 16, null);
 
-                g.DrawString("Andromalius", GlobalVariables.WIDTH / 2 - 20, 105);
+                g.DrawString(GlobalVariables.fontTitle, "Andromalius", new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 20, 105), Color.White);
             }
         }
     }

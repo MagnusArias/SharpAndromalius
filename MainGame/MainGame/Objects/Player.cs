@@ -32,7 +32,7 @@ namespace MainGame.Objects
         protected Boolean low_attack;
         private Boolean doubleJump;
         private Boolean alreadyDoubleJump;
-        private double doubleJumpStart;
+        private float doubleJumpStart;
         private Boolean teleporting;
         private Boolean dashing;
         public Boolean knockback;
@@ -158,16 +158,16 @@ namespace MainGame.Objects
             fireballShooted = true;
         }
 
-        private void SetParameters(int boost)
+        private void SetParameters(float boost)
         {
-            moveSpeed = 0.5 * boost;
-            maxSpeed = 2.8 * boost;
-            stopSpeed = 1.0 * boost;
-            fallSpeed = 0.2 * boost;
-            maxFallSpeed = 9.0 * boost;
-            jumpStart = -5.5 * boost;
-            stopJumpSpeed = 0.3 * boost;
-            doubleJumpStart = -5 * boost;
+            moveSpeed = 0.5f * boost;
+            maxSpeed = 2.8f * boost;
+            stopSpeed = 1.0f * boost;
+            fallSpeed = 0.2f * boost;
+            maxFallSpeed = 9.0f * boost;
+            jumpStart = -5.5f * boost;
+            stopJumpSpeed = 0.3f * boost;
+            doubleJumpStart = -5f * boost;
         }
 
         public Boolean IsFireballReady()
@@ -350,7 +350,7 @@ namespace MainGame.Objects
 
             if (knockback)
             {
-                dy += fallSpeed * 2;
+                V2_dxy.Y += fallSpeed * 2.0f;
                 if (!falling) knockback = false;
                 return;
             }
@@ -358,46 +358,49 @@ namespace MainGame.Objects
 
             if (left)
             {
-                dx -= moveSpeed;
-                if (dx < -maxSpeed)
+                V2_dxy.X -= moveSpeed;
+                if (V2_dxy.X < -maxSpeed)
                 {
-                    dx = -maxSpeed;
+                    V2_dxy.X = -maxSpeed;
                 }
             }
             else if (right)
             {
-                dx += moveSpeed;
-                if (dx > maxSpeed)
+                V2_dxy.X += moveSpeed;
+                if (V2_dxy.X > maxSpeed)
                 {
-                    dx = maxSpeed;
+                    V2_dxy.X = maxSpeed;
                 }
             }
             else
             {
-                if (dx > 0)
+                if (V2_dxy.X > 0)
                 {
-                    dx -= stopSpeed;
-                    if (dx < 0)
+                    V2_dxy.X -= stopSpeed;
+                    if (V2_dxy.X < 0)
                     {
-                        dx = 0;
+                        V2_dxy.X = 0;
 
                     }
                 }
-                else if (dx < 0)
+                else if (V2_dxy.X < 0)
                 {
-                    dx += stopSpeed;
-                    if (dx > 0)
+                    V2_dxy.X += stopSpeed;
+                    if (V2_dxy.X > 0)
                     {
-                        dx = 0;
+                        V2_dxy.X = 0;
                     }
                 }
             }
 
-            if ((attack || hi_attack || low_attack || dashing) && !(jumping || falling)) { dx = 0; }
+            if ((attack || hi_attack || low_attack || dashing) && !(jumping || falling))
+            {
+                V2_dxy.X = 0;
+            }
 
             if (jumping && !falling)
             {
-                dy = jumpStart;
+                V2_dxy.Y = jumpStart;
                 falling = true;
 
             }
@@ -408,7 +411,7 @@ namespace MainGame.Objects
                 dashTimer++;
                 if (facingRight)
                 {
-                    dx = moveSpeed * (10 - dashTimer * 0.04);
+                    V2_dxy.X = moveSpeed * (10 - dashTimer * 0.04f);
                     for (int i = 0; i < 6; i++)
                     {
                         energyParticles.Add(new P_Player(tileMap, V2_xy.X, V2_xy.Y + cheight / 4, P_Player.LEFT));
@@ -416,7 +419,7 @@ namespace MainGame.Objects
                 }
                 else
                 {
-                    dx = -moveSpeed * (10 - dashTimer * 0.04);
+                    V2_dxy.X = -moveSpeed * (10 - dashTimer * 0.04f);
                     for (int i = 0; i < 6; i++)
                     {
                         energyParticles.Add(new P_Player(tileMap, V2_xy.X, V2_xy.Y + cheight / 4, P_Player.RIGHT));
@@ -426,7 +429,7 @@ namespace MainGame.Objects
 
             if (doubleJump && skill_doubleJump)
             {
-                dy = doubleJumpStart;
+                V2_dxy.Y = doubleJumpStart;
                 alreadyDoubleJump = true;
                 doubleJump = false;
                 for (int i = 0; i < 6; i++)
@@ -439,9 +442,9 @@ namespace MainGame.Objects
 
             if (falling)
             {
-                dy += fallSpeed;
-                if (dy < 0 && !jumping) dy += stopJumpSpeed;
-                if (dy > maxFallSpeed) dy = maxFallSpeed;
+                V2_dxy.Y += fallSpeed;
+                if (V2_dxy.Y < 0 && !jumping) V2_dxy.Y += stopJumpSpeed;
+                if (V2_dxy.Y > maxFallSpeed) V2_dxy.Y = maxFallSpeed;
             }
         }
 
@@ -449,7 +452,7 @@ namespace MainGame.Objects
         {
             currentAction = i;
 
-            bodyAnimation.SetFrames(sprites.Get(currentAction));
+            bodyAnimation.SetFrames(sprites[currentAction]);
             bodyAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
             armorAnimation.SetFrames(armorSprites.get(currentAction));
@@ -487,9 +490,9 @@ namespace MainGame.Objects
             flinching = true;
             flinchCount = 0;
 
-            if (facingRight) dx = -1;
-            else dx = 1;
-            dy = -3;
+            if (facingRight) V2_dxy.X = -1;
+            else V2_dxy.X = 1;
+            V2_dxy.Y = -3;
             knockback = true;
             falling = true;
             jumping = false;
@@ -500,7 +503,7 @@ namespace MainGame.Objects
 
             GetNextPosition();
             CheckTileMapCollision();
-            SetPosition(xtemp, ytemp);
+            SetPosition(xy_temp.X, xy_temp.Y);
 
             if (GlobalVariables.DEBUG_READY)
             {
@@ -512,7 +515,7 @@ namespace MainGame.Objects
 
             if (teleporting) energyParticles.Add(new P_Player(tileMap, V2_xy.X, V2_xy.Y, P_Player.UP));
 
-            if (dx == 0) V2_xy.X = (int)V2_xy.X;
+            if (V2_dxy.X == 0) V2_xy.X = (int)V2_xy.X;
             if (fireballCooldown > 15) fireballShooted = false;
 
             if (fireballCooldown >= 100) fireballCooldown = 100;
@@ -535,9 +538,9 @@ namespace MainGame.Objects
             for (int i = 0; i < energyParticles.Count; i++)
             {
                 energyParticles[i].Update();
-                if (energyParticles[i].shouldRemove())
+                if (energyParticles[i].ShouldRemove())
                 {
-                    energyParticles.Remove(i);
+                    energyParticles.RemoveAt(i);
                     i--;
                 }
             }
@@ -558,7 +561,7 @@ namespace MainGame.Objects
                 if (!bodyAnimation.HasPlayedOnce())
                 {
                     knockback = true;
-                    if (dy == 0) dx = 0;
+                    if (V2_dxy.Y == 0) V2_dxy.X = 0;
 
                 }
             }
@@ -599,10 +602,10 @@ namespace MainGame.Objects
             if (facingRight)
             {
                 g.Draw(bodyAnimation.GetImage(), V2_xy, source, Color.White, 0.0f, Origin, 1.0f, SpriteEffects.None, 0.0f);
-                g.drawImage(bodyAnimation.getImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
+                g.Draw(bodyAnimation.GetImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
 
-                if (skill_doubleJump && !skill_dash) g.drawImage(armorAnimation.getImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
-                else if (skill_dash) g.drawImage(robeAnimation.getImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
+                if (skill_doubleJump && !skill_dash) g.Draw(armorAnimation.GetImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
+                else if (skill_dash) g.Draw(robeAnimation.GetImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
 
 
                 if (!fireballShooted)
@@ -613,23 +616,23 @@ namespace MainGame.Objects
 
                         if (squat)
                         {
-                            new_y = V2_xy.Y + ymap - (height / 2) + 10;
+                            new_y = V2_xy.Y + V2_mapxy.Y - (height / 2) + 10;
                         }
                         else
                         {
-                            new_y = V2_xy.Y + ymap - height / 2;
+                            new_y = V2_xy.Y + V2_mapxy.Y - height / 2;
                         }
 
-                        if (GetSkill(2)) g.drawImage(swordAnimation.getImage(), (int)(x + xmap - width / 2), (int)(new_y), null);
+                        if (GetSkill(2)) g.Draw(swordAnimation.GetImage(), (int)(x + xmap - width / 2), (int)(new_y), null);
                     }
                 }
             }
             else
             {
 
-                g.drawImage(bodyAnimation.getImage(), (int)(x + xmap - width / 2 + width), (int)(y + ymap - height / 2), -width, height, null);
-                if (skill_doubleJump && !skill_dash) g.drawImage(armorAnimation.getImage(), (int)(x + xmap - width / 2 + width), (int)(y + ymap - height / 2), -width, height, null);
-                else if (skill_dash) g.drawImage(robeAnimation.getImage(), (int)(x + xmap - width / 2 + width), (int)(y + ymap - height / 2), -width, height, null);
+                g.Draw(bodyAnimation.GetImage(), (int)(x + xmap - width / 2 + width), (int)(y + ymap - height / 2), -width, height, null);
+                if (skill_doubleJump && !skill_dash) g.Draw(armorAnimation.GetImage(), (int)(x + xmap - width / 2 + width), (int)(y + ymap - height / 2), -width, height, null);
+                else if (skill_dash) g.Draw(robeAnimation.GetImage(), (int)(x + xmap - width / 2 + width), (int)(y + ymap - height / 2), -width, height, null);
 
 
                 if (!fireballShooted)
@@ -640,14 +643,17 @@ namespace MainGame.Objects
 
                         if (squat)
                         {
-                            new_y = V2_xy.Y + ymap - (height / 2) + 10;
+                            new_y = V2_xy.Y + V2_mapxy.Y - (height / 2) + 10;
                         }
                         else
                         {
-                            new_y = V2_xy.Y + ymap - height / 2;
+                            new_y = V2_xy.Y + V2_mapxy.Y - height / 2;
                         }
 
-                        if (GetSkill(2)) g.drawImage(swordAnimation.getImage(), (int)(x + xmap - width / 2 + width), (int)(new_y), -60, 30, null);
+                        if (GetSkill(2))
+                        {
+                            g.Draw(swordAnimation.GetImage(), (int)(x + xmap - width / 2 + width), (int)(new_y), -60, 30, null);
+                        }
                     }
                 }
             }
@@ -655,9 +661,9 @@ namespace MainGame.Objects
             if (GlobalVariables.DEBUG_READY)
             {
                 Rectangle r = GetRectangle();
-                r.X += (int)xmap;
-                r.Y += (int)ymap;
-                g.draw(r);
+                r.X += (int)V2_mapxy.X;
+                r.Y += (int)V2_mapxy.Y;
+                g.Draw(r);
             }
         }
 
@@ -673,18 +679,19 @@ namespace MainGame.Objects
 
                 //tutaj częśc dla człowieczka
                 int count = 0;
-                sprites = new ArrayList[]();
+                sprites = new List<Texture2D>[8];
                 for (int i = 0; i < NUMFRAMES.Length; i++)
                 {
                     Texture2D[] bi = new Texture2D[NUMFRAMES[i]];
                     for (int j = 0; j < NUMFRAMES[i]; j++) { bi[j] = spritesheet.getSubimage(j * FRAMEWIDTHS[i], count, FRAMEWIDTHS[i], FRAMEHEIGHTS[i]); }
                     sprites.Add(bi);
+                    
                     count += FRAMEHEIGHTS[i];
                 }
 
                 // tutaj część dla zbroi
                 count = 0;
-                armorSprites = new ArrayList[]();
+                armorSprites = new List<Texture2D>[8];
                 for (int i = 0; i < NUMFRAMES.Length; i++)
                 {
                     Texture2D[] bi = new Texture2D[NUMFRAMES[i]];
@@ -695,7 +702,7 @@ namespace MainGame.Objects
 
                 // tutaj czesc dla miecza
                 count = 0;
-                swordSprites = new ArrayList[]();
+                swordSprites = new List<Texture2D>[8];
                 for (int i = 0; i < swordNUMFRAMES.Length; i++)
                 {
                     Texture2D[] bi = new Texture2D[swordNUMFRAMES[i]];
@@ -705,7 +712,7 @@ namespace MainGame.Objects
                 }
 
                 count = 0;
-                robeSprites = new ArrayList[]();
+                robeSprites = new List<Texture2D>[8];
                 for (int i = 0; i < NUMFRAMES.Length; i++)
                 {
                     Texture2D[] bi = new Texture2D[NUMFRAMES[i]];
@@ -726,7 +733,7 @@ namespace MainGame.Objects
             for (int i = 0; i < items.Count; i++)
             {
 
-                Item e = (Item)items[i];
+                Item e = items[i];
 
                 if (Intersects(e))
                 {
@@ -761,8 +768,7 @@ namespace MainGame.Objects
         {
             for (int i = 0; i < enemies.Count; i++)
             {
-
-                Enemy e = (Enemy)enemies[i];
+                Enemy e = enemies[i];
 
                 if (currentAction == HIGH_ATTACK)
                 {
@@ -847,14 +853,14 @@ namespace MainGame.Objects
                     else attackRect.X = (int)V2_xy.X - 35;
                 }
             }
-            else if (dy < 0)
+            else if (V2_dxy.Y < 0)
             {
                 if (currentAction != JUMPING)
                 {
                     SetAnimation(JUMPING);
                 }
             }
-            else if (dy > 0)
+            else if (V2_dxy.Y > 0)
             {
                 if (currentAction != FALLING)
                 {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using MainGame;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace MainGame.Control
 {
@@ -13,10 +14,8 @@ namespace MainGame.Control
     {
         private Texture2D image;
 
-        private double x;
-        private double y;
-        private double dx;
-        private double dy;
+        private Vector2 xy;
+        private Vector2 d_xy;
 
         public int width;
         public int height;
@@ -81,14 +80,14 @@ namespace MainGame.Control
         }
         public void SetPosition(double x, double y)
         {
-            this.x = (x * xscale) % width;
-            this.y = (y * yscale) % height;
+            this.xy.X = (float)(x * xscale) % width;
+            this.xy.Y = (float)(y * yscale) % height;
         }
 
         public void SetVector(double dx, double dy)
         {
-            this.dx = dx;
-            this.dy = dy;
+            this.d_xy.X = (float)dx;
+            this.d_xy.Y = (float)dy;
         }
 
         public void SetScale(double xscale, double yscale)
@@ -105,22 +104,22 @@ namespace MainGame.Control
 
         public double GetX()
         {
-            return x;
+            return xy.X;
         }
 
         public double GetY()
         {
-            return y;
+            return xy.Y;
         }
 
         public void update()
         {
-            x += dx;
-            while (x <= -width) x += width;
-            while (x >= width) x -= width;
-            y += dy;
-            while (y <= -height) y += height;
-            while (y >= height) y -= height;
+            xy.X += d_xy.X;
+            while (xy.X <= -width) xy.X += width;
+            while (xy.X >= width) xy.X -= width;
+            xy.Y += d_xy.Y;
+            while (xy.Y <= -height) d_xy.Y += height;
+            while (xy.Y >= height) d_xy.Y -= height;
         }
 
         public void Draw(SpriteBatch g)
@@ -133,19 +132,19 @@ namespace MainGame.Control
                 }
             }
 
-            if (x < 0)
+            if (xy.X < 0)
             {
                 g.Draw(image, (int)x + GlobalVariables.WIDTH, (int)y, null);
             }
-            if (x > 0)
+            if (xy.X > 0)
             {
                 g.Draw(image, (int)x - GlobalVariables.WIDTH, (int)y, null);
             }
-            if (y < 0)
+            if (xy.Y < 0)
             {
                 g.Draw(image, (int)x, (int)y + GlobalVariables.HEIGHT, null);
             }
-            if (y > 0)
+            if (xy.Y > 0)
             {
                 g.Draw(image, (int)x, (int)y - GlobalVariables.HEIGHT, null);
             }

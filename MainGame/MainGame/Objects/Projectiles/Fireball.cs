@@ -1,5 +1,5 @@
 ﻿using MainGame.Control;
-using MainGame.Maps.TileMap;
+using MainGame.Maps.Tiles;
 using MainGame.Objects.Enemies;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

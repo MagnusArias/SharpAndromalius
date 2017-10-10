@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using MainGame.Control;
-using MainGame.Maps.TileMap;
+using MainGame.Maps.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MainGame.Objects

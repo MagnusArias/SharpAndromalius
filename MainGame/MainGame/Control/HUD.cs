@@ -1,4 +1,4 @@
-﻿using MainGame.Maps.TileMap;
+﻿using MainGame.Maps.Tiles;
 using MainGame.Objects;
 using Microsoft.Xna.Framework.Graphics;
 using System;

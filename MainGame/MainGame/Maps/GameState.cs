@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework.Graphics;
 
 namespace MainGame.Maps
 {
-    class GameState
+    abstract class GameState
     {
         protected GameStateManager gsm;
 
@@ -15,9 +11,9 @@ namespace MainGame.Maps
             this.gsm = gsm;
         }
 
-        public abstract void init();
-        public abstract void update();
-        public abstract void draw(Graphics2D g);
-        public abstract void handleInput();
+        public abstract void Init();
+        public abstract void Update();
+        public abstract void Draw(SpriteBatch g);
+        public abstract void HandleInput();
     }
 }

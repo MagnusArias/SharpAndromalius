@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 using MainGame.Control;
 using MainGame.Objects.Enemies;
-using MainGame.Maps.TileMap;
+using MainGame.Maps.Tiles;
 using MainGame.Objects.Items;
 using MainGame.Objects.Projectiles;
 using Microsoft.Xna.Framework;
@@ -113,7 +113,7 @@ namespace MainGame.Objects
             attackRect.Width = 20;
             attackRect.Height = 10;
 
-            alr = new Rectangle((int)x - 15, (int)y - 45, 45, 45);
+            alr = new Rectangle((int)V2_xy.X - 15, (int)V2_xy.Y - 45, 45, 45);
 
             //rozmiary gracza, do wyswietlenia
             width = 45;
@@ -413,7 +413,7 @@ namespace MainGame.Objects
                     dx = moveSpeed * (10 - dashTimer * 0.04);
                     for (int i = 0; i < 6; i++)
                     {
-                        energyParticles.add(new P_Player(tileMap, x, y + cheight / 4, P_Player.LEFT));
+                        energyParticles.Add(new P_Player(tileMap, V2_xy.X, V2_xy.Y + cheight / 4, P_Player.LEFT));
                     }
                 }
                 else
@@ -421,7 +421,7 @@ namespace MainGame.Objects
                     dx = -moveSpeed * (10 - dashTimer * 0.04);
                     for (int i = 0; i < 6; i++)
                     {
-                        energyParticles.add(new EnergyParticle(tileMap, x, y + cheight / 4, EnergyParticle.RIGHT));
+                        energyParticles.Add(new P_Player(tileMap, V2_xy.X, V2_xy.Y + cheight / 4, P_Player.RIGHT));
                     }
                 }
             }
@@ -433,7 +433,7 @@ namespace MainGame.Objects
                 doubleJump = false;
                 for (int i = 0; i < 6; i++)
                 {
-                    energyParticles.add(new EnergyParticle(tileMap, x, y + cheight / 4, EnergyParticle.DOWN));
+                    energyParticles.Add(new P_Player(tileMap, V2_xy.X, V2_xy.Y + cheight / 4, P_Player.DOWN));
                 }
             }
 
@@ -451,7 +451,7 @@ namespace MainGame.Objects
         {
             currentAction = i;
 
-            bodyAnimation.SetFrames(sprites.get(currentAction));
+            bodyAnimation.SetFrames(sprites.Get(currentAction));
             bodyAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
             armorAnimation.SetFrames(armorSprites.get(currentAction));
@@ -512,9 +512,9 @@ namespace MainGame.Objects
             else boost = 1;
             SetParameters(boost);
 
-            if (teleporting) energyParticles.add(new EnergyParticle(tileMap, x, y, EnergyParticle.UP));
+            if (teleporting) energyParticles.Add(new P_Player(tileMap, V2_xy.X, V2_xy.Y, P_Player.UP));
 
-            if (dx == 0) x = (int)x;
+            if (dx == 0) V2_xy.X = (int)V2_xy.X;
             if (fireballCooldown > 15) fireballShooted = false;
 
             if (fireballCooldown >= 100) fireballCooldown = 100;
@@ -534,19 +534,19 @@ namespace MainGame.Objects
                 }
             }
 
-            for (int i = 0; i < energyParticles.size(); i++)
+            for (int i = 0; i < energyParticles.Count; i++)
             {
-                energyParticles.get(i).update();
-                if (energyParticles.get(i).shouldRemove())
+                energyParticles[i].Update();
+                if (energyParticles[i].shouldRemove())
                 {
-                    energyParticles.remove(i);
+                    energyParticles.Remove(i);
                     i--;
                 }
             }
 
             if (currentAction == ATTACK || currentAction == HIGH_ATTACK || currentAction == LOW_ATTACK)
             {
-                if (bodyAnimation.hasPlayedOnce())
+                if (bodyAnimation.HasPlayedOnce())
                 {
                     hi_attack = false;
                     attack = false;
@@ -557,7 +557,7 @@ namespace MainGame.Objects
             if (currentAction == KNOCKBACK)
             {
 
-                if (!bodyAnimation.hasPlayedOnce())
+                if (!bodyAnimation.HasPlayedOnce())
                 {
                     knockback = true;
                     if (dy == 0) dx = 0;
@@ -570,10 +570,10 @@ namespace MainGame.Objects
 
             CheckAnimations();
 
-            bodyAnimation.update();
-            armorAnimation.update();
-            robeAnimation.update();
-            swordAnimation.update();
+            bodyAnimation.Update();
+            armorAnimation.Update();
+            robeAnimation.Update();
+            swordAnimation.Update();
 
             // ustawienie kierunku
             if (!attack && !hi_attack && !low_attack && !knockback && !dashing)
@@ -600,6 +600,7 @@ namespace MainGame.Objects
 
             if (facingRight)
             {
+                g.Draw(bodyAnimation.GetImage(), V2_xy, source, Color.White, 0.0f, Origin, 1.0f, SpriteEffects.None, 0.0f);
                 g.drawImage(bodyAnimation.getImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
 
                 if (skill_doubleJump && !skill_dash) g.drawImage(armorAnimation.getImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
@@ -614,11 +615,11 @@ namespace MainGame.Objects
 
                         if (squat)
                         {
-                            new_y = y + ymap - (height / 2) + 10;
+                            new_y = V2_xy.Y + ymap - (height / 2) + 10;
                         }
                         else
                         {
-                            new_y = y + ymap - height / 2;
+                            new_y = V2_xy.Y + ymap - height / 2;
                         }
 
                         if (GetSkill(2)) g.drawImage(swordAnimation.getImage(), (int)(x + xmap - width / 2), (int)(new_y), null);
@@ -641,11 +642,11 @@ namespace MainGame.Objects
 
                         if (squat)
                         {
-                            new_y = y + ymap - (height / 2) + 10;
+                            new_y = V2_xy.Y + ymap - (height / 2) + 10;
                         }
                         else
                         {
-                            new_y = y + ymap - height / 2;
+                            new_y = V2_xy.Y + ymap - height / 2;
                         }
 
                         if (GetSkill(2)) g.drawImage(swordAnimation.getImage(), (int)(x + xmap - width / 2 + width), (int)(new_y), -60, 30, null);
@@ -823,9 +824,9 @@ namespace MainGame.Objects
                 if (currentAction != HIGH_ATTACK)
                 {
                     SetAnimation(HIGH_ATTACK);
-                    attackRect.Y = (int)y - 16;
-                    if (facingRight) attackRect.X = (int)x + 10;
-                    else attackRect.X = (int)x - 35;
+                    attackRect.Y = (int)V2_xy.Y - 16;
+                    if (facingRight) attackRect.X = (int)V2_xy.X + 10;
+                    else attackRect.X = (int)V2_xy.X - 35;
                 }
             }
             else if (attack)
@@ -833,9 +834,9 @@ namespace MainGame.Objects
                 if (currentAction != ATTACK)
                 {
                     SetAnimation(ATTACK);
-                    attackRect.Y = (int)y - 16;
-                    if (facingRight) attackRect.X = (int)x + 10;
-                    else attackRect.X = (int)x - 35;
+                    attackRect.Y = (int)V2_xy.Y - 16;
+                    if (facingRight) attackRect.X = (int)V2_xy.X + 10;
+                    else attackRect.X = (int)V2_xy.X - 35;
                 }
             }
             else if (low_attack)
@@ -843,9 +844,9 @@ namespace MainGame.Objects
                 if (currentAction != LOW_ATTACK)
                 {
                     SetAnimation(LOW_ATTACK);
-                    attackRect.Y = (int)y;
-                    if (facingRight) attackRect.X = (int)x + 10;
-                    else attackRect.X = (int)x - 35;
+                    attackRect.Y = (int)V2_xy.Y;
+                    if (facingRight) attackRect.X = (int)V2_xy.X + 10;
+                    else attackRect.X = (int)V2_xy.X - 35;
                 }
             }
             else if (dy < 0)

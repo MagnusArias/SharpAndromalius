@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using MainGame.Objects;
-using MainGame.Maps.TileMap;
+using MainGame.Maps.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MainGame.Control
@@ -60,7 +60,7 @@ namespace MainGame.Control
             if (debugReady)
             {
                 SetMapPosition();
-                g.setColor(java.awt.Color.GREEN);
+
                 g.DrawString(playerX, GlobalVariables.WIDTH - 150, 20);
                 g.DrawString(playerY, GlobalVariables.WIDTH - 150, 30);
                 g.DrawString(playerDX, GlobalVariables.WIDTH - 100, 20);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using MainGame.Control;
 using MainGame.Objects;
-using MainGame.Maps.TileMap;
+using MainGame.Maps.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MainGame.Objects.Enemies
@@ -95,14 +95,14 @@ namespace MainGame.Objects.Enemies
                 if (lastBreath <= 0) remove = true;
             }
 
-            facingRight = player.GetX() >= x;
+            facingRight = player.GetX() >= V2_xy.X;
 
 
             if (player.GetX() > 2240 && player.GetY() > 1530 && player.GetY() < 1870)
             {
                 playerCatch = true;
 
-                if (Math.Abs(player.GetX() - x) < 250)
+                if (Math.Abs(player.GetX() - V2_xy.X) < 250)
                 { // jestesmy blisko bossa, to sie oddala od nas
 
                     if (!facingRight)
@@ -122,7 +122,7 @@ namespace MainGame.Objects.Enemies
                         }
                     }
                 }
-                else if (Math.Abs(player.GetX() - x) > 250 && Math.Abs(player.GetX() - x) < 400)
+                else if (Math.Abs(player.GetX() - V2_xy.X) > 250 && Math.Abs(player.GetX() - V2_xy.X) < 400)
                 { // oddalimy sie, ale nas goni
                     if (facingRight)
                     {
@@ -142,7 +142,7 @@ namespace MainGame.Objects.Enemies
                     }
                 }
             }
-            else if (Math.Abs(player.GetX() - x) > 400 && !playerCatch)
+            else if (Math.Abs(player.GetX() - V2_xy.X) > 400 && !playerCatch)
             { // ale jezeli jestesmy daleko, to opuszcza poscig
                 if (dx > 0)
                 {
@@ -164,8 +164,8 @@ namespace MainGame.Objects.Enemies
             }
             else playerCatch = false;
 
-            x += dx;
-            y = Math.Sin(b * tick) + y;
+            V2_xy.X += (float)dx;
+            V2_xy.Y = (float)Math.Sin(b * tick) + V2_xy.Y;
 
             // update animation
             animation.Update();

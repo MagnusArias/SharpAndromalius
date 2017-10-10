@@ -20,6 +20,7 @@ namespace MainGame.Control
         public static int ENTER = 8;
         public static int ESCAPE = 9;
 
+        
         public static void KeySet(int i, Boolean b)
         {
             if (i == KeyEvent.VK_UP) keyState[UP] = b;
@@ -42,7 +43,7 @@ namespace MainGame.Control
             }
         }
 
-        public Boolean IsPressed(int i)
+        public static Boolean IsPressed(int i)
         {
             return keyState[i] && !prevKeyState[i];
         }

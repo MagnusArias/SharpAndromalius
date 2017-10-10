@@ -1,33 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace MainGame.Maps.TileMap
+namespace MainGame.Maps.Tiles
 {
     class Tile
     {
-        // TODO - poszukac zamiennika buffered_image
-        private String image;
+        private Texture2D image;
         private int type;
 
-        //tile types
         public const int AIR = 0;
         public const int SOLID = 1;
 
-        public Tile(String image, int type)
+        public Tile(Texture2D image, int type)
         {
             this.image = image;
             this.type = type;
         }
 
-        public String getImage()
+        public Texture2D GetImage()
         {
             return image;
         }
 
-        public int getType()
+        public int GetTileType()
         {
             return type;
         }

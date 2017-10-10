@@ -50,8 +50,8 @@
     <Compile Include="GlobalVariables.cs" />
     <Compile Include="Maps\GameState.cs" />
     <Compile Include="Maps\GameStateManager.cs" />
-    <Compile Include="Maps\Level_1\Level_1.cs" />
-    <Compile Include="Maps\Level_2\Level_2.cs" />
+    <Compile Include="Maps\Level1\Level_1.cs" />
+    <Compile Include="Maps\Level2\Level_2.cs" />
     <Compile Include="Maps\MenuState.cs" />
     <Compile Include="Maps\PauseState.cs" />
     <Compile Include="Maps\TileMap\Tile.cs" />
@@ -273,15 +273,15 @@
     <Content Include="Content\Weapons\sword-slash-07-60x30.png" />
     <Content Include="Content\Weapons\sword-slash-08-60x30.png" />
     <Content Include="Icon.ico" />
-    <Content Include="Maps\Level_1\tileset.png" />
-    <Content Include="Maps\Level_2\tileset.png" />
+    <Content Include="Maps\Level1\tileset.png" />
+    <Content Include="Maps\Level2\tileset.png" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
     <None Include="Content\Misc\tlo2.jgc" />
-    <None Include="Maps\Level_1\level1.map" />
-    <None Include="Maps\Level_2\level.map" />
+    <None Include="Maps\Level1\level1.map" />
+    <None Include="Maps\Level2\level.map" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

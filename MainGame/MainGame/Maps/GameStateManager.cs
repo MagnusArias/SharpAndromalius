@@ -1,84 +1,84 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MainGame.Maps.Level1;
+using MainGame.Maps.Level2;
+using MainGame.Maps;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 
-namespace MainGamme.Maps
+
+namespace MainGame.Maps
 {
     class GameStateManager
     {
         private GameState[] gameStates;
         private int currentState;
         private PauseState pauseState;
-        private boolean paused;
+        private Boolean paused;
 
-        private static final int NUMGAMESTATES = 16;
+        private const int NUMGAMESTATES = 16;
 
-        public static final int MENUSTATE = 0;
-        public static final int LEVEL1 = 1;
-        public static final int LEVEL2 = 2;
+        public const int MENUSTATE = 0;
+        public const int LEVEL1 = 1;
+        public const int LEVEL2 = 2;
 
         public GameStateManager()
         {
-
             gameStates = new GameState[NUMGAMESTATES];
 
             pauseState = new PauseState(this);
             paused = false;
 
             currentState = MENUSTATE;
-            loadState(currentState);
+            LoadState(currentState);
         }
 
-        private void loadState(int state)
+        private void LoadState(int state)
         {
             if (state == MENUSTATE) gameStates[state] = new MenuState(this);
-            else if (state == LEVEL1) gameStates[state] = new Level1(this);
-            else if (state == LEVEL2) gameStates[state] = new Level2(this);
+            else if (state == LEVEL1) gameStates[state] = new Level_1(this);
+            else if (state == LEVEL2) gameStates[state] = new Level_2(this);
         }
 
-        private void unloadState(int state)
+        private void UnloadState(int state)
         {
             gameStates[state] = null;
         }
 
-        public void setState(int state)
+        public void SetState(int state)
         {
-            unloadState(currentState);
+            UnloadState(currentState);
             currentState = state;
-            loadState(currentState);
+            LoadState(currentState);
         }
 
-        public void setPaused(boolean b)
+        public void SetPaused(Boolean b)
         {
             paused = b;
         }
 
-        public void update()
+        public void Update()
         {
             if (paused)
             {
-                pauseState.update();
+                pauseState.Update();
                 return;
             }
-            if (gameStates[currentState] != null) gameStates[currentState].update();
+            if (gameStates[currentState] != null) gameStates[currentState].Update();
         }
 
-        public void draw(java.awt.Graphics2D g)
+        public void Draw(SpriteBatch g)
         {
             if (paused)
             {
-                pauseState.draw(g);
+                pauseState.Draw(g);
                 return;
             }
-            if (gameStates[currentState] != null) gameStates[currentState].draw(g);
+            if (gameStates[currentState] != null) gameStates[currentState].Draw(g);
             else
             {
                 Color myColour = new Color(255, 255, 255, 127);
 
                 g.setColor(myColour);
-                g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
+                g.fillRect(0, 0, GlobalVariables.WIDTH, GlobalVariables.HEIGHT);
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿using MainGame.Control;
-using MainGame.Maps.TileMap;
+using MainGame.Maps.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 

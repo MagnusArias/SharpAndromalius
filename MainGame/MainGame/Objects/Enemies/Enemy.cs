@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using MainGame.Control;
 using MainGame.Objects;
-using MainGame.Maps.TileMap;
+using MainGame.Maps.Tiles;
 
 namespace MainGame.Objects.Enemies
 {
@@ -62,6 +62,7 @@ namespace MainGame.Objects.Enemies
 
         public void Update() { }
 
+        
         public void Draw(SpriteBatch g)
         {
             base.Draw(g);

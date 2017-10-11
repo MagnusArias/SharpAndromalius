@@ -13,16 +13,21 @@ namespace MainGame
         public static int GAME_WINDOW_WIDTH;
         public static int GAME_WINDOW_HEIGHT;
         public static int GAME_WINDOW_SCALE;
-        
+
         //
         //
         //  
         //          PLAYER SPRITES
         //
+        public static Texture2D Player_Main;
         public const String PLAYER_MAIN = "Content/Player/player-main.png";
+        public static Texture2D Player_Red;
         public const String PLAYER_RED = "Content/Player/player-spritemap-red.png";
+        public static Texture2D Player_Blue;
         public const String PLAYER_BLUE = "Content/Player/player-spritemap-blue.png";
+        public static Texture2D Player_Green;
         public const String PLAYER_GREEN = "Content/Player/player-spritemap-green.png";
+        public static Texture2D Player_Grey;
         public const String PLAYER_GREY = "Content/Player/player-spritemap-grey.png";
         //
         //
@@ -53,7 +58,7 @@ namespace MainGame
         public const String GHOST_BLUE_WALK = "Content/Enemies/Ghost/blue-walk.png";
         //
         //  Boss 1:     114 176
-        public static Texture2D E_Boss;
+        public static Texture2D E_BossWalk;
         public const String BOSS_WALK = "Content/Enemies/Bosses/boss-1.png";
         //
         //

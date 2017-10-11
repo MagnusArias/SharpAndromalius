@@ -20,7 +20,7 @@ namespace MainGame.Maps
             //
             //  Instance for MAP
             //
-            i_dj = new I_DJump(tileMap, player);
+            i_dj = new I_DJump(tileMap, player, GlobalVariables.DOUBLE_JUMP);
             i_dj.SetPosition(272, 1530);
             items.Add(i_dj);
 
@@ -105,7 +105,5 @@ namespace MainGame.Maps
             eb.SetPosition(2550, 1750);
             enemies.Add(eb);
         }
-
-        public override void Select() { }
     }
 }

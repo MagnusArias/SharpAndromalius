@@ -35,33 +35,8 @@ namespace MainGame.Objects.Enemies
             animation.SetDelay(4);
         }
 
-        private void GetNextPosition()
-        {
-            if (!dead)
-            {
-                if (left) V2_dxy.X = -moveSpeed;
-                else if (right) V2_dxy.X = moveSpeed;
-                else V2_dxy.X = 0;
-                if (falling)
-                {
-                    V2_dxy.Y += fallSpeed;
-                    if (V2_dxy.Y > maxFallSpeed) V2_dxy.Y = maxFallSpeed;
-                }
-                if (jumping && !falling)
-                {
-                    V2_dxy.Y = jumpStart;
-                }
-            }
-            else
-            {
-                V2_dxy.X = 0;
-                V2_dxy.Y = 0;
-            }
-        }
-
         public override void Update()
         {
-
             if (dead)
             {
                 if (!isDeadSet)

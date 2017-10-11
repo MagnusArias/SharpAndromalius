@@ -3,13 +3,11 @@ using MainGame.Maps.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-
 namespace MainGame.Objects.Projectiles
 {
     class P_Player : ParentObject
     {
         private int count;
-        private Boolean remove;
 
         private Texture2D[] sprites;
 
@@ -18,37 +16,39 @@ namespace MainGame.Objects.Projectiles
         public static int DOWN = 2;
         public static int RIGHT = 3;
 
-        public P_Player(TileMap tm, double x, double y, int dir) : base(tm)
+        public P_Player(TileMap tm, float x, float y, int dir) : base(tm)
         {
             animation = new Animation();
 
             facingRight = true;
-            this.x = x;
-            this.y = y;
+            V2_xy.X = x;
+            V2_xy.Y = y;
 
             Random r = new Random();
-            double d1 = r.Next() * 2.5 - 1.25;
-            double d2 = -r.Next() - 0.8;
+            float d1 = (float)(r.Next() * 2.5 - 1.25);
+            float d2 = (float)(-r.Next() - 0.8);
 
-            if (dir == UP)
+            switch (dir)
             {
-                dx = d1;
-                dy = d2;
-            }
-            else if (dir == LEFT)
-            {
-                dx = d2;
-                dy = d1;
-            }
-            else if (dir == DOWN)
-            {
-                dx = d1;
-                dy = -d2;
-            }
-            else
-            {
-                dx = -d2;
-                dy = d1;
+                case 0:
+                    V2_dxy.X = d1;
+                    V2_dxy.Y = d2;
+                    break;
+
+                case 1:
+                    V2_dxy.X = d2;
+                    V2_dxy.Y = d1;
+                    break;
+
+                case 2:
+                    V2_dxy.X = d1;
+                    V2_dxy.Y = -d2;
+                    break;
+
+                case 3:
+                    V2_dxy.X = -d2;
+                    V2_dxy.Y = d1;
+                    break;
             }
 
             count = 0;
@@ -58,19 +58,12 @@ namespace MainGame.Objects.Projectiles
             animation.SetDelay(-1);
         }
 
-        public void Update()
+        public override void Update()
         {
-            x += dx;
-            y += dy;
+            V2_xy.X += V2_dxy.X;
+            V2_xy.Y += V2_dxy.Y;
             count++;
             if (count == 25) remove = true;
-        }
-
-        public Boolean ShouldRemove() { return remove; }
-
-        public void Draw(SpriteBatch g)
-        {
-            base.Draw(g);
         }
     }
 }

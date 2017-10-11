@@ -21,7 +21,8 @@ namespace MainGame.Maps
         public MenuState(GameStateManager gsm) : base(gsm)
         {
             tick = 0;
-            b = Math.random() * 0.06 + 0.07;
+            Random r = new Random();
+            b = r.Next() * 0.06 + 0.07;
             yPos = (GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 100);
         }
 

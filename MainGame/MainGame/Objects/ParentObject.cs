@@ -23,7 +23,7 @@ namespace MainGame.Objects
         // wymiary
         protected int width;
         protected int height;
-        
+
         // "collision box"
         protected int collisionWidth;
         protected int collisionHeight;
@@ -62,6 +62,7 @@ namespace MainGame.Objects
         protected int health;
         protected int maxHealth;
         protected float percentHealth;
+        protected int damage;
 
         protected Boolean dead;
 
@@ -222,6 +223,8 @@ namespace MainGame.Objects
 
         public int GetCHeight() => collisionHeight;
 
+        public int GetDamage() => damage;
+
         public void SetPosition(float x, float y)
         {
             V2_xy.X = x;
@@ -248,6 +251,8 @@ namespace MainGame.Objects
 
         public void SetDown(Boolean b) => squat = b;
 
+        public void CanBeRemoved() => remove = true;
+
         public Boolean NotOnScreen()
         {
             return V2_xy.X + V2_mapxy.X + width < 0 ||
@@ -257,6 +262,40 @@ namespace MainGame.Objects
         }
 
         public Boolean ShouldRemove() => remove;
+
+        public virtual void GetNextPosition()
+        {
+            if (!dead)
+            {
+                if (left) V2_dxy.X = -moveSpeed;
+                else if (right) V2_dxy.X = moveSpeed;
+                else V2_dxy.X = 0;
+                if (falling)
+                {
+                    V2_dxy.Y += fallSpeed;
+                    if (V2_dxy.Y > maxFallSpeed) V2_dxy.Y = maxFallSpeed;
+                }
+                if (jumping && !falling)
+                {
+                    V2_dxy.Y = jumpStart;
+                }
+            }
+            else
+            {
+                V2_dxy.X = 0;
+                V2_dxy.Y = 0;
+            }
+        }
+
+        public virtual void Hit(int damage)
+        {
+            health -= damage;
+            if (health < 0) health = 0;
+            if (health == 0)
+            {
+                dead = true;
+            }
+        }
 
         public virtual void Update() { }
 

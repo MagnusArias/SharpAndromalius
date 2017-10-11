@@ -51,7 +51,7 @@ namespace MainGame.Maps
         public void Init(String background, String tileset, String map, Vector2 player_pos, Vector2 teleport_pos)
         {
             blockInput = false;
-            back = new Background(background, 0.5);
+            back = new Background(background, 0.5f);
 
             tileMap = new TileMap(30);
             tileMap.LoadTiles(tileset);
@@ -90,12 +90,9 @@ namespace MainGame.Maps
         {
             HandleInput();
 
-            if (teleport.Contains(player))
-            {
-                eventFinish = blockInput = true;
-            }
+            if (teleport.Contains(player)) eventFinish = blockInput = true;
 
-            if (player.GetHealth() == 0 || player.GetY() > tileMap.GetHeight()) { eventDead = blockInput = true; }
+            if (player.GetHealth() == 0 || player.GetY() > tileMap.GetHeight()) eventDead = blockInput = true;
 
             if (eventStart) EventStart();
             if (eventDead) EventDead();
@@ -118,33 +115,22 @@ namespace MainGame.Maps
             {
                 Fireball f = fireballs[i];
                 f.Update(enemies);
-                if (f.IsHit())
-                {
-                    fireballs.RemoveAt(i);
-                    i--;
-                }
+                if (f.IsHit()) fireballs.RemoveAt(i--);
+
             }
 
             for (int i = 0; i < items.Count; i++)
             {
                 Item e = items[i];
                 e.Update();
-                if (e.ShouldRemove())
-                {
-                    items.RemoveAt(i);
-                    i--;
-                }
+                if (e.ShouldRemove()) items.RemoveAt(i--);
             }
 
             for (int i = 0; i < enemies.Count; i++)
             {
                 Enemy e = enemies[i];
                 e.Update();
-                if (e.ShouldRemove())
-                {
-                    enemies.RemoveAt(i);
-                    i--;
-                }
+                if (e.ShouldRemove()) enemies.RemoveAt(i--);
             }
             teleport.Update();
             debug.Update();
@@ -265,10 +251,7 @@ namespace MainGame.Maps
             }
             if (eventCount >= 120)
             {
-                if (player.GetHealth() == 0)
-                {
-                    gsm.SetState(GameStateManager.MENUSTATE);
-                }
+                if (player.GetHealth() == 0) gsm.SetState(GameStateManager.MENUSTATE);
                 else
                 {
                     eventDead = blockInput = false;
@@ -298,12 +281,9 @@ namespace MainGame.Maps
                 rec_tb[0].Width += 12;
                 rec_tb[0].Height += 8;
             }
-            if (eventCount == 120)
-            {
-                gsm.SetState(newState);
-            }
+            if (eventCount == 120) gsm.SetState(newState);
         }
 
-        public abstract void Select();
+        public virtual void Select();
     }
 }

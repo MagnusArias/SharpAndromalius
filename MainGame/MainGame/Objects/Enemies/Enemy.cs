@@ -8,7 +8,6 @@ namespace MainGame.Objects.Enemies
     class Enemy : ParentObject
     {
         protected int lastBreath;
-        protected int damage;
 
         protected Player player;
         protected Texture2D sprites;
@@ -18,17 +17,5 @@ namespace MainGame.Objects.Enemies
         public Boolean IsDead() => dead;
 
         public int GetLastBreath() => lastBreath;
-
-        public int GetDamage() => damage;
-
-        public void Hit(int damage)
-        {
-            health -= damage;
-            if (health < 0) health = 0;
-            if (health == 0)
-            {
-                dead = true;
-            }
-        }
     }
 }

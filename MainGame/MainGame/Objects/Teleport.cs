@@ -52,9 +52,6 @@ namespace MainGame.Objects
 
         }
 
-        public override void Update()
-        {
-            animation.Update();
-        }
+        public override void Update() => animation.Update();
     }
 }

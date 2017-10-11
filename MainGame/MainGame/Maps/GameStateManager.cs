@@ -1,6 +1,4 @@
-﻿using MainGame.Maps.Level1;
-using MainGame.Maps.Level2;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 

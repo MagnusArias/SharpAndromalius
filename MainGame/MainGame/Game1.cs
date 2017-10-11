@@ -48,7 +48,7 @@ namespace MainGame
             GlobalVariables.E_SkeletonGreenWalk = Content.Load<Texture2D>(GlobalVariables.SKELETON_GREEN_WALK);
             GlobalVariables.E_SkeletonGreenDead = Content.Load<Texture2D>(GlobalVariables.SKELETON_GREEN_DEAD);
             GlobalVariables.E_GhostBlueWalk = Content.Load<Texture2D>(GlobalVariables.GHOST_BLUE_WALK);
-            GlobalVariables.E_Boss = Content.Load<Texture2D>(GlobalVariables.BOSS_WALK);
+            GlobalVariables.E_BossWalk = Content.Load<Texture2D>(GlobalVariables.BOSS_WALK);
 
         }
         // TODO: use this.Content to load your game content here

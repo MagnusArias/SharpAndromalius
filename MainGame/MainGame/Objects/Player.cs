@@ -50,7 +50,6 @@ namespace MainGame.Objects
         protected int currentAction;
 
         //takie drobne rzeczy gracza
-        private int damage;
         private int boost;
 
         // rozne timery, do immoratala i do dasha
@@ -172,14 +171,8 @@ namespace MainGame.Objects
         public void SetJumping(Boolean b)
         {
             if (knockback) return;
-
-
-            if (b && !jumping && falling && !alreadyDoubleJump)
-            {
-                doubleJump = true;
-            }
+            if (b && !jumping && falling && !alreadyDoubleJump) doubleJump = true;
             jumping = b;
-
         }
 
         public void SetDead()
@@ -307,7 +300,7 @@ namespace MainGame.Objects
 
         public void SetTeleporting(Boolean b) => teleporting = b;
 
-        private void GetNextPosition()
+        public override void GetNextPosition()
         {
 
             if (knockback)
@@ -414,7 +407,7 @@ namespace MainGame.Objects
         {
             currentAction = i;
 
-            bodyAnimation.SetFrames(sprites[currentAction].);
+            bodyAnimation.SetFrames(sprites[currentAction]);
             bodyAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
             armorAnimation.SetFrames(armorSprites.get(currentAction));
@@ -442,7 +435,7 @@ namespace MainGame.Objects
             else return 0;
         }
 
-        public void Hit(int damage)
+        public override void Hit(int damage)
         {
             if (flinching) return;
 

@@ -45,23 +45,6 @@ namespace MainGame.Objects.Enemies
             animation.SetDelay(4);
         }
 
-        private void GetNextPosition()
-        {
-            if (left) V2_dxy.X = -moveSpeed;
-            else if (right) V2_dxy.X = moveSpeed;
-            else V2_dxy.X = 0;
-
-            if (falling)
-            {
-                V2_dxy.Y += fallSpeed;
-                if (V2_dxy.Y > maxFallSpeed) V2_dxy.Y = maxFallSpeed;
-            }
-            if (isJumping && !falling)
-            {
-                V2_dxy.Y = jumpStart;
-            }
-        }
-
         private double CalculateDistance(Player p)
         {
             double dist = Math.Abs(

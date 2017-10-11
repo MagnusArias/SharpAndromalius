@@ -1,6 +1,5 @@
 ﻿using MainGame.Objects.Enemies;
 using MainGame.Objects.Items;
-using MainGame.Objects.Projectiles;
 using Microsoft.Xna.Framework;
 
 namespace MainGame.Maps
@@ -106,7 +105,5 @@ namespace MainGame.Maps
             eb.SetPosition(2550, 1750);
             enemies.Add(eb);
         }
-
-        public override void Select() { }
     }
 }

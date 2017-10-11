@@ -37,7 +37,7 @@ namespace MainGame.Objects.Enemies
 
             facingRight = false;
 
-            sprites = GlobalVariables.E_Boss;
+            sprites = GlobalVariables.E_BossWalk;
 
             animation.SetFrames(sprites);
             animation.SetDelay(4);

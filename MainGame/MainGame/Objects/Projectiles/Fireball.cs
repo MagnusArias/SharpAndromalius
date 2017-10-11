@@ -4,25 +4,19 @@ using MainGame.Objects.Enemies;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace MainGame.Objects.Projectiles
 {
     class Fireball : ParentObject
     {
-        public const String FIREBALLSPRITEMAP = "/Game/Src/Assets/fireball-spriteset.png";
-
-	    private Boolean hit;
-        private Boolean remove;
+        private Boolean hit;
         private Texture2D[] sprites;
         private Texture2D[] hitSprites;
         private Rectangle attackRect;
-        private int damage;
 
         public Fireball(TileMap tm, Boolean right) : base(tm)
         {
-
             animation = new Animation();
 
             moveSpeed = 3.8f;
@@ -101,21 +95,14 @@ namespace MainGame.Objects.Projectiles
 
         public void Update(List<Enemy> enemies)
         {
-
             CheckTileMapCollision();
             SetPosition(xy_temp.X, xy_temp.Y);
 
-            if (V2_dxy.X == 0 && !hit)
-            {
-                SetHit();
-            }
+            if (V2_dxy.X == 0 && !hit) SetHit();
 
             for (int i = 0; i < enemies.Count; i++)
             {
-
                 Enemy e = enemies[i];
-
-                // sprawdzenie ataku, zadajemy obrazenia wrogowi
 
                 if (e.Intersects(attackRect))
                 {
@@ -132,10 +119,7 @@ namespace MainGame.Objects.Projectiles
             }
 
             animation.Update();
-            if (hit && animation.HasPlayedOnce())
-            {
-                remove = true;
-            }
+            if (hit && animation.HasPlayedOnce()) remove = true;
 
         }
     }

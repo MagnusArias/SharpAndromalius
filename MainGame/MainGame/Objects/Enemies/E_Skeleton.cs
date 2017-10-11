@@ -7,12 +7,10 @@ namespace MainGame.Objects.Enemies
     class E_Skeleton : Enemy
     {
         private Boolean active;
-
         private Boolean isDeadSet;
 
         public E_Skeleton(TileMap tm, Player p) : base(tm)
         {
-
             player = p;
             lastBreath = 40;
 

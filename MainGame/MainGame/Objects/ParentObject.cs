@@ -45,6 +45,7 @@ namespace MainGame.Objects
         protected Boolean squat;
         protected Boolean jumping;
         protected Boolean falling;
+        protected Boolean remove;
 
         // atrybuty poruszania
         protected float moveSpeed;
@@ -59,6 +60,8 @@ namespace MainGame.Objects
         {
             tileMap = tm;
             tileSize = tm.GetTileSize();
+            remove = false;
+            animation = new Animation();
         }
 
         public Boolean Intersects(ParentObject o)
@@ -243,6 +246,10 @@ namespace MainGame.Objects
                 V2_xy.Y + V2_mapxy.Y + height < 0 ||
                 V2_xy.Y + V2_mapxy.Y - height > GlobalVariables.GAME_WINDOW_HEIGHT;
         }
+
+        public Boolean ShouldRemove() => remove;
+
+        public void Update() { }
 
         public void Draw(SpriteBatch g)
         {

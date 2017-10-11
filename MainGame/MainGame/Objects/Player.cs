@@ -55,7 +55,6 @@ namespace MainGame.Objects
         private int health;
         private int maxHealth;
         private int damage;
-
         private int boost;
 
         // rozne timery, do immoratala i do dasha
@@ -170,15 +169,9 @@ namespace MainGame.Objects
             doubleJumpStart = -5f * boost;
         }
 
-        public Boolean IsFireballReady()
-        {
-            return fireballCooldown >= 100 && (falling || jumping || !left || !right) && !knockback && !dashing;
-        }
+        public Boolean IsFireballReady() => fireballCooldown >= 100 && (falling || jumping || !left || !right) && !knockback && !dashing;
 
-        public Boolean IsDashingReady()
-        {
-            return dashCooldown >= 200 && (falling || jumping || left || right) && !knockback;
-        }
+        public Boolean IsDashingReady() => dashCooldown >= 200 && (falling || jumping || left || right) && !knockback;
 
         public void SetJumping(Boolean b)
         {
@@ -199,40 +192,19 @@ namespace MainGame.Objects
             Stop();
         }
 
-        public int GetHealth()
-        {
-            return health;
-        }
+        public int GetHealth() => health;
 
-        public int GetMaxHealth()
-        {
-            return maxHealth;
-        }
+        public int GetMaxHealth() => maxHealth;
 
-        public int GetMana()
-        {
-            return fireballCooldown;
-        }
+        public int GetMana() => fireballCooldown;
 
-        public int GetMaxMana()
-        {
-            return maxFireballCooldown;
-        }
+        public int GetMaxMana() => maxFireballCooldown;
 
-        public int GetStamina()
-        {
-            return dashCooldown;
-        }
+        public int GetStamina() => dashCooldown;
 
-        public int GetMaxStamina()
-        {
-            return maxDashCooldown;
-        }
+        public int GetMaxStamina() => maxDashCooldown;
 
-        public Boolean GetFacing()
-        {
-            return facingRight;
-        }
+        public Boolean GetFacing() => facingRight;
 
         public void SetSkill(int number, Boolean state)
         {
@@ -335,15 +307,9 @@ namespace MainGame.Objects
             Stop();
         }
 
-        public void Stop()
-        {
-            left = right = jumping = flinching = dashing = squat = attack = hi_attack = low_attack = false;
-        }
+        public void Stop() => left = right = jumping = flinching = dashing = squat = attack = hi_attack = low_attack = false;
 
-        public void SetTeleporting(Boolean b)
-        {
-            teleporting = b;
-        }
+        public void SetTeleporting(Boolean b) => teleporting = b;
 
         private void GetNextPosition()
         {
@@ -498,9 +464,8 @@ namespace MainGame.Objects
             jumping = false;
         }
 
-        public void Update()
+        public new void Update()
         {
-
             GetNextPosition();
             CheckTileMapCollision();
             SetPosition(xy_temp.X, xy_temp.Y);
@@ -511,6 +476,7 @@ namespace MainGame.Objects
                 boost = 2;
             }
             else boost = 1;
+
             SetParameters(boost);
 
             if (teleporting) energyParticles.Add(new P_Player(tileMap, V2_xy.X, V2_xy.Y, P_Player.UP));
@@ -584,11 +550,9 @@ namespace MainGame.Objects
             }
         }
 
-        public void Draw(SpriteBatch g)
+        public new void Draw(SpriteBatch g)
         {
-
             SetMapPosition();
-
 
             for (int i = 0; i < energyParticles.Count; i++)
             {

@@ -38,10 +38,7 @@ namespace MainGame.Maps
             else if (state == LEVEL2) gameStates[state] = new Level_2(this);
         }
 
-        private void UnloadState(int state)
-        {
-            gameStates[state] = null;
-        }
+        private void UnloadState(int state) => gameStates[state] = null;
 
         public void SetState(int state)
         {
@@ -50,10 +47,7 @@ namespace MainGame.Maps
             LoadState(currentState);
         }
 
-        public void SetPaused(Boolean b)
-        {
-            paused = b;
-        }
+        public void SetPaused(Boolean b) => paused = b;
 
         public void Update()
         {

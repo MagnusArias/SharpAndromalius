@@ -13,36 +13,17 @@ namespace MainGame.Objects.Enemies
         protected int damage;
 
         protected Boolean dead;
-        protected Boolean remove;
         
         protected Player player;
         protected Texture2D sprites;
 
-        public Enemy(TileMap tm) : base(tm)
-        {
-            remove = false;
-            animation = new Animation();
-        }
+        public Enemy(TileMap tm) : base(tm) { }
 
-        public Boolean IsDead()
-        {
-            return dead;
-        }
+        public Boolean IsDead() => dead;
 
-        public int GetLastBreath()
-        {
-            return lastBreath;
-        }
+        public int GetLastBreath() => lastBreath;
 
-        public Boolean ShouldRemove()
-        {
-            return remove;
-        }
-
-        public int GetDamage()
-        {
-            return damage;
-        }
+        public int GetDamage() => damage;
 
         public void Hit(int damage)
         {
@@ -52,13 +33,6 @@ namespace MainGame.Objects.Enemies
             {
                 dead = true;
             }
-        }
-
-        public void Update() { }
-        
-        public void Draw(SpriteBatch g)
-        {
-            base.Draw(g);
         }
     }
 }

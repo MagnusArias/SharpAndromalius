@@ -46,7 +46,7 @@ namespace MainGame.Objects.Enemies
             attackTick = 0;
             facingRight = true;
 
-            sprites = GlobalVariables.E_GhostBlueWalk[0];
+            sprites = GlobalVariables.E_GhostBlueWalk;
 
             animation.SetFrames(sprites);
             animation.SetDelay(4);

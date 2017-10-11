@@ -2235,3 +2235,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Plain.spritefont
 
+#begin Maps/level1.map
+/build:Maps/level1.map
+
+#begin Maps/level2.map
+/build:Maps/level2.map
+

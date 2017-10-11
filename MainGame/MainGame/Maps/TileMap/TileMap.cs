@@ -49,7 +49,6 @@ namespace MainGame.Maps.Tiles
         {
             try
             {
-
                 tileset = ImageIO.read(getClass().getResourceAsStream(s));
 
                 numTilesAcross = tileset.Width / tileSize;
@@ -89,7 +88,6 @@ namespace MainGame.Maps.Tiles
 
             try
             {
-
                 InputStream ins = getClass().getResourceAsStream(s);
                 BufferedReader br = new BufferedReader(new InputStreamReader(ins));
 
@@ -211,6 +209,7 @@ namespace MainGame.Maps.Tiles
                     int rc = map[row, col];
                     int r = rc / numTilesAcross;
                     int c = rc % numTilesAcross;
+
                     // tile, position as V2_Xy, scale as tileSize
                     g.Draw(
                         tiles[r, c].GetImage(), 

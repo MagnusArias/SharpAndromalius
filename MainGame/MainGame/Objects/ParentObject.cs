@@ -25,9 +25,10 @@ namespace MainGame.Objects
         protected int height;
         
         // "collision box"
-        protected int cwidth;
-        protected int cheight;
+        protected int collisionWidth;
+        protected int collisionHeight;
         protected Boolean debugReady;
+        protected Boolean active;
 
         // collision
         protected int currRow;
@@ -97,18 +98,18 @@ namespace MainGame.Objects
         }
 
         public Rectangle GetRectangle() => new Rectangle(
-                    (int)V2_xy.X - cwidth / 2,
-                    (int)V2_xy.Y - cheight / 2,
-                    cwidth,
-                    cheight
+                    (int)V2_xy.X - collisionWidth / 2,
+                    (int)V2_xy.Y - collisionHeight / 2,
+                    collisionWidth,
+                    collisionHeight
             );
 
         public void CalculateCorners(float x, float y)
         {
-            int leftTile = (int)(x - cwidth / 2) / tileSize;
-            int rightTile = (int)(x + cwidth / 2 - 1) / tileSize;
-            int topTile = (int)(y - cheight / 2) / tileSize;
-            int bottomTile = (int)(y + cheight / 2 - 1) / tileSize;
+            int leftTile = (int)(x - collisionWidth / 2) / tileSize;
+            int rightTile = (int)(x + collisionWidth / 2 - 1) / tileSize;
+            int topTile = (int)(y - collisionHeight / 2) / tileSize;
+            int bottomTile = (int)(y + collisionHeight / 2 - 1) / tileSize;
 
             if (topTile < 0 || bottomTile >= tileMap.GetNumRows() || leftTile < 0 || rightTile >= tileMap.GetNumCols())
             {
@@ -146,7 +147,7 @@ namespace MainGame.Objects
                 if (topLeft || topRight)
                 {
                     V2_dxy.Y = 0;
-                    xy_temp.Y = currRow * tileSize + cheight / 2;
+                    xy_temp.Y = currRow * tileSize + collisionHeight / 2;
                 }
                 else
                 {
@@ -159,7 +160,7 @@ namespace MainGame.Objects
                 {
                     V2_dxy.Y = 0;
                     falling = false;
-                    xy_temp.Y = (currRow + 1) * tileSize - cheight / 2;
+                    xy_temp.Y = (currRow + 1) * tileSize - collisionHeight / 2;
                 }
                 else
                 {
@@ -174,7 +175,7 @@ namespace MainGame.Objects
                 if (topLeft || bottomLeft)
                 {
                     V2_dxy.Y = 0;
-                    xy_temp.X = currCol * tileSize + cwidth / 2;
+                    xy_temp.X = currCol * tileSize + collisionWidth / 2;
                 }
                 else
                 {
@@ -186,7 +187,7 @@ namespace MainGame.Objects
                 if (topRight || bottomRight)
                 {
                     V2_dxy.Y = 0;
-                    xy_temp.X = (currCol + 1) * tileSize - cwidth / 2;
+                    xy_temp.X = (currCol + 1) * tileSize - collisionWidth / 2;
                 }
                 else
                 {
@@ -217,9 +218,9 @@ namespace MainGame.Objects
 
         public int GetHeight() => height;
 
-        public int GetCWidth() => cwidth;
+        public int GetCWidth() => collisionWidth;
 
-        public int GetCHeight() => cheight;
+        public int GetCHeight() => collisionHeight;
 
         public void SetPosition(float x, float y)
         {
@@ -257,9 +258,9 @@ namespace MainGame.Objects
 
         public Boolean ShouldRemove() => remove;
 
-        public abstract void Update();
+        public virtual void Update() { }
 
-        public void Draw(SpriteBatch g)
+        public virtual void Draw(SpriteBatch g)
         {
             SpriteEffects spriteEffect;
             if (facingRight) spriteEffect = SpriteEffects.None;

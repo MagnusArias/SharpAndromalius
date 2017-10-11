@@ -1,17 +1,10 @@
 ﻿using MainGame.Maps.Tiles;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MainGame.Objects.Enemies
 {
     class E_Ghost : Enemy
     {
-        private Boolean active;
-
         private Boolean isJumping;
 
         private const int IDLE = 0;
@@ -33,8 +26,8 @@ namespace MainGame.Objects.Enemies
             width = 25;
             height = 40;
 
-            cwidth = 25;
-            cheight = 40;
+            collisionWidth = 25;
+            collisionHeight = 40;
 
             damage = 15;
 
@@ -57,6 +50,7 @@ namespace MainGame.Objects.Enemies
             if (left) V2_dxy.X = -moveSpeed;
             else if (right) V2_dxy.X = moveSpeed;
             else V2_dxy.X = 0;
+
             if (falling)
             {
                 V2_dxy.Y += fallSpeed;
@@ -71,20 +65,20 @@ namespace MainGame.Objects.Enemies
         private double CalculateDistance(Player p)
         {
             double dist = Math.Abs(
-                            Math.Sqrt(
-                                    Math.Pow((V2_xy.X - p.GetX()), 2.00) +
-                                    Math.Pow((V2_xy.Y - p.GetY()), 2.00)
-                            )
-                        );
+                Math.Sqrt(
+                    Math.Pow((V2_xy.X - p.GetX()), 2.00) +
+                    Math.Pow((V2_xy.Y - p.GetY()), 2.00)
+                    )
+                );
+
             return dist;
         }
 
-        public new void Update()
+        public override void Update()
         {
             if (dead)
             {
                 lastBreath--;
-
                 if (lastBreath <= 0) remove = true;
             }
             else
@@ -94,7 +88,6 @@ namespace MainGame.Objects.Enemies
                     if (Math.Abs(player.GetX() - V2_xy.X) < GlobalVariables.GAME_WINDOW_WIDTH) active = true;
                     return;
                 }
-
 
                 GetNextPosition();
                 CheckTileMapCollision();
@@ -164,6 +157,5 @@ namespace MainGame.Objects.Enemies
                 animation.Update();
             }
         }
-
     }
 }

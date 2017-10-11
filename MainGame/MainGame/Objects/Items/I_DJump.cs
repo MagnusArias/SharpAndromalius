@@ -23,8 +23,8 @@ namespace MainGame.Objects.Items
             width = 16;
             height = 16;
 
-            cwidth = 16;
-            cheight = 16;
+            collisionWidth = 16;
+            collisionHeight = 16;
 
             sprites = Content.DoubleJump[0];
 

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿#pragma warning disable CS0618 // Type or member is obsolete
+using System;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using MainGame.Control;
 using MainGame.Objects.Enemies;
@@ -22,12 +20,12 @@ namespace MainGame.Objects
         private List<Item> items;
 
         public const String PLAYERSPRITEMAP = "/Game/Src/Assets/player-spritemap.png";
-	    public const String ARMORSPRITEMAP = "/Game/Src/Assets/armor05-spritemap.png";
-	    public const String ROBESPRITEMAP = "/Game/Src/Assets/robe02-spritemap.png";
-	    public const String SWORDSPRITEMAP = "/Game/Src/Assets/sword-slash.png";
-	
-	    // dostepne ruchy
-	    protected Boolean hi_attack;
+        public const String ARMORSPRITEMAP = "/Game/Src/Assets/armor05-spritemap.png";
+        public const String ROBESPRITEMAP = "/Game/Src/Assets/robe02-spritemap.png";
+        public const String SWORDSPRITEMAP = "/Game/Src/Assets/sword-slash.png";
+
+        // dostepne ruchy
+        protected Boolean hi_attack;
         protected Boolean attack;
         protected Boolean low_attack;
         private Boolean doubleJump;
@@ -115,8 +113,8 @@ namespace MainGame.Objects
             height = 45;
 
             // rozmiary collision boxa
-            cwidth = 20;
-            cheight = 45;
+            collisionWidth = 20;
+            collisionHeight = 45;
 
             //atrybuty dasha i fireballa
             maxFireballCooldown = 100;
@@ -378,7 +376,7 @@ namespace MainGame.Objects
                     V2_dxy.X = moveSpeed * (10 - dashTimer * 0.04f);
                     for (int i = 0; i < 6; i++)
                     {
-                        energyParticles.Add(new P_Player(tileMap, V2_xy.X, V2_xy.Y + cheight / 4, P_Player.LEFT));
+                        energyParticles.Add(new P_Player(tileMap, V2_xy.X, V2_xy.Y + collisionHeight / 4, P_Player.LEFT));
                     }
                 }
                 else
@@ -386,7 +384,7 @@ namespace MainGame.Objects
                     V2_dxy.X = -moveSpeed * (10 - dashTimer * 0.04f);
                     for (int i = 0; i < 6; i++)
                     {
-                        energyParticles.Add(new P_Player(tileMap, V2_xy.X, V2_xy.Y + cheight / 4, P_Player.RIGHT));
+                        energyParticles.Add(new P_Player(tileMap, V2_xy.X, V2_xy.Y + collisionHeight / 4, P_Player.RIGHT));
                     }
                 }
             }
@@ -398,7 +396,7 @@ namespace MainGame.Objects
                 doubleJump = false;
                 for (int i = 0; i < 6; i++)
                 {
-                    energyParticles.Add(new P_Player(tileMap, V2_xy.X, V2_xy.Y + cheight / 4, P_Player.DOWN));
+                    energyParticles.Add(new P_Player(tileMap, V2_xy.X, V2_xy.Y + collisionHeight / 4, P_Player.DOWN));
                 }
             }
 
@@ -416,13 +414,13 @@ namespace MainGame.Objects
         {
             currentAction = i;
 
-            bodyAnimation.SetFrames(sprites[currentAction]);
+            bodyAnimation.SetFrames(sprites[currentAction].);
             bodyAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
             armorAnimation.SetFrames(armorSprites.get(currentAction));
             armorAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
-            robeAnimation.SetFrames(robeSprites.get(currentAction));
+            robeAnimation.SetFrames(robeSprites.GetValue(currentAction));
             robeAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
             swordAnimation.SetFrames(swordSprites.get(currentAction));
@@ -432,13 +430,13 @@ namespace MainGame.Objects
             height = FRAMEHEIGHTS[currentAction];
         }
 
-        public int SetViewLeftRight()
+        public int GetViewLeftRight()
         {
             if (facingRight) return 1;
             else return -1;
         }
 
-        public int SetViewDown()
+        public int GetViewDown()
         {
             if (squat) return 1;
             else return 0;
@@ -462,7 +460,7 @@ namespace MainGame.Objects
             jumping = false;
         }
 
-        public new void Update()
+        public override void Update()
         {
             GetNextPosition();
             CheckTileMapCollision();
@@ -548,78 +546,74 @@ namespace MainGame.Objects
             }
         }
 
-        public new void Draw(SpriteBatch g)
+        public override void Draw(SpriteBatch g)
         {
+            SpriteEffects spriteEffect;
+            if (facingRight) spriteEffect = SpriteEffects.None;
+            else spriteEffect = SpriteEffects.FlipVertically;
+
             SetMapPosition();
 
-            for (int i = 0; i < energyParticles.Count; i++)
+            for (int i = 0; i < energyParticles.Count; i++) energyParticles[i].Draw(g);
+
+            if (flinching && !knockback && flinchCount % 10 < 5) return;
+
+            Animation arm = new Animation();
+            if (skill_doubleJump && !skill_dash) arm = armorAnimation;
+            else if (skill_dash) arm = robeAnimation;
+
+            // drawing body 
+            g.Draw(
+                 bodyAnimation.GetImage(),                                                                       // image
+                 new Vector2(V2_xy.X + V2_mapxy.X - (width / 2.0f), V2_xy.Y + V2_mapxy.Y - (height / 2.0f)),     // position
+                 null,                                                                                           // destination rectangle
+                 new Rectangle(0, 0, bodyAnimation.GetImage().Width, bodyAnimation.GetImage().Height),           // source - if null draws
+                 new Vector2(width / 2.0f, height / 2.0f),                                                       // origin
+                 0.0f,                                                                                           // rotation
+                 new Vector2(1, 1),                                                                              // scale
+                 Color.White,                                                                                    // color
+                 spriteEffect,                                                                                   // effects
+                 0.0f                                                                                            // layerDepth
+                 );
+
+            // drawing armor
+            g.Draw(
+                 arm.GetImage(),                                                                                 // image
+                 new Vector2(V2_xy.X + V2_mapxy.X - (width / 2.0f), V2_xy.Y + V2_mapxy.Y - (height / 2.0f)),     // position
+                 null,                                                                                           // destination rectangle
+                 new Rectangle(0, 0, arm.GetImage().Width, arm.GetImage().Height),                               // source - if null draws
+                 new Vector2(width / 2.0f, height / 2.0f),                                                       // origin
+                 0.0f,                                                                                           // rotation
+                 new Vector2(1, 1),                                                                              // scale
+                 Color.White,                                                                                    // color
+                 spriteEffect,                                                                                   // effects
+                 0.0f                                                                                            // layerDepth
+                 );
+
+            // draw sword
+            if (!fireballShooted)
             {
-                energyParticles[i].Draw(g);
-            }
-            if (flinching && !knockback)
-            {
-                if (flinchCount % 10 < 5) return;
-            }
-
-            if (facingRight)
-            {
-                g.Draw(bodyAnimation.GetImage(), V2_xy, source, Color.White, 0.0f, Origin, 1.0f, SpriteEffects.None, 0.0f);
-                g.Draw(bodyAnimation.GetImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
-
-                if (skill_doubleJump && !skill_dash) g.Draw(armorAnimation.GetImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
-                else if (skill_dash) g.Draw(robeAnimation.GetImage(), (int)(x + xmap - width / 2), (int)(y + ymap - height / 2), null);
-
-
-                if (!fireballShooted)
+                if (attack || low_attack || hi_attack)
                 {
-                    if (attack || low_attack || hi_attack)
-                    {
-                        double new_y;
+                    float new_y = V2_xy.Y + V2_mapxy.Y - (height / 2.0f);
+                    if (squat) new_y += 10;
 
-                        if (squat)
-                        {
-                            new_y = V2_xy.Y + V2_mapxy.Y - (height / 2) + 10;
-                        }
-                        else
-                        {
-                            new_y = V2_xy.Y + V2_mapxy.Y - height / 2;
-                        }
-
-                        if (GetSkill(2)) g.Draw(swordAnimation.GetImage(), (int)(x + xmap - width / 2), (int)(new_y), null);
-                    }
-                }
-            }
-            else
-            {
-
-                g.Draw(bodyAnimation.GetImage(), (int)(x + xmap - width / 2 + width), (int)(y + ymap - height / 2), -width, height, null);
-                if (skill_doubleJump && !skill_dash) g.Draw(armorAnimation.GetImage(), (int)(x + xmap - width / 2 + width), (int)(y + ymap - height / 2), -width, height, null);
-                else if (skill_dash) g.Draw(robeAnimation.GetImage(), (int)(x + xmap - width / 2 + width), (int)(y + ymap - height / 2), -width, height, null);
-
-
-                if (!fireballShooted)
-                {
-                    if (attack || low_attack || hi_attack)
-                    {
-                        double new_y;
-
-                        if (squat)
-                        {
-                            new_y = V2_xy.Y + V2_mapxy.Y - (height / 2) + 10;
-                        }
-                        else
-                        {
-                            new_y = V2_xy.Y + V2_mapxy.Y - height / 2;
-                        }
-
-                        if (GetSkill(2))
-                        {
-                            g.Draw(swordAnimation.GetImage(), (int)(x + xmap - width / 2 + width), (int)(new_y), -60, 30, null);
-                        }
-                    }
+                    if (GetSkill(2)) g.Draw(
+                        swordAnimation.GetImage(),                                                                      // image
+                        new Vector2(V2_xy.X + V2_mapxy.X - (width / 2.0f), new_y),                                      // position
+                        null,                                                                                           // destination rectangle
+                        new Rectangle(0, 0, swordAnimation.GetImage().Width, swordAnimation.GetImage().Height),         // source - if null draws
+                        new Vector2(width / 2.0f, height / 2.0f),                                                       // origin
+                        0.0f,                                                                                           // rotation
+                        new Vector2(1, 1),                                                                              // scale
+                        Color.White,                                                                                    // color
+                        spriteEffect,                                                                                   // effects
+                        0.0f                                                                                            // layerDepth
+                        );
                 }
             }
 
+            /*
             if (GlobalVariables.DEBUG_READY)
             {
                 Rectangle r = GetRectangle();
@@ -627,6 +621,7 @@ namespace MainGame.Objects
                 r.Y += (int)V2_mapxy.Y;
                 g.Draw(r);
             }
+            */
         }
 
         private void LoadGraphics()
@@ -647,7 +642,7 @@ namespace MainGame.Objects
                     Texture2D[] bi = new Texture2D[NUMFRAMES[i]];
                     for (int j = 0; j < NUMFRAMES[i]; j++) { bi[j] = spritesheet.getSubimage(j * FRAMEWIDTHS[i], count, FRAMEWIDTHS[i], FRAMEHEIGHTS[i]); }
                     sprites.Add(bi);
-                    
+
                     count += FRAMEHEIGHTS[i];
                 }
 
@@ -689,7 +684,7 @@ namespace MainGame.Objects
                 Environment.Exit(0);
             }
         }
-        
+
         private void CheckItemCollision()
         {
             for (int i = 0; i < items.Count; i++)
@@ -725,7 +720,7 @@ namespace MainGame.Objects
                 }
             }
         }
-    
+
         private void CheckEnemyCollision()
         {
             for (int i = 0; i < enemies.Count; i++)

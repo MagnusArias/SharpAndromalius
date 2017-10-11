@@ -7,12 +7,9 @@ namespace MainGame.Objects.Enemies
 {
     class Enemy : ParentObject
     {
-        protected int health;
-        protected int maxHealth;
         protected int lastBreath;
         protected int damage;
 
-        
         protected Player player;
         protected Texture2D sprites;
 
@@ -33,6 +30,5 @@ namespace MainGame.Objects.Enemies
                 dead = true;
             }
         }
-        public override void Update() { }
     }
 }

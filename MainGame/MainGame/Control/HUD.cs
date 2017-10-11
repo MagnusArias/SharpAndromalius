@@ -2,10 +2,6 @@
 using MainGame.Objects;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MainGame.Control
 {
@@ -29,12 +25,11 @@ namespace MainGame.Control
             }
         }
 
-        public void Init(Player p)
-        {
-            player = p;
-        }
+        public void Init(Player p) => player = p;
 
-        public void Draw(SpriteBatch g)
+        public override void Update() { }
+
+        public new void Draw(SpriteBatch g)
         {
             g.Draw(hpBar, (player.GetHealth() * 2) - 75, 15, null);
             g.Draw(mpBar, (player.GetMana()) - 75, 15 + 16, null);

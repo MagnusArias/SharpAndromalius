@@ -1,12 +1,10 @@
 ﻿using MainGame.Maps.Tiles;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace MainGame.Objects.Enemies
 {
     class E_Skeleton : Enemy
     {
-        private Boolean active;
         private Boolean isDeadSet;
 
         public E_Skeleton(TileMap tm, Player p) : base(tm)
@@ -19,8 +17,8 @@ namespace MainGame.Objects.Enemies
             width = 36;
             height = 48;
 
-            cwidth = 25;
-            cheight = 45;
+            collisionWidth = 25;
+            collisionHeight = 45;
 
             damage = 10;
             moveSpeed = 0.8f;
@@ -61,7 +59,7 @@ namespace MainGame.Objects.Enemies
             }
         }
 
-        public void Update()
+        public override void Update()
         {
 
             if (dead)
@@ -114,11 +112,6 @@ namespace MainGame.Objects.Enemies
                 // update animation
                 animation.Update();
             }
-        }
-
-        public void Draw(SpriteBatch g)
-        {
-            base.Draw(g);
         }
     }
 }

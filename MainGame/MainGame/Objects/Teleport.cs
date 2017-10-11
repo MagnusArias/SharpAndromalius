@@ -21,8 +21,8 @@ namespace MainGame.Objects
 
             facingRight = true;
             width = height = 32;
-            cwidth = 64;
-            cheight = 64;
+            collisionWidth = 64;
+            collisionHeight = 64;
 
             try
             {

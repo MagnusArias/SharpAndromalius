@@ -32,8 +32,8 @@ namespace MainGame.Objects.Projectiles
 
             width = 30;
             height = 15;
-            cwidth = 28;
-            cheight = 14;
+            collisionWidth = 28;
+            collisionHeight = 14;
 
             attackRect = new Rectangle(0, 0, 28, 14);
 

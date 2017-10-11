@@ -106,8 +106,8 @@ namespace MainGame.Maps
             player.Update();
 
             tileMap.SetPosition(
-                   GlobalVariables.GAME_WINDOW_WIDTH / 2 - player.GetX() - (70 * player.SetViewLeftRight()),
-                   GlobalVariables.GAME_WINDOW_HEIGHT / 2 - player.GetY() - (150 * player.SetViewDown()) + 10
+                   GlobalVariables.GAME_WINDOW_WIDTH / 2 - player.GetX() - (70 * player.GetViewLeftRight()),
+                   GlobalVariables.GAME_WINDOW_HEIGHT / 2 - player.GetY() - (150 * player.GetViewDown()) + 10
            );
 
 

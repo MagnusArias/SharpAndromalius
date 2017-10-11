@@ -1,14 +1,10 @@
 ﻿using MainGame.Maps.Tiles;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 using System;
 
 namespace MainGame.Objects.Enemies
 {
     class E_Boss : Enemy
     {
-	    
-        private Boolean active;
         private int eventCount;
 
         private int tick;
@@ -28,8 +24,8 @@ namespace MainGame.Objects.Enemies
             height = 88 * 2;
 
             eventCount = 0;
-            cwidth = 57 * 2;
-            cheight = 88 * 2;
+            collisionWidth = 57 * 2;
+            collisionHeight = 88 * 2;
 
             damage = 50;
 
@@ -63,7 +59,7 @@ namespace MainGame.Objects.Enemies
             }
         }
 
-        public new void Update()
+        public override void Update()
         {
             tick++;
             eventCount++;

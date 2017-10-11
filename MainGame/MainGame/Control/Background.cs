@@ -17,27 +17,15 @@ namespace MainGame.Control
         private double xscale;
         private double yscale;
 
-        public Background(String s)
-        {
-            Setup(s, 0.1, 0.1);
-        }
+        public Background(String s) => Setup(s, 0.1, 0.1);
 
-        public Background(String s, double d)
-        {
-            Setup(s, d, d);
-        }
+        public Background(String s, double d) => Setup(s, d, d);
 
-        public Background(String s, double d1, double d2)
-        {
-            Setup(s, d1, d2);
-        }
+        public Background(String s, double d1, double d2) => Setup(s, d1, d2);
 
-        public Background(String s, double ms, int x, int y, int w, int h)
-        {
-            SetupExtended(s, ms, x, y, w, h);
-        }
+        public Background(String s, double ms, int x, int y, int w, int h) => SetupExtended(s, ms, x, y, w, h);
 
- 
+
         public void SetupExtended(String s, double ms, int x, int y, int w, int h)
         {
             try
@@ -94,15 +82,9 @@ namespace MainGame.Control
             height = i2;
         }
 
-        public double GetX()
-        {
-            return xy.X;
-        }
+        public double GetX() => xy.X;
 
-        public double GetY()
-        {
-            return xy.Y;
-        }
+        public double GetY() => xy.Y;
 
         public void Update()
         {
@@ -122,23 +104,6 @@ namespace MainGame.Control
                 {
                     g.Draw(image, new Vector2(xy.X + width * i, xy.Y + height * j), new Rectangle(0,0,width,height), Color.White, 0.0f, new Vector2(width/2, height/2), 1.0f, SpriteEffects.None, 0.0f);
                 }
-            }
-
-            if (xy.X < 0)
-            {
-                g.Draw(image, new Vector2(xy.X + GlobalVariables.GAME_WINDOW_WIDTH, xy.Y), new Rectangle(0, 0, width, height), Color.White, 0.0f, new Vector2(width / 2, height / 2), 1.0f, SpriteEffects.None, 0.0f);
-            }
-            if (xy.X > 0)
-            {
-                g.Draw(image, new Vector2(xy.X - GlobalVariables.GAME_WINDOW_WIDTH, xy.Y), new Rectangle(0, 0, width, height), Color.White, 0.0f, new Vector2(width / 2, height / 2), 1.0f, SpriteEffects.None, 0.0f);
-            }
-            if (xy.Y < 0)
-            {
-                g.Draw(image, new Vector2(xy.X, xy.Y + GlobalVariables.GAME_WINDOW_HEIGHT), new Rectangle(0, 0, width, height), Color.White, 0.0f, new Vector2(width / 2, height / 2), 1.0f, SpriteEffects.None, 0.0f);
-            }
-            if (xy.Y > 0)
-            {
-                g.Draw(image, new Vector2(xy.X, xy.Y - GlobalVariables.GAME_WINDOW_HEIGHT), new Rectangle(0, 0, width, height), Color.White, 0.0f, new Vector2(width / 2, height / 2), 1.0f, SpriteEffects.None, 0.0f);
             }
         }
     }

@@ -3,17 +3,17 @@ using MainGame.Objects.Items;
 using MainGame.Objects.Projectiles;
 using Microsoft.Xna.Framework;
 
-namespace MainGame.Maps.Level1
+namespace MainGame.Maps
 {
-    class Level_1 : GameState
+    class Level_2 : GameState
     {
-        public Level_1(GameStateManager gsm) : base(gsm) => Init(
+        public Level_2(GameStateManager gsm) : base(gsm) => Init(
                 GlobalVariables.BACKGROUND,
-                GlobalVariables.TILESET_L1,
-                GlobalVariables.MAP_1,
-                new Vector2(100, 100),
-                new Vector2(200, 200));
-
+                GlobalVariables.TILESET_L2,
+                GlobalVariables.MAP_2,
+                new Vector2(200, 300),
+                new Vector2(1500,200));       
+    
         private new void PlaceItems()
         {
             items.Clear();
@@ -40,7 +40,7 @@ namespace MainGame.Maps.Level1
             //
             //  Instance for HUD
             //
-            i_dj = new I_DJump(tileMap, player);
+            i_dj = new I_DJump(tileMap, player); // druga instancja do wyswietlania w hud
             i_dj.SetPosition(0, 0);
             items.Add(i_dj);
 
@@ -60,7 +60,7 @@ namespace MainGame.Maps.Level1
         private new void PlaceEnemies()
         {
             enemies.Clear();
-            
+
             //
             //  SKELETONS
             //
@@ -107,5 +107,6 @@ namespace MainGame.Maps.Level1
             enemies.Add(eb);
         }
 
+        public override void Select() { }
     }
 }

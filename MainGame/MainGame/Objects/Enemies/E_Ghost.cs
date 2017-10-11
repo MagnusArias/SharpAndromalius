@@ -79,7 +79,7 @@ namespace MainGame.Objects.Enemies
             return dist;
         }
 
-        public void Update()
+        public new void Update()
         {
             if (dead)
             {
@@ -165,9 +165,5 @@ namespace MainGame.Objects.Enemies
             }
         }
 
-        public void Draw(SpriteBatch g)
-        {
-            base.Draw(g);
-        }
     }
 }

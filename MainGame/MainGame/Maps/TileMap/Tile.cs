@@ -16,14 +16,8 @@ namespace MainGame.Maps.Tiles
             this.type = type;
         }
 
-        public Texture2D GetImage()
-        {
-            return image;
-        }
+        public Texture2D GetImage() => image;
 
-        public int GetTileType()
-        {
-            return type;
-        }
+        public int GetTileType() => type;
     }
 }

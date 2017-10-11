@@ -12,55 +12,38 @@ namespace MainGame.Maps
         private int currentChoice = 0;
 
         private String[] options = {
-            "Play",
-            "Quit"
+            "Return to game",
+            "Exit game"
         };
 
-        public PauseState(GameStateManager gsm) : base(gsm)
-        {
-            // fonts           
-        }
+        public PauseState(GameStateManager gsm) : base(gsm) { }
 
-        public override void Init() { }
+        public new void Update() => HandleInput();
 
-        public override void Update()
-        {
-            HandleInput();
-        }
-
-        public override void Draw(SpriteBatch g)
+        public new void Draw(SpriteBatch g)
         {
             Color myColour = new Color(0, 0, 0, 32);
 
             g.fillRect(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT);
 
-            g.DrawString(GlobalVariables.fontTitle, "Wroc do gry", new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 100, GlobalVariables.GAME_WINDOW_HEIGHT / 2), myColour);
-            g.DrawString(GlobalVariables.fontTitle, "Wyjdz z gry ", new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 100, GlobalVariables.GAME_WINDOW_HEIGHT / 2 + 30), myColour);
+            g.DrawString(GlobalVariables.fontTitle, options[0], new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 100, GlobalVariables.GAME_WINDOW_HEIGHT / 2), myColour);
+            g.DrawString(GlobalVariables.fontTitle, options[1], new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 100, GlobalVariables.GAME_WINDOW_HEIGHT / 2 + 30), myColour);
 
             if (currentChoice == 0) g.fillRect(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 120, GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 5, 5, 5);
             else if (currentChoice == 1) g.fillRect(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 120, GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 5 + 30, 5, 5);
 
         }
 
-        public override void HandleInput()
+        public new void HandleInput()
         {
             if (Keys.IsPressed(Keys.ESCAPE)) gsm.SetPaused(false);
-
+            
+            if (Keys.IsPressed(Keys.UP) && currentChoice > 0) currentChoice--;
             if (Keys.IsPressed(Keys.ENTER)) Select();
-            if (Keys.IsPressed(Keys.UP))
-            {
-                if (currentChoice > 0)
-                {
-                    currentChoice--;
-                }
-            }
-            if (Keys.IsPressed(Keys.DOWN))
-            {
-                if (currentChoice < options.Length - 1) { currentChoice++; }
-            }
+            if (Keys.IsPressed(Keys.DOWN) && (currentChoice < options.Length - 1)) currentChoice++;
         }
 
-        private void Select()
+        public override void Select()
         {
             if (currentChoice == 1) { Environment.Exit(0); }
             else if (currentChoice == 0) { gsm.SetPaused(false); }

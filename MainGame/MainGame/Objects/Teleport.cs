@@ -52,14 +52,9 @@ namespace MainGame.Objects
 
         }
 
-        public void Update()
+        public override void Update()
         {
             animation.Update();
-        }
-
-        public void Draw(SpriteBatch g)
-        {
-            base.Draw(g);
         }
     }
 }

@@ -97,15 +97,7 @@ namespace MainGame.Objects.Projectiles
             V2_dxy.X = 0;
         }
 
-        public Boolean IsHit()
-        {
-            return hit;
-        }
-
-        public Boolean ShouldRemove()
-        {
-            return remove;
-        }
+        public Boolean IsHit() => hit;
 
         public void Update(List<Enemy> enemies)
         {
@@ -145,11 +137,6 @@ namespace MainGame.Objects.Projectiles
                 remove = true;
             }
 
-        }
-
-        public void Draw(SpriteBatch g)
-        {
-            base.Draw(g);
         }
     }
 }

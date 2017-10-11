@@ -52,8 +52,6 @@ namespace MainGame.Objects
         protected int currentAction;
 
         //takie drobne rzeczy gracza
-        private int health;
-        private int maxHealth;
         private int damage;
         private int boost;
 

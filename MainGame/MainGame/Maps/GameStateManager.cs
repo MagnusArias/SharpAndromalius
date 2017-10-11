@@ -1,9 +1,8 @@
 ﻿using MainGame.Maps.Level1;
 using MainGame.Maps.Level2;
-using MainGame.Maps;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MainGame.Maps
 {

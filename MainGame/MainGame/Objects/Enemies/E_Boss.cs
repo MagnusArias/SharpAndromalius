@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using MainGame.Control;
-using MainGame.Objects;
-using MainGame.Maps.Tiles;
+﻿using MainGame.Maps.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MainGame.Objects.Enemies
 {
@@ -22,12 +15,6 @@ namespace MainGame.Objects.Enemies
         private double a;
         private double b;
         private int currentAction;
-        private Boolean playerCatch;
-        private int szerokosc;
-
-        private double hp_max;
-        private double hp;
-        private double maxHp;
 
         public E_Boss(TileMap tm, Player p) : base(tm)
         {
@@ -54,7 +41,7 @@ namespace MainGame.Objects.Enemies
 
             facingRight = false;
 
-            sprites = GlobalVariables.Enemy_Boss1[0];
+            sprites = GlobalVariables.E_Boss;
 
             animation.SetFrames(sprites);
             animation.SetDelay(4);
@@ -81,10 +68,7 @@ namespace MainGame.Objects.Enemies
             tick++;
             eventCount++;
 
-            hp = (double)health;
-            maxHp = (double)maxHealth;
-
-            hp_max = hp / maxHp;
+            percentHealth = health / maxHealth;
 
             if (eventCount % 50 == 0)
             {
@@ -169,22 +153,6 @@ namespace MainGame.Objects.Enemies
 
             // update animation
             animation.Update();
-
-        }
-
-
-        public void DrawHPBar(SpriteBatch g)
-        {
-            if (dead) return;
-
-            if (playerCatch)
-            {
-
-                g.Draw(GlobalVariables.bossHPBar, 72, 122, (int)((GlobalVariables.GAME_WINDOW_WIDTH - 142) * hp_max), 14, null);
-                g.Draw(GlobalVariables.bossHPBarOutline, 0 + 70, 0 + 120, GlobalVariables.GAME_WINDOW_WIDTH - 140, 16, null);
-
-                g.DrawString(GlobalVariables.fontTitle, "Andromalius", new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 20, 105), Color.White);
-            }
         }
     }
 }

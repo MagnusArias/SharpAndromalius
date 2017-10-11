@@ -33,5 +33,6 @@ namespace MainGame.Objects.Enemies
                 dead = true;
             }
         }
+        public override void Update() { }
     }
 }

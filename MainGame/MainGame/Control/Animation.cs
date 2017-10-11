@@ -14,10 +14,7 @@ namespace MainGame.Control
 
         private int timesPlayed;
 
-        public Animation()
-        {
-            timesPlayed = 0;
-        }
+        public Animation() => timesPlayed = 0;
 
         public void SetFrames(Texture2D[] frames)
         {
@@ -29,10 +26,7 @@ namespace MainGame.Control
             numFrames = frames.Length;
         }
 
-        public void SetDelay(int i)
-        {
-            delay = i;
-        }
+        public void SetDelay(int i) => delay = i;
 
         public void Update()
         {
@@ -51,19 +45,10 @@ namespace MainGame.Control
             }
         }
 
-        public Texture2D GetImage()
-        {
-            return frames[currentFrame];
-        }
+        public Texture2D GetImage() => frames[currentFrame];
 
-        public Boolean HasPlayedOnce()
-        {
-            return timesPlayed > 0;
-        }
+        public Boolean HasPlayedOnce() => timesPlayed > 0;
 
-        public Boolean HasPlayed(int i)
-        {
-            return timesPlayed == i;
-        }
+        public Boolean HasPlayed(int i) => timesPlayed == i;
     }
 }

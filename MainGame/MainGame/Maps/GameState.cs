@@ -82,15 +82,9 @@ namespace MainGame.Maps
             PlaceEnemies();
         }
 
-        public void PlaceEnemies()
-        {
-            enemies.Clear();
-        }
+        public void PlaceEnemies() => enemies.Clear();
 
-        public void PlaceItems()
-        {
-            items.Clear();
-        }
+        public void PlaceItems() => items.Clear();
 
         public void Update()
         {
@@ -309,5 +303,7 @@ namespace MainGame.Maps
                 gsm.SetState(newState);
             }
         }
+
+        public abstract void Select();
     }
 }

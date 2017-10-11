@@ -39,7 +39,7 @@ namespace MainGame.Control
             playerDash = p.GetStamina().ToString() + "/" + p.GetMaxStamina().ToString();
         }
 
-        public void Update() => Convert();
+        public new void Update() => Convert();
 
         public Boolean GetStatus() => debugReady;
 

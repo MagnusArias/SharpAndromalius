@@ -1,4 +1,5 @@
-﻿using MainGame.Maps.Tiles;
+﻿#pragma warning disable CS0618 // Type or member is obsolete
+using MainGame.Maps.Tiles;
 using MainGame.Control;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -37,6 +38,7 @@ namespace MainGame.Objects
         protected Boolean topRight;
         protected Boolean bottomLeft;
         protected Boolean bottomRight;
+        protected Boolean playerCatch;
 
         // poruszanie sie
         protected Boolean left;
@@ -55,6 +57,10 @@ namespace MainGame.Objects
         protected float maxFallSpeed;
         protected float jumpStart;
         protected float stopJumpSpeed;
+
+        protected int health;
+        protected int maxHealth;
+        protected float percentHealth;
 
         protected Boolean dead;
 
@@ -251,7 +257,7 @@ namespace MainGame.Objects
 
         public Boolean ShouldRemove() => remove;
 
-        public void Update() { }
+        public abstract void Update();
 
         public void Draw(SpriteBatch g)
         {
@@ -262,16 +268,18 @@ namespace MainGame.Objects
             SetMapPosition();
 
             g.Draw(
-                animation.GetImage(),
-                new Vector2(V2_xy.X + V2_mapxy.X + (width / 2.0f), V2_xy.Y + V2_mapxy.Y + (height / 2.0f)),
-                new Rectangle(0, 0, animation.GetImage().Width, animation.GetImage().Height), 
-                Color.White, 
-                0.0f,
-                new Vector2(width / 2.0f, height / 2.0f), 
-                1.0f, 
-                spriteEffect, 
-                0.0f);
-           
+                animation.GetImage(),                                                                           // image
+                new Vector2(V2_xy.X + V2_mapxy.X + (width / 2.0f), V2_xy.Y + V2_mapxy.Y + (height / 2.0f)),     // position
+                null,                                                                                           // destination rectangle
+                new Rectangle(0, 0, animation.GetImage().Width, animation.GetImage().Height),                   // source - if null draws
+                new Vector2(width / 2.0f, height / 2.0f),                                                       // origin
+                0.0f,                                                                                           // rotation
+                new Vector2(1, 1),                                                                              // scale
+                Color.White,                                                                                    // color
+                spriteEffect,                                                                                   // effects
+                0.0f                                                                                            // layerDepth
+                );
+
             // draw collision box
             /*
             Rectangle r = GetRectangle();
@@ -285,9 +293,31 @@ namespace MainGame.Objects
         {
             if (playerCatch)
             {
+                g.Draw(
+                    GlobalVariables.bossHPBar,                                                                  // image
+                    new Vector2(72, 122),                                                                       // position
+                    new Rectangle(0, 0, (int)((GlobalVariables.GAME_WINDOW_WIDTH - 142) * percentHealth), 14),  // destination rectangle
+                    null,                                                                                       // source - if null draws
+                    Vector2.Zero,                                                                               // origin
+                    0.0f,                                                                                       // rotation
+                    new Vector2((float)percentHealth, 0),                                                       // scale
+                    Color.White,                                                                                // color
+                    SpriteEffects.None,                                                                         // effects
+                    0.0f                                                                                        // layerDepth
+                    );
 
-                g.Draw(GlobalVariables.bossHPBar, 72, 122, (int)((GlobalVariables.GAME_WINDOW_WIDTH - 142) * hp_max), 14, null);
-                g.Draw(GlobalVariables.bossHPBarOutline, 0 + 70, 0 + 120, GlobalVariables.GAME_WINDOW_WIDTH - 140, 16, null);
+                g.Draw(
+                    GlobalVariables.bossHPBarOutline,                                                       // image
+                    new Vector2(70, 120),                                                                   // position
+                    new Rectangle(0, 0, GlobalVariables.GAME_WINDOW_WIDTH - 140, 16),                       // destination rectangle
+                    null,                                                                                   // source - if null draws
+                    Vector2.Zero,                                                                           // origin
+                    0.0f,                                                                                   // rotation
+                    new Vector2(1, 1),                                                                      // scale
+                    Color.White,                                                                            // color
+                    SpriteEffects.None,                                                                     // effects
+                    0.0f                                                                                    // layerDepth
+                    );
 
                 g.DrawString(GlobalVariables.fontTitle, "Andromalius", new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 20, 105), Color.White);
             }

@@ -15,7 +15,7 @@ namespace MainGame.Maps.Tiles
         private float tween;
 
         // mapa
-        private int[][] map;
+        private int[,] map;
         private int tileSize;
         private int numRows;
         private int numCols;
@@ -25,7 +25,7 @@ namespace MainGame.Maps.Tiles
         // tileset jako obrazek
         private Texture2D tileset;
         private int numTilesAcross;
-        private Tile[][] tiles;
+        private Tile[,] tiles;
 
         // do rysowania
         private int rowOffset;
@@ -53,28 +53,28 @@ namespace MainGame.Maps.Tiles
                 tileset = ImageIO.read(getClass().getResourceAsStream(s));
 
                 numTilesAcross = tileset.Width / tileSize;
-                tiles = new Tile[6][numTilesAcross];
+                tiles = new Tile[6, numTilesAcross];
 
                 Texture2D subimage;
                 for (int col = 0; col < numTilesAcross; col++)
                 {
                     subimage = tileset.GetData<Texture2D>(new Rectangle(col * tileSize, tileSize * 0, tileSize, tileSize));
-                    tiles[0][col] = new Tile(subimage, Tile.AIR);
+                    tiles[0, col] = new Tile(subimage, Tile.AIR);
 
                     subimage = tileset.getSubimage(col * tileSize, tileSize * 1, tileSize, tileSize);
-                    tiles[1][col] = new Tile(subimage, Tile.AIR);
+                    tiles[1, col] = new Tile(subimage, Tile.AIR);
 
                     subimage = tileset.getSubimage(col * tileSize, tileSize * 2, tileSize, tileSize);
-                    tiles[2][col] = new Tile(subimage, Tile.SOLID);
+                    tiles[2, col] = new Tile(subimage, Tile.SOLID);
 
                     subimage = tileset.getSubimage(col * tileSize, tileSize * 3, tileSize, tileSize);
-                    tiles[3][col] = new Tile(subimage, Tile.SOLID);
+                    tiles[3, col] = new Tile(subimage, Tile.SOLID);
 
                     subimage = tileset.getSubimage(col * tileSize, tileSize * 4, tileSize, tileSize);
-                    tiles[4][col] = new Tile(subimage, Tile.SOLID);
+                    tiles[4, col] = new Tile(subimage, Tile.SOLID);
 
                     subimage = tileset.getSubimage(col * tileSize, tileSize * 5, tileSize, tileSize);
-                    tiles[5][col] = new Tile(subimage, Tile.SOLID);
+                    tiles[5, col] = new Tile(subimage, Tile.SOLID);
                 }
 
             }
@@ -96,7 +96,7 @@ namespace MainGame.Maps.Tiles
                 numCols = int.Parse(br.readLine());
                 numRows = int.Parse(br.readLine());
 
-                map = new int[numRows][numCols];
+                map = new int[numRows, numCols];
                 width = numCols * tileSize;
                 height = numRows * tileSize;
 
@@ -113,7 +113,7 @@ namespace MainGame.Maps.Tiles
                     String[] tokens = line.Split(delims);
                     for (int col = 0; col < numCols; col++)
                     {
-                        map[row][col] = int.Parse(tokens[col]);
+                        map[row, col] = int.Parse(tokens[col]);
                     }
                 }
 
@@ -124,45 +124,21 @@ namespace MainGame.Maps.Tiles
             }
         }
 
-        public int GetTileSize()
-        {
-            return tileSize;
-        }
+        public int GetTileSize() => tileSize;
 
-        public float GetX()
-        {
-            return V2_xy.X;
-        }
+        public float GetX() => V2_xy.X;
 
-        public float GetY()
-        {
-            return V2_xy.Y;
-        }
+        public float GetY() => V2_xy.Y;
 
-        public int GetWidth()
-        {
-            return width;
-        }
+        public int GetWidth() => width;
 
-        public int GetHeight()
-        {
-            return height;
-        }
+        public int GetHeight() => height;
 
-        public int GetNumRows()
-        {
-            return numRows;
-        }
+        public int GetNumRows() => numRows;
 
-        public int GetNumCols()
-        {
-            return numCols;
-        }
+        public int GetNumCols() => numCols;
 
-        public Boolean IsShaking()
-        {
-            return shaking;
-        }
+        public Boolean IsShaking() => shaking;
 
         public void SetShaking(Boolean b, int i)
         {
@@ -172,16 +148,13 @@ namespace MainGame.Maps.Tiles
 
         public int GetType(int row, int col)
         {
-            int rc = map[row][col];
+            int rc = map[row, col];
             int r = rc / numTilesAcross;
             int c = rc % numTilesAcross;
-            return tiles[r][c].GetTileType();
+            return tiles[r, c].GetTileType();
         }
 
-        public void SetTween(float d)
-        {
-            tween = d;
-        }
+        public void SetTween(float d) => tween = d;
 
         public void SetBounds(int i1, int i2, int i3, int i4)
         {
@@ -233,14 +206,14 @@ namespace MainGame.Maps.Tiles
                 {
 
                     if (col >= numCols) break;
-                    if (map[row][col] == 0) continue;
+                    if (map[row, col] == 0) continue;
 
-                    int rc = map[row][col];
+                    int rc = map[row, col];
                     int r = rc / numTilesAcross;
                     int c = rc % numTilesAcross;
                     // tile, position as V2_Xy, scale as tileSize
                     g.Draw(
-                        tiles[r][c].GetImage(), 
+                        tiles[r, c].GetImage(), 
                         new Vector2(V2_xy.X + col * tileSize, V2_xy.Y + row * tileSize), 
                         new Rectangle(0, 0, width, height), 
                         Color.White, 

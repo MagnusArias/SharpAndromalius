@@ -20,38 +20,38 @@ namespace MainGame.Maps
             //
             //  Instance for MAP
             //
-            i_dj = new I_DJump(tileMap, player);
+            i_dj = new I_DJump(tileMap, player, null);
             i_dj.SetPosition(272, 1530);
             items.Add(i_dj);
 
-            i_d = new I_Dash(tileMap, player);
+            i_d = new I_Dash(tileMap, player, null);
             i_d.SetPosition(3080, 1000);
             items.Add(i_d);
 
-            i_s = new I_Sword(tileMap, player);
+            i_s = new I_Sword(tileMap, player, null);
             i_s.SetPosition(1000, 1500);
             items.Add(i_s);
 
-            i_fb = new I_Fireball(tileMap, player);
+            i_fb = new I_Fireball(tileMap, player, null);
             i_fb.SetPosition(210, 2140);
             items.Add(i_fb);
 
             //
             //  Instance for HUD
             //
-            i_dj = new I_DJump(tileMap, player); // druga instancja do wyswietlania w hud
+            i_dj = new I_DJump(tileMap, player, null);
             i_dj.SetPosition(0, 0);
             items.Add(i_dj);
 
-            i_d = new I_Dash(tileMap, player);
+            i_d = new I_Dash(tileMap, player, null);
             i_d.SetPosition(0, 0);
             items.Add(i_d);
 
-            i_s = new I_Sword(tileMap, player);
+            i_s = new I_Sword(tileMap, player, null);
             i_s.SetPosition(0, 0);
             items.Add(i_s);
 
-            i_fb = new I_Fireball(tileMap, player);
+            i_fb = new I_Fireball(tileMap, player, null);
             i_fb.SetPosition(0, 0);
             items.Add(i_fb);
         }

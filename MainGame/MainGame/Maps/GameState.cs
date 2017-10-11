@@ -284,6 +284,6 @@ namespace MainGame.Maps
             if (eventCount == 120) gsm.SetState(newState);
         }
 
-        public virtual void Select();
+        public virtual void Select() { }
     }
 }

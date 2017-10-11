@@ -76,12 +76,20 @@ namespace MainGame
         //          TILESETS SPRITES
         //
         public const String TILESET_L1 = "Content/Tilesets/tileset.png";
+        public const String TILESET_L2 = "Content/Tilesets/tileset.png";
         //
         //
         //  
         //          BACKGROUND SPRITES
         //
         public const String BACKGROUND = "Content/Assets/Misc/background.png";
+        //
+        //
+        //  
+        //          MAPS
+        //
+        public const String MAP_1 = "Content/Assets/Misc/background.png";
+        public const String MAP_2 = "Content/Assets/Misc/background.png";
         //
         //
         //  

@@ -12,7 +12,6 @@ namespace MainGame.Objects.Enemies
         protected int lastBreath;
         protected int damage;
 
-        protected Boolean dead;
         
         protected Player player;
         protected Texture2D sprites;

@@ -76,7 +76,7 @@ namespace MainGame.Objects.Enemies
             }
         }
 
-        public void Update()
+        public new void Update()
         {
             tick++;
             eventCount++;
@@ -172,10 +172,6 @@ namespace MainGame.Objects.Enemies
 
         }
 
-        public void Draw(SpriteBatch g)
-        {
-            base.Draw(g);
-        }
 
         public void DrawHPBar(SpriteBatch g)
         {

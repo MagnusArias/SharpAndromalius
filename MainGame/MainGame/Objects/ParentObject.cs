@@ -22,7 +22,7 @@ namespace MainGame.Objects
         // wymiary
         protected int width;
         protected int height;
-
+        
         // "collision box"
         protected int cwidth;
         protected int cheight;
@@ -55,6 +55,8 @@ namespace MainGame.Objects
         protected float maxFallSpeed;
         protected float jumpStart;
         protected float stopJumpSpeed;
+
+        protected Boolean dead;
 
         public ParentObject(TileMap tm)
         {
@@ -277,6 +279,18 @@ namespace MainGame.Objects
             r.Y += (int)V2_mapxy.Y;
             g.Draw(r);
             */
+        }
+
+        public void DrawHP(SpriteBatch g)
+        {
+            if (playerCatch)
+            {
+
+                g.Draw(GlobalVariables.bossHPBar, 72, 122, (int)((GlobalVariables.GAME_WINDOW_WIDTH - 142) * hp_max), 14, null);
+                g.Draw(GlobalVariables.bossHPBarOutline, 0 + 70, 0 + 120, GlobalVariables.GAME_WINDOW_WIDTH - 140, 16, null);
+
+                g.DrawString(GlobalVariables.fontTitle, "Andromalius", new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 20, 105), Color.White);
+            }
         }
     }
 }

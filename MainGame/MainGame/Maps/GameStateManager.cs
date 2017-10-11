@@ -71,7 +71,6 @@ namespace MainGame.Maps
             {
                 Color myColour = new Color(255, 255, 255, 127);
 
-                g.setColor(myColour);
                 g.fillRect(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT);
             }
         }

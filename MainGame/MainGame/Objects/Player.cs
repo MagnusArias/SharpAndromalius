@@ -413,6 +413,8 @@ namespace MainGame.Objects
             armorAnimation.SetFrames(armorSprites.get(currentAction));
             armorAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
+            // Testing new environment - VS 2015 Comunity on Win7
+
             robeAnimation.SetFrames(robeSprites.GetValue(currentAction));
             robeAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 

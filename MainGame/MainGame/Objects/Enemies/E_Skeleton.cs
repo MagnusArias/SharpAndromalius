@@ -31,7 +31,7 @@ namespace MainGame.Objects.Enemies
 
             sprites = GlobalVariables.E_SkeletonGreenWalk;
 
-            animation.SetFrames(sprites);
+            //animation.SetFrames(sprites);
             animation.SetDelay(4);
         }
 
@@ -43,7 +43,7 @@ namespace MainGame.Objects.Enemies
                 {
                     sprites = GlobalVariables.E_SkeletonGreenDead;
                     isDeadSet = true;
-                    animation.SetFrames(sprites);
+                    //animation.SetFrames(sprites);
                     animation.SetDelay(4);
                 }
                 lastBreath--;

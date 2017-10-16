@@ -11,7 +11,7 @@ namespace MainGame.Control
 
         public HUD(TileMap tm) : base(tm)
         {
-            try
+           /* try
             {
                 hpBar = ImageIO.read(getClass().getResourceAsStream(HPBAR));
                 mpBar = ImageIO.read(getClass().getResourceAsStream(FIREBAR));
@@ -22,17 +22,17 @@ namespace MainGame.Control
             {
                 Console.WriteLine("\nStackTrace ---\n{0}", e.StackTrace);
                 Environment.Exit(0);
-            }
+            }*/
         }
 
         public void Init(Player p) => player = p;
 
-        public override void Draw(SpriteBatch g)
+        /*public override void Draw(SpriteBatch g)
         {
             g.Draw(hpBar, (player.GetHealth() * 2) - 75, 15, null);
             g.Draw(mpBar, (player.GetMana()) - 75, 15 + 16, null);
             g.Draw(staBar, (player.GetStamina() / 2) - 75, 15 + 32, null);
             g.Draw(hudBar, 0, 13, null);
-        }
+        }*/
     }
 }

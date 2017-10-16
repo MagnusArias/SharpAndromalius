@@ -11,7 +11,7 @@ namespace MainGame.Maps
         private int currentChoice = 0;
         private String[] options = {
             "Graj",
-            "Zakończ"
+            "Zakoncz"
         };
 
         private double b;
@@ -26,7 +26,7 @@ namespace MainGame.Maps
             yPos = (GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 100);
         }
 
-        public new void Update()
+        public new void _Update()
         {
             // check keys
             HandleInput();
@@ -34,23 +34,23 @@ namespace MainGame.Maps
             yPos += Math.Sin(b * tick);
         }
 
-        public new void Draw(SpriteBatch g)
+        public override void _Draw(SpriteBatch g)
         {
-            g.fillRect(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT);
+            g.Draw(GlobalVariables.blackRect, new Rectangle(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT), Color.Black);
 
             // draw title
             g.DrawString(GlobalVariables.fontTitle, "ANDROMALIUS", new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 150, (float)yPos), Color.White);
 
             // draw menu options
             g.DrawString(GlobalVariables.fontSimple, options[0], new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 100, GlobalVariables.GAME_WINDOW_HEIGHT / 2), Color.White);
-            g.DrawString(GlobalVariables.fontSimple, options[2], new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 100, GlobalVariables.GAME_WINDOW_HEIGHT / 2 + 30), Color.White);
+            g.DrawString(GlobalVariables.fontSimple, options[1], new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 100, GlobalVariables.GAME_WINDOW_HEIGHT / 2 + 30), Color.White);
 
             // draw point
-            if (currentChoice == 0) g.fillRect(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 120, GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 5, 5, 5);
-            else if (currentChoice == 1) g.fillRect(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 120, GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 5 + 30, 5, 5);
+            if (currentChoice == 0) g.Draw(GlobalVariables.blackRect, new Rectangle(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 120, GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 5, 5, 5), Color.White);
+            else if (currentChoice == 1) g.Draw(GlobalVariables.blackRect, new Rectangle(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 120, GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 5 + 30, 5, 5), Color.White);
 
             // other
-            g.DrawString(GlobalVariables.fontTitle, "2017, Copyright Przemysław Dębiec, MIT license", new Vector2(10, GlobalVariables.GAME_WINDOW_HEIGHT - 50), Color.White);
+            g.DrawString(GlobalVariables.fontTitle, "2017, Copyright Przemyslaw Debiec, MIT license", new Vector2(10, GlobalVariables.GAME_WINDOW_HEIGHT - 50), Color.White);
         }
 
         public override void Select()
@@ -61,9 +61,9 @@ namespace MainGame.Maps
 
         public new void HandleInput()
         {
-            if (Keys.IsPressed(Keys.UP) && currentChoice > 0) currentChoice--;
-            if (Keys.IsPressed(Keys.ENTER)) Select();
-            if (Keys.IsPressed(Keys.DOWN) && (currentChoice < options.Length - 1)) currentChoice++;
+            if (MyKeys.IsPressed(MyKeys._UP) && currentChoice > 0) currentChoice--;
+            if (MyKeys.IsPressed(MyKeys._ENTER)) Select();
+            if (MyKeys.IsPressed(MyKeys._DOWN) && (currentChoice < options.Length - 1)) currentChoice++;
         }
     }
 }

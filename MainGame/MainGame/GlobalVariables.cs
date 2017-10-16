@@ -109,18 +109,18 @@ namespace MainGame
         public const String PORTALSPRITEMAP = "/Content/Assets/penis.gif";
 
 
-        public const String FONT_TITLE = "/Content/font";
+        public const String FONT_TITLE = "Fonts/Title";
         public static SpriteFont fontTitle;
 
-        public const String FONT_SIMPLE = "/Content/font_simple";
+        public const String FONT_SIMPLE = "Fonts/Plain";
         public static SpriteFont fontSimple;
 
 
 
 
-        
-        
-        
+
+
+        public static Texture2D blackRect;
         public static Texture2D Particles;
         
 

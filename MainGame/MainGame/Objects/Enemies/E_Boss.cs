@@ -39,7 +39,7 @@ namespace MainGame.Objects.Enemies
 
             sprites = GlobalVariables.E_BossWalk;
 
-            animation.SetFrames(sprites);
+            //animation.SetFrames(sprites);
             animation.SetDelay(4);
 
             Random r = new Random();
@@ -49,8 +49,8 @@ namespace MainGame.Objects.Enemies
 
             try
             {
-                hpBar = ImageIO.read(getClass().getResourceAsStream(BOSSHPBAR));
-                hpBarOutline = ImageIO.read(getClass().getResourceAsStream(BOSSBAROUTLINE));
+                //hpBar = ImageIO.read(getClass().getResourceAsStream(BOSSHPBAR));
+                //hpBarOutline = ImageIO.read(getClass().getResourceAsStream(BOSSBAROUTLINE));
             }
             catch (Exception e)
             {

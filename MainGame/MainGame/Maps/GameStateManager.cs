@@ -46,29 +46,28 @@ namespace MainGame.Maps
 
         public void SetPaused(Boolean b) => paused = b;
 
-        public void Update()
+        public void _Update()
         {
             if (paused)
             {
                 pauseState.Update();
                 return;
             }
-            if (gameStates[currentState] != null) gameStates[currentState].Update();
+            if (gameStates[currentState] != null) gameStates[currentState]._Update();
         }
 
-        public void Draw(SpriteBatch g)
+        public void _Draw(SpriteBatch g)
         {
             if (paused)
             {
                 pauseState.Draw(g);
                 return;
             }
-            if (gameStates[currentState] != null) gameStates[currentState].Draw(g);
+            if (gameStates[currentState] != null) gameStates[currentState]._Draw(g);
             else
             {
                 Color myColour = new Color(255, 255, 255, 127);
-
-                g.fillRect(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT);
+                g.Draw(GlobalVariables.blackRect, new Rectangle(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT), Color.Black);
             }
         }
     }

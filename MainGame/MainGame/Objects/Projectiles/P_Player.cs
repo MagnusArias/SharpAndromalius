@@ -52,7 +52,7 @@ namespace MainGame.Objects.Projectiles
             }
 
             count = 0;
-            sprites = GlobalVariables.EnergyParticle[0];
+            //sprites = GlobalVariables.EnergyParticle[0];
 
             animation.SetFrames(sprites);
             animation.SetDelay(-1);

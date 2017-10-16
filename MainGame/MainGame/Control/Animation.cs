@@ -1,5 +1,14 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿#region Using statements and file description
+using Microsoft.Xna.Framework.Graphics;
 using System;
+//-----------------------------------------------------------------------------
+// Animation.cs
+//
+// Originally created: 10.07.2016, 20:43 by Przemysław Dębiec
+// 
+// Main controller for animations
+//-----------------------------------------------------------------------------
+#endregion
 
 namespace MainGame.Control
 {

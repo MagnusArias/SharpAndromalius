@@ -41,7 +41,7 @@ namespace MainGame.Objects.Enemies
 
             sprites = GlobalVariables.E_GhostBlueWalk;
 
-            animation.SetFrames(sprites);
+           // animation.SetFrames(sprites);
             animation.SetDelay(4);
         }
 

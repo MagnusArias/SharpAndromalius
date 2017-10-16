@@ -31,7 +31,8 @@ namespace MainGame.Objects.Projectiles
 
             attackRect = new Rectangle(0, 0, 28, 14);
 
-            // load sprites
+           /* 
+            * // load sprites
             try
             {
 
@@ -68,7 +69,7 @@ namespace MainGame.Objects.Projectiles
             catch (Exception e)
             {
                 Console.WriteLine("\nStackTrace ---\n{0}", e.StackTrace);
-            }
+            }*/
 
         }
 

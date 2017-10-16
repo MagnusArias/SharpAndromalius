@@ -21,7 +21,7 @@ namespace MainGame.Control
 
         public Background(String s, float d1, float d2) => Setup(s, d1, d2);
 
-        public Background(String s, float ms, int x, int y, int w, int h) => SetupExtended(s, ms, x, y, w, h);
+        //public Background(String s, float ms, int x, int y, int w, int h) => SetupExtended(s, ms, x, y, w, h);
 
         public void Setup(String s, float s1, float s2)
         {
@@ -31,7 +31,7 @@ namespace MainGame.Control
             scale.Y = s2;
         }
 
-        public void SetupExtended(String s, float ms, int x, int y, int w, int h)
+      /*  public void SetupExtended(String s, float ms, int x, int y, int w, int h)
         {
             image = GlobalVariables.Background;
             image = image.getSubimage(x, y, w, h);
@@ -39,7 +39,7 @@ namespace MainGame.Control
             height = image.Height;
             scale.X = ms;
             scale.Y = ms;
-        }
+        }*/
 
         public void SetPosition(float x, float y)
         {

@@ -86,23 +86,23 @@ namespace MainGame.Maps
 
         public void PlaceItems() => items.Clear();
 
-        public void Update()
+        public virtual void _Update()
         {
             HandleInput();
 
-            if (teleport.Contains(player)) eventFinish = blockInput = true;
+           // if (teleport.Contains(player)) eventFinish = blockInput = true;
 
-            if (player.GetHealth() == 0 || player.GetY() > tileMap.GetHeight()) eventDead = blockInput = true;
+            //if (player.GetHealth() == 0 || player.GetY() > tileMap.GetHeight()) eventDead = blockInput = true;
 
-            if (eventStart) EventStart();
-            if (eventDead) EventDead();
-            if (eventFinish) EventFinish(GameStateManager.LEVEL2);
+          //  if (eventStart) EventStart();
+           // if (eventDead) EventDead();
+          //  if (eventFinish) EventFinish(GameStateManager.LEVEL2);
 
-            back.SetPosition(tileMap.GetX(), tileMap.GetY());
+           // back.SetPosition(tileMap.GetX(), tileMap.GetY());
 
-            player.Update();
+          //  player.Update();
 
-            tileMap.SetPosition(
+          /*  tileMap.SetPosition(
                    GlobalVariables.GAME_WINDOW_WIDTH / 2 - player.GetX() - (70 * player.GetViewLeftRight()),
                    GlobalVariables.GAME_WINDOW_HEIGHT / 2 - player.GetY() - (150 * player.GetViewDown()) + 10
            );
@@ -133,10 +133,10 @@ namespace MainGame.Maps
                 if (e.ShouldRemove()) enemies.RemoveAt(i--);
             }
             teleport.Update();
-            debug.Update();
+            debug.Update();*/
         }
 
-        public void Draw(SpriteBatch g)
+        public virtual void _Draw(SpriteBatch g)
         {
             back.Draw(g);
             player.Draw(g);
@@ -156,27 +156,27 @@ namespace MainGame.Maps
             hud.Draw(g);
         }
 
-        public void HandleInput()
+        public virtual void HandleInput()
         {
             Fireball fb;
 
-            if (!blockInput)
+            /*if (!blockInput)
             {
-                player.SetJumping(Keys.keyState[Keys.UP]);
-                player.SetLeft(Keys.keyState[Keys.LEFT]);
-                player.SetRight(Keys.keyState[Keys.RIGHT]);
-                player.SetDown(Keys.keyState[Keys.DOWN]);
+                player.SetJumping(MyKeys.keyState[MyKeys._UP]);
+                player.SetLeft(MyKeys.keyState[MyKeys._LEFT]);
+                player.SetRight(MyKeys.keyState[MyKeys._RIGHT]);
+                player.SetDown(MyKeys.keyState[MyKeys._DOWN]);
 
-                if (Keys.IsPressed(Keys.BUTTON3)) player.SetAttacking();
-                if (Keys.IsPressed(Keys.BUTTON4)) debug.SetReady();
+                if (MyKeys.IsPressed(MyKeys._BUTTON3)) player.SetAttacking();
+                if (MyKeys.IsPressed(MyKeys._BUTTON4)) debug.SetReady();
                 //if (Keys.IsPressed(Keys.ENTER)) Reset();
 
-                if (Keys.IsPressed(Keys.ESCAPE)) gsm.SetPaused(true);
+                if (MyKeys.IsPressed(MyKeys._ESCAPE)) gsm.SetPaused(true);
 
-                if (Keys.IsPressed(Keys.BUTTON2) && player.IsDashingReady()) player.SetDashing();
+                if (MyKeys.IsPressed(MyKeys._BUTTON2) && player.IsDashingReady()) player.SetDashing();
 
 
-                if (Keys.IsPressed(Keys.BUTTON1))
+                if (MyKeys.IsPressed(MyKeys._BUTTON1))
                 {
                     if (player.IsFireballReady())
                     {
@@ -188,7 +188,7 @@ namespace MainGame.Maps
                         player.SetFireballCooldown(0);
                     }
                 }
-            }
+            }*/
         }
 
         public void Reset(Vector2 player_pos)
@@ -216,10 +216,10 @@ namespace MainGame.Maps
             }
             if (eventCount > 1 && eventCount < 60)
             {
-                rec_tb[0].Height -= 4;
+                /*rec_tb[0].Height -= 4;
                 rec_tb[1].Width -= 6;
                 rec_tb[2].Y += 4;
-                rec_tb[3].X += 6;
+                rec_tb[3].X += 6;*/
             }
             if (eventCount == 60)
             {
@@ -244,10 +244,10 @@ namespace MainGame.Maps
             }
             else if (eventCount > 60)
             {
-                rec_tb[0].X -= 6;
+               /* rec_tb[0].X -= 6;
                 rec_tb[0].Y -= 4;
                 rec_tb[0].Width += 12;
-                rec_tb[0].Height += 8;
+                rec_tb[0].Height += 8;*/
             }
             if (eventCount >= 120)
             {
@@ -276,10 +276,10 @@ namespace MainGame.Maps
             }
             else if (eventCount > 60)
             {
-                rec_tb[0].X -= 6;
+               /* rec_tb[0].X -= 6;
                 rec_tb[0].Y -= 4;
                 rec_tb[0].Width += 12;
-                rec_tb[0].Height += 8;
+                rec_tb[0].Height += 8;*/
             }
             if (eventCount == 120) gsm.SetState(newState);
         }

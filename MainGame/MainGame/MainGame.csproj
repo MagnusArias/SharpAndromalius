@@ -47,7 +47,7 @@
     <Compile Include="Control\Background.cs" />
     <Compile Include="Control\DebugInfo.cs" />
     <Compile Include="Control\HUD.cs" />
-    <Compile Include="Control\Keys.cs" />
+    <Compile Include="Control\MyKeys.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GlobalVariables.cs" />
     <Compile Include="Maps\GameState.cs" />

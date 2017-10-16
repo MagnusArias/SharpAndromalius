@@ -37,8 +37,8 @@ namespace MainGame.Objects
                         Width = width,
                         Height = height
                     };
-                    sprites[i] = spritesheet.GetData<Rectangle>(new Rectangle(0,0,30,30));
-                    sprites[i] = spritesheet.getSubimage(i * width, 0, width, height);
+                   // sprites[i] = spritesheet.GetData<Rectangle>(new Rectangle(0,0,30,30)[]);
+                    //sprites[i] = spritesheet.getSubimage(i * width, 0, width, height);
                 }
 
                 animation.SetFrames(sprites);

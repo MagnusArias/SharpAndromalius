@@ -49,7 +49,7 @@ namespace MainGame.Maps.Tiles
         {
             try
             {
-                tileset = ImageIO.read(getClass().getResourceAsStream(s));
+              /*  tileset = ImageIO.read(getClass().getResourceAsStream(s));
 
                 numTilesAcross = tileset.Width / tileSize;
                 tiles = new Tile[6, numTilesAcross];
@@ -72,9 +72,9 @@ namespace MainGame.Maps.Tiles
                     subimage = tileset.getSubimage(col * tileSize, tileSize * 4, tileSize, tileSize);
                     tiles[4, col] = new Tile(subimage, Tile.SOLID);
 
-                    subimage = tileset.getSubimage(col * tileSize, tileSize * 5, tileSize, tileSize);
+                    //subimage = tileset.getSubimage(col * tileSize, tileSize * 5, tileSize, tileSize);
                     tiles[5, col] = new Tile(subimage, Tile.SOLID);
-                }
+                }*/
 
             }
             catch (Exception e)
@@ -88,11 +88,11 @@ namespace MainGame.Maps.Tiles
 
             try
             {
-                InputStream ins = getClass().getResourceAsStream(s);
-                BufferedReader br = new BufferedReader(new InputStreamReader(ins));
+                //InputStream ins = getClass().getResourceAsStream(s);
+               // BufferedReader br = new BufferedReader(new InputStreamReader(ins));
 
-                numCols = int.Parse(br.readLine());
-                numRows = int.Parse(br.readLine());
+               // numCols = int.Parse(br.readLine());
+                //numRows = int.Parse(br.readLine());
 
                 map = new int[numRows, numCols];
                 width = numCols * tileSize;
@@ -105,15 +105,15 @@ namespace MainGame.Maps.Tiles
                 xy_max.Y = 0;
 
                 char delims = ' ';
-                for (int row = 0; row < numRows; row++)
+               /* for (int row = 0; row < numRows; row++)
                 {
-                    String line = br.readLine();
+                   /String line = br.readLine();
                     String[] tokens = line.Split(delims);
                     for (int col = 0; col < numCols; col++)
                     {
                         map[row, col] = int.Parse(tokens[col]);
                     }
-                }
+                }*/
 
             }
             catch (Exception e)
@@ -224,7 +224,7 @@ namespace MainGame.Maps.Tiles
                         );
 
                     Rectangle rec = new Rectangle((int)V2_xy.X + col * tileSize, (int)V2_xy.Y + row * tileSize, 30, 30);
-                    if (GlobalVariables.DEBUG_READY && rc > 59) g.Draw(rec);
+                    if (GlobalVariables.DEBUG_READY && rc > 59) g.Draw(GlobalVariables.blackRect, rec, Color.Black);
 
                 }
             }

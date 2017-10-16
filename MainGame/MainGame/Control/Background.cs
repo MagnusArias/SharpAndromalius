@@ -25,6 +25,7 @@ namespace MainGame.Control
 
         public void Setup(String s, float s1, float s2)
         {
+            image = GlobalVariables.Background;
             width = image.Width;
             height = image.Height;
             scale.X = s1;
@@ -86,7 +87,15 @@ namespace MainGame.Control
             {
                 for (int j = 0; j < GlobalVariables.GAME_WINDOW_HEIGHT / height * GlobalVariables.GAME_WINDOW_SCALE; j++)
                 {
-                    g.Draw(image, new Vector2(xy.X + width * i, xy.Y + height * j), new Rectangle(0, 0, width, height), Color.White, 0.0f, new Vector2(width / 2, height / 2), 1.0f, SpriteEffects.None, 0.0f);
+                    g.Draw(
+                        image, 
+                        new Vector2(xy.X + width * i, xy.Y + height * j), 
+                        new Rectangle(0, 0, width, height), 
+                        Color.White, 0.0f, 
+                        new Vector2(width / 2, height / 2), 
+                        1.0f, 
+                        SpriteEffects.None, 
+                        0.0f);
                 }
             }
         }

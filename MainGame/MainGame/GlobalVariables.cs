@@ -87,7 +87,8 @@ namespace MainGame
         //  
         //          BACKGROUND SPRITES
         //
-        public const String BACKGROUND = "Content/Assets/Misc/background.png";
+        public static Texture2D Background;
+        public const String BACKGROUND = "Backgrounds/tlo.png";
         //
         //
         //  
@@ -116,11 +117,10 @@ namespace MainGame
         public static SpriteFont fontSimple;
 
 
-
-
-
+        
 
         public static Texture2D blackRect;
+        public static Texture2D whiteRect;
         public static Texture2D Particles;
         
 
@@ -132,8 +132,7 @@ namespace MainGame
         public static Texture2D mpBar;
         public static Texture2D staBar;
         public static Texture2D hudBar;
-        public static Texture2D Player;
-        public static Texture2D Background;
+        
         public static Texture2D Teleport;
 
         public static Texture2D bossHPBar;

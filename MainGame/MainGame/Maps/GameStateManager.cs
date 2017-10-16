@@ -46,21 +46,21 @@ namespace MainGame.Maps
 
         public void SetPaused(Boolean b) => paused = b;
 
-        public void _Update()
+        public void _Update(GameTime gm)
         {
             if (paused)
             {
-                pauseState.Update();
+                pauseState._Update(gm);
                 return;
             }
-            if (gameStates[currentState] != null) gameStates[currentState]._Update();
+            if (gameStates[currentState] != null) gameStates[currentState]._Update(gm);
         }
 
         public void _Draw(SpriteBatch g)
         {
             if (paused)
             {
-                pauseState.Draw(g);
+                pauseState._Draw(g);
                 return;
             }
             if (gameStates[currentState] != null) gameStates[currentState]._Draw(g);

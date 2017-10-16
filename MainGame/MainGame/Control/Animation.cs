@@ -25,14 +25,14 @@ namespace MainGame.Control
 
         public Animation() => timesPlayed = 0;
 
-        public void SetFrames(Texture2D[] frames)
+        public void SetFrames(Texture2D[] f)
         {
-            this.frames = frames;
+            this.frames = f;
             currentFrame = 0;
             count = 0;
             timesPlayed = 0;
             delay = 5;
-            numFrames = frames.Length;
+            numFrames = f.Length;
         }
 
         public void SetDelay(int i) => delay = i;

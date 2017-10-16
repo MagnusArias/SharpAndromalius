@@ -407,18 +407,18 @@ namespace MainGame.Objects
         {
             currentAction = i;
 
-            bodyAnimation.SetFrames(sprites[currentAction]);
+            //bodyAnimation.SetFrames(sprites[currentAction]);
             bodyAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
-            armorAnimation.SetFrames(armorSprites.get(currentAction));
+            //armorAnimation.SetFrames(armorSprites.get(currentAction));
             armorAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
             // Testing new environment - VS 2015 Comunity on Win7
 
-            robeAnimation.SetFrames(robeSprites.GetValue(currentAction));
+           // robeAnimation.SetFrames(robeSprites.GetValue(currentAction));
             robeAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
-            swordAnimation.SetFrames(swordSprites.get(currentAction));
+            //swordAnimation.SetFrames(swordSprites.get(currentAction));
             swordAnimation.SetDelay(swordSPRITEDELAYS[currentAction]);
 
             width = FRAMEWIDTHS[currentAction];
@@ -624,7 +624,7 @@ namespace MainGame.Objects
             try
             {
 
-                Texture2D spritesheet = ImageIO.read(getClass().getResourceAsStream(PLAYERSPRITEMAP));
+                /*Texture2D spritesheet = ImageIO.read(getClass().getResourceAsStream(PLAYERSPRITEMAP));
                 Texture2D spritesheet2 = ImageIO.read(getClass().getResourceAsStream(ARMORSPRITEMAP));
                 Texture2D spritesheet3 = ImageIO.read(getClass().getResourceAsStream(SWORDSPRITEMAP));
                 Texture2D spritesheet4 = ImageIO.read(getClass().getResourceAsStream(ROBESPRITEMAP));
@@ -671,7 +671,7 @@ namespace MainGame.Objects
                     for (int j = 0; j < NUMFRAMES[i]; j++) { bi[j] = spritesheet4.getSubimage(j * FRAMEWIDTHS[i], count, FRAMEWIDTHS[i], FRAMEHEIGHTS[i]); }
                     robeSprites.Add(bi);
                     count += FRAMEHEIGHTS[i];
-                }
+                }*/
             }
             catch (Exception e)
             {

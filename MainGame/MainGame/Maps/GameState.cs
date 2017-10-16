@@ -6,6 +6,7 @@ using MainGame.Objects.Items;
 using MainGame.Objects.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
@@ -14,6 +15,7 @@ namespace MainGame.Maps
     abstract class GameState
     {
         protected GameStateManager gsm;
+        protected KeyboardState keyEvent;
 
         protected Player player;
         public Vector2 newPlayerPos;
@@ -86,23 +88,23 @@ namespace MainGame.Maps
 
         public void PlaceItems() => items.Clear();
 
-        public virtual void _Update()
+        public virtual void _Update(GameTime gm)
         {
             HandleInput();
 
-           // if (teleport.Contains(player)) eventFinish = blockInput = true;
+            if (teleport.Contains(player)) eventFinish = blockInput = true;
 
-            //if (player.GetHealth() == 0 || player.GetY() > tileMap.GetHeight()) eventDead = blockInput = true;
+            if (player.GetHealth() == 0 || player.GetY() > tileMap.GetHeight()) eventDead = blockInput = true;
 
-          //  if (eventStart) EventStart();
-           // if (eventDead) EventDead();
-          //  if (eventFinish) EventFinish(GameStateManager.LEVEL2);
+            if (eventStart) EventStart();
+            if (eventDead) EventDead();
+            if (eventFinish) EventFinish(GameStateManager.LEVEL2);
 
-           // back.SetPosition(tileMap.GetX(), tileMap.GetY());
+            back.SetPosition(tileMap.GetX(), tileMap.GetY());
 
-          //  player.Update();
+            player.Update();
 
-          /*  tileMap.SetPosition(
+            tileMap.SetPosition(
                    GlobalVariables.GAME_WINDOW_WIDTH / 2 - player.GetX() - (70 * player.GetViewLeftRight()),
                    GlobalVariables.GAME_WINDOW_HEIGHT / 2 - player.GetY() - (150 * player.GetViewDown()) + 10
            );
@@ -133,7 +135,7 @@ namespace MainGame.Maps
                 if (e.ShouldRemove()) enemies.RemoveAt(i--);
             }
             teleport.Update();
-            debug.Update();*/
+            debug.Update();
         }
 
         public virtual void _Draw(SpriteBatch g)
@@ -160,7 +162,7 @@ namespace MainGame.Maps
         {
             Fireball fb;
 
-            /*if (!blockInput)
+            if (!blockInput)
             {
                 player.SetJumping(MyKeys.keyState[MyKeys._UP]);
                 player.SetLeft(MyKeys.keyState[MyKeys._LEFT]);
@@ -188,7 +190,7 @@ namespace MainGame.Maps
                         player.SetFireballCooldown(0);
                     }
                 }
-            }*/
+            }
         }
 
         public void Reset(Vector2 player_pos)

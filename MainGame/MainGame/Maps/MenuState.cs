@@ -1,6 +1,7 @@
 ﻿using MainGame.Control;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 
 
@@ -14,6 +15,9 @@ namespace MainGame.Maps
             "Zakoncz"
         };
 
+        private String TITLE = "Sharp Andromalius";
+        private Vector2 titleSize;
+
         private double b;
         private int tick;
         private double yPos;
@@ -22,16 +26,17 @@ namespace MainGame.Maps
         {
             tick = 0;
             Random r = new Random();
-            b = r.Next() * 0.06 + 0.07;
-            yPos = (GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 100);
+            b = r.Next(0,1) * 0.06 + 0.07;
+            titleSize = GlobalVariables.fontTitle.MeasureString(TITLE);
+            yPos = (GlobalVariables.GAME_WINDOW_HEIGHT / 3);
         }
 
-        public new void _Update()
+        public override void _Update(GameTime gm)
         {
-            // check keys
+            keyEvent = Keyboard.GetState();
             HandleInput();
             tick++;
-            yPos += Math.Sin(b * tick);
+            yPos += Math.Sin(b * tick) ;
         }
 
         public override void _Draw(SpriteBatch g)
@@ -39,18 +44,38 @@ namespace MainGame.Maps
             g.Draw(GlobalVariables.blackRect, new Rectangle(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT), Color.Black);
 
             // draw title
-            g.DrawString(GlobalVariables.fontTitle, "ANDROMALIUS", new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 150, (float)yPos), Color.White);
-
+            g.DrawString(
+                GlobalVariables.fontTitle, 
+                TITLE, 
+                new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2, (float)yPos), 
+                Color.White,
+                0.0f,
+                titleSize/2,
+                GlobalVariables.GAME_WINDOW_SCALE,
+                SpriteEffects.None,
+                0.0f);
+            
             // draw menu options
-            g.DrawString(GlobalVariables.fontSimple, options[0], new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 100, GlobalVariables.GAME_WINDOW_HEIGHT / 2), Color.White);
-            g.DrawString(GlobalVariables.fontSimple, options[1], new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 100, GlobalVariables.GAME_WINDOW_HEIGHT / 2 + 30), Color.White);
+            for (int i = 0; i < options.Length; i++)
+            {
+                g.DrawString(
+                    GlobalVariables.fontSimple,
+                    options[i],
+                    new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2, (GlobalVariables.GAME_WINDOW_HEIGHT / 2) + (i*30*GlobalVariables.GAME_WINDOW_SCALE)),
+                    Color.White,
+                    0.0f,
+                    GlobalVariables.fontSimple.MeasureString(options[i]) / 2,
+                    GlobalVariables.GAME_WINDOW_SCALE,
+                    SpriteEffects.None,
+                    0.0f);
+            }
+
 
             // draw point
-            if (currentChoice == 0) g.Draw(GlobalVariables.blackRect, new Rectangle(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 120, GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 5, 5, 5), Color.White);
-            else if (currentChoice == 1) g.Draw(GlobalVariables.blackRect, new Rectangle(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 120, GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 5 + 30, 5, 5), Color.White);
+            g.Draw(GlobalVariables.whiteRect, new Rectangle(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 130, (GlobalVariables.GAME_WINDOW_HEIGHT / 2) + (currentChoice*30*GlobalVariables.GAME_WINDOW_SCALE), 15, 15), Color.White);
 
             // other
-            g.DrawString(GlobalVariables.fontTitle, "2017, Copyright Przemyslaw Debiec, MIT license", new Vector2(10, GlobalVariables.GAME_WINDOW_HEIGHT - 50), Color.White);
+            g.DrawString(GlobalVariables.fontSimple, "2017, Copyright (r) Przemyslaw Debiec", new Vector2(10, GlobalVariables.GAME_WINDOW_HEIGHT - 50), Color.White);
         }
 
         public override void Select()
@@ -59,11 +84,11 @@ namespace MainGame.Maps
             else if (currentChoice == 1) { Environment.Exit(0); }
         }
 
-        public new void HandleInput()
+        public override void HandleInput()
         {
-            if (MyKeys.IsPressed(MyKeys._UP) && currentChoice > 0) currentChoice--;
-            if (MyKeys.IsPressed(MyKeys._ENTER)) Select();
-            if (MyKeys.IsPressed(MyKeys._DOWN) && (currentChoice < options.Length - 1)) currentChoice++;
+            if (keyEvent.IsKeyDown(Keys.Up) && currentChoice > 0) currentChoice--;
+            if (keyEvent.IsKeyDown(Keys.Enter)) Select();
+            if (keyEvent.IsKeyDown(Keys.Down) && (currentChoice < options.Length - 1)) currentChoice++;
         }
     }
 }

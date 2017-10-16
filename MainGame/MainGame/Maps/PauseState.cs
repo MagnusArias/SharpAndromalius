@@ -18,9 +18,9 @@ namespace MainGame.Maps
 
         public PauseState(GameStateManager gsm) : base(gsm) { }
 
-        public new void Update() => HandleInput();
+        public new void _Update() => HandleInput();
 
-        public new void Draw(SpriteBatch g)
+        public new void _Draw(SpriteBatch g)
         {
             Color myColour = new Color(0, 0, 0, 32);
 

@@ -407,16 +407,18 @@ namespace MainGame.Objects
         {
             currentAction = i;
 
-           // bodyAnimation.SetFrames(sprites[currentAction]);
+            bodyAnimation.SetFrames(sprites[currentAction]);
             bodyAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
-           // armorAnimation.SetFrames(armorSprites.get(currentAction));
+            armorAnimation.SetFrames(armorSprites.get(currentAction));
             armorAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
-            //robeAnimation.SetFrames(robeSprites.GetValue(currentAction));
+            // Testing new environment - VS 2015 Comunity on Win7
+
+            robeAnimation.SetFrames(robeSprites.GetValue(currentAction));
             robeAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
-           // swordAnimation.SetFrames(swordSprites.get(currentAction));
+            swordAnimation.SetFrames(swordSprites.get(currentAction));
             swordAnimation.SetDelay(swordSPRITEDELAYS[currentAction]);
 
             width = FRAMEWIDTHS[currentAction];
@@ -619,7 +621,6 @@ namespace MainGame.Objects
 
         private void LoadGraphics()
         {
-            /*
             try
             {
 
@@ -677,7 +678,6 @@ namespace MainGame.Objects
                 Console.WriteLine("\nStackTrace ---\n{0}", e.StackTrace);
                 Environment.Exit(0);
             }
-            */
         }
 
         private void CheckItemCollision()

@@ -10,7 +10,7 @@ namespace MainGame.Objects.Enemies
         protected int lastBreath;
 
         protected Player player;
-        protected Texture2D sprites;
+        protected Texture2D[] sprites;
 
         public Enemy(TileMap tm) : base(tm) { }
 

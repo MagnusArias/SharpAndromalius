@@ -31,7 +31,7 @@ namespace MainGame.Maps
             yPos = (GlobalVariables.GAME_WINDOW_HEIGHT / 3);
         }
 
-        public override void _Update(GameTime gm)
+        public override void _Update(GameTime gt)
         {
             keyEvent = Keyboard.GetState();
             HandleInput();

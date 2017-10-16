@@ -21,23 +21,21 @@ namespace MainGame.Control
         public static int _BUTTON4 = 7;
         public static int _ENTER = 8;
         public static int _ESCAPE = 9;
-        
-        public static void KeySet(Boolean b)
-        {
-            if (keyEvent.IsKeyDown(Keys.Up)) keyState[_UP] = b;
-            else if (keyEvent.IsKeyDown(Keys.Left)) keyState[_LEFT] = b;
-            else if (keyEvent.IsKeyDown(Keys.Down)) keyState[_DOWN] = b;
-            else if (keyEvent.IsKeyDown(Keys.Right)) keyState[_RIGHT] = b;
-            else if (keyEvent.IsKeyDown(Keys.Q)) keyState[_BUTTON1] = b;
-            else if (keyEvent.IsKeyDown(Keys.W)) keyState[_BUTTON2] = b;
-            else if (keyEvent.IsKeyDown(Keys.E)) keyState[_BUTTON3] = b;
-            else if (keyEvent.IsKeyDown(Keys.R)) keyState[_BUTTON4] = b;
-            else if (keyEvent.IsKeyDown(Keys.Enter)) keyState[_ENTER] = b;
-            else if (keyEvent.IsKeyDown(Keys.Escape)) keyState[_ESCAPE] = b;
-        }
+
 
         public static void Update()
         {
+            if (keyEvent.IsKeyDown(Keys.Up)) keyState[_UP] = true; else keyState[_UP] = false;
+            if (keyEvent.IsKeyDown(Keys.Down)) keyState[_DOWN] = true; else keyState[_DOWN] = false;
+            if (keyEvent.IsKeyDown(Keys.Left)) keyState[_LEFT] = true; else keyState[_LEFT] = false;
+            if (keyEvent.IsKeyDown(Keys.Right)) keyState[_RIGHT] = true; else keyState[_RIGHT] = false;
+            if (keyEvent.IsKeyDown(Keys.Q)) keyState[_BUTTON1] = true; else keyState[_BUTTON1] = false;
+            if (keyEvent.IsKeyDown(Keys.W)) keyState[_BUTTON2] = true; else keyState[_BUTTON2] = false;
+            if (keyEvent.IsKeyDown(Keys.E)) keyState[_BUTTON3] = true; else keyState[_BUTTON3] = false;
+            if (keyEvent.IsKeyDown(Keys.R)) keyState[_BUTTON4] = true; else keyState[_BUTTON4] = false;
+            if (keyEvent.IsKeyDown(Keys.Enter)) keyState[_ENTER] = true; else keyState[_ENTER] = false;
+            if (keyEvent.IsKeyDown(Keys.Escape)) keyState[_ESCAPE] = true; else keyState[_ESCAPE] = false;
+
             for (int i = 0; i < NUM_KEYS; i++)
             {
                 prevKeyState[i] = keyState[i];

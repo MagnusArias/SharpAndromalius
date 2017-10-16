@@ -8,7 +8,6 @@ namespace MainGame.Maps
 {
     class PauseState : GameState
     {
-        private SpriteFont font;
         private int currentChoice = 0;
 
         private String[] options = {
@@ -18,23 +17,36 @@ namespace MainGame.Maps
 
         public PauseState(GameStateManager gsm) : base(gsm) { }
 
-        public new void _Update() => HandleInput();
+        public override void _Update(GameTime gt) => HandleInput();
 
-        public new void _Draw(SpriteBatch g)
+        public override void _Draw(SpriteBatch g)
         {
             Color myColour = new Color(0, 0, 0, 32);
 
-            //g.fillRect(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT);
+            g.Draw(GlobalVariables.blackRect, new Rectangle(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT), myColour);
 
-            g.DrawString(GlobalVariables.fontTitle, options[0], new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 100, GlobalVariables.GAME_WINDOW_HEIGHT / 2), myColour);
-            g.DrawString(GlobalVariables.fontTitle, options[1], new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 100, GlobalVariables.GAME_WINDOW_HEIGHT / 2 + 30), myColour);
+            // draw menu options
+            for (int i = 0; i < options.Length; i++)
+            {
+                g.DrawString(
+                    GlobalVariables.fontSimple,
+                    options[i],
+                    new Vector2(GlobalVariables.GAME_WINDOW_WIDTH / 2, (GlobalVariables.GAME_WINDOW_HEIGHT / 2) + (i * 30 * GlobalVariables.GAME_WINDOW_SCALE)),
+                    Color.White,
+                    0.0f,
+                    GlobalVariables.fontSimple.MeasureString(options[i]) / 2,
+                    GlobalVariables.GAME_WINDOW_SCALE,
+                    SpriteEffects.None,
+                    0.0f);
+            }
 
-           // if (currentChoice == 0) g.fillRect(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 120, GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 5, 5, 5);
-           // else if (currentChoice == 1) g.fillRect(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 120, GlobalVariables.GAME_WINDOW_HEIGHT / 2 - 5 + 30, 5, 5);
+
+            // draw point
+            g.Draw(GlobalVariables.whiteRect, new Rectangle(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 130, (GlobalVariables.GAME_WINDOW_HEIGHT / 2) + (currentChoice * 30 * GlobalVariables.GAME_WINDOW_SCALE), 15, 15), Color.White);
 
         }
 
-        public new void HandleInput()
+        public override void HandleInput()
         {
             if (MyKeys.IsPressed(MyKeys._ESCAPE)) gsm.SetPaused(false);
             

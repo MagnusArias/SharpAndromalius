@@ -80,6 +80,7 @@ namespace MainGame
         //  
         //          TILESETS SPRITES
         //
+        public static Texture2D Tileset_1;
         public const String TILESET_L1 = "Content/Tilesets/tileset.png";
         public const String TILESET_L2 = "Content/Tilesets/tileset.png";
         //

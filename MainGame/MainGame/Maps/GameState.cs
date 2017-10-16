@@ -88,7 +88,7 @@ namespace MainGame.Maps
 
         public void PlaceItems() => items.Clear();
 
-        public virtual void _Update(GameTime gm)
+        public virtual void _Update(GameTime gt)
         {
             HandleInput();
 

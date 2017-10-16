@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 
 namespace MainGame.Maps.Tiles
 {
@@ -47,40 +48,40 @@ namespace MainGame.Maps.Tiles
 
         public void LoadTiles(String s)
         {
-            try
+            tileset = GlobalVariables.Tileset_1;
+
+            numTilesAcross = tileset.Width / tileSize;
+            tiles = new Tile[6, numTilesAcross];
+
+            Color[] imageData = new Color[tileset.Width * tileset.Height];
+            tileset.GetData<Color>(imageData);
+            Texture2D subimage;
+            Color[] imagePiece;
+            Rectangle sourceRec;
+
+            for (int col = 0; col < numTilesAcross; col++)
             {
-              /*  tileset = ImageIO.read(getClass().getResourceAsStream(s));
-
-                numTilesAcross = tileset.Width / tileSize;
-                tiles = new Tile[6, numTilesAcross];
-
-                Texture2D subimage;
-                for (int col = 0; col < numTilesAcross; col++)
+                for (int i = 0; i < 2; i++)
                 {
-                    subimage = tileset.GetData<Texture2D>(new Rectangle(col * tileSize, tileSize * 0, tileSize, tileSize));
+                    sourceRec = new Rectangle(col * tileSize, tileSize * i, tileSize, tileSize);
+                    imagePiece = GetSubImage(imageData, tileset.Width, sourceRec);
+                    subimage = new Texture2D(GraphicsDevice, width: sourceRec.Width, height: sourceRec.Height);
+                    subimage.SetData<Color>(imagePiece);
                     tiles[0, col] = new Tile(subimage, Tile.AIR);
+                }
 
-                    subimage = tileset.getSubimage(col * tileSize, tileSize * 1, tileSize, tileSize);
-                    tiles[1, col] = new Tile(subimage, Tile.AIR);
-
-                    subimage = tileset.getSubimage(col * tileSize, tileSize * 2, tileSize, tileSize);
-                    tiles[2, col] = new Tile(subimage, Tile.SOLID);
-
-                    subimage = tileset.getSubimage(col * tileSize, tileSize * 3, tileSize, tileSize);
-                    tiles[3, col] = new Tile(subimage, Tile.SOLID);
-
-                    subimage = tileset.getSubimage(col * tileSize, tileSize * 4, tileSize, tileSize);
-                    tiles[4, col] = new Tile(subimage, Tile.SOLID);
-
-                    //subimage = tileset.getSubimage(col * tileSize, tileSize * 5, tileSize, tileSize);
-                    tiles[5, col] = new Tile(subimage, Tile.SOLID);
-                }*/
-
+                for (int i = 2; i < 6; i++)
+                {
+                    sourceRec = new Rectangle(col * tileSize, tileSize * i, tileSize, tileSize);
+                    imagePiece = GetSubImage(imageData, tileset.Width, sourceRec);
+                    subimage = new Texture2D(GraphicsDevice, width: sourceRec.Width, height: sourceRec.Height);
+                    subimage.SetData<Color>(imagePiece);
+                    tiles[0, col] = new Tile(subimage, Tile.SOLID);
+                }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("\nStackTrace ---\n{0}", e.StackTrace);
-            }
+
+
+
         }
 
         public void LoadMap(String s)
@@ -88,11 +89,11 @@ namespace MainGame.Maps.Tiles
 
             try
             {
-                //InputStream ins = getClass().getResourceAsStream(s);
-               // BufferedReader br = new BufferedReader(new InputStreamReader(ins));
+                StreamReader ins = new StreamReader(File.OpenRead(s));
 
-               // numCols = int.Parse(br.readLine());
-                //numRows = int.Parse(br.readLine());
+
+                numCols = int.Parse(ins.ReadLine());
+                numRows = int.Parse(ins.ReadLine());
 
                 map = new int[numRows, numCols];
                 width = numCols * tileSize;
@@ -105,15 +106,15 @@ namespace MainGame.Maps.Tiles
                 xy_max.Y = 0;
 
                 char delims = ' ';
-               /* for (int row = 0; row < numRows; row++)
+                for (int row = 0; row < numRows; row++)
                 {
-                   /String line = br.readLine();
+                    String line = ins.ReadLine();
                     String[] tokens = line.Split(delims);
                     for (int col = 0; col < numCols; col++)
                     {
                         map[row, col] = int.Parse(tokens[col]);
                     }
-                }*/
+                }
 
             }
             catch (Exception e)
@@ -181,6 +182,19 @@ namespace MainGame.Maps.Tiles
             if (V2_xy.Y > xy_max.Y) V2_xy.Y = xy_max.X;
         }
 
+        public Color[] GetSubImage(Color[] colorData, int width, Rectangle rec)
+        {
+            Color[] color = new Color[rec.Width * rec.Height];
+            for (int x = 0; x < rec.Width; x++)
+            {
+                for (int y = 0; y < rec.Height; y++)
+                {
+                    color[x + y * rec.Width] = colorData[x + rec.X + (y + rec.Y) * width];
+                }
+            }
+            return color;
+        }
+
         public void Update()
         {
             Random r = new Random();
@@ -212,14 +226,14 @@ namespace MainGame.Maps.Tiles
 
                     // tile, position as V2_Xy, scale as tileSize
                     g.Draw(
-                        tiles[r, c].GetImage(), 
-                        new Vector2(V2_xy.X + col * tileSize, V2_xy.Y + row * tileSize), 
-                        new Rectangle(0, 0, width, height), 
-                        Color.White, 
-                        0.0f, 
-                        new Vector2(width / 2, height / 2), 
-                        1.0f, 
-                        SpriteEffects.None, 
+                        tiles[r, c].GetImage(),
+                        new Vector2(V2_xy.X + col * tileSize, V2_xy.Y + row * tileSize),
+                        new Rectangle(0, 0, width, height),
+                        Color.White,
+                        0.0f,
+                        new Vector2(width / 2, height / 2),
+                        1.0f,
+                        SpriteEffects.None,
                         0.0f
                         );
 

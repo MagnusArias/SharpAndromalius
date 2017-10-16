@@ -29,9 +29,9 @@ namespace MainGame.Objects.Enemies
             left = false;
             facingRight = true;
 
-            sprites = GlobalVariables.E_SkeletonGreenWalk;
+            sprites[0] = GlobalVariables.E_SkeletonGreenWalk;
 
-            //animation.SetFrames(sprites);
+            animation.SetFrames(sprites);
             animation.SetDelay(4);
         }
 
@@ -41,7 +41,7 @@ namespace MainGame.Objects.Enemies
             {
                 if (!isDeadSet)
                 {
-                    sprites = GlobalVariables.E_SkeletonGreenDead;
+                    sprites[0] = GlobalVariables.E_SkeletonGreenDead;
                     isDeadSet = true;
                     //animation.SetFrames(sprites);
                     animation.SetDelay(4);

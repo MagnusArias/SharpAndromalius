@@ -37,9 +37,9 @@ namespace MainGame.Objects.Enemies
 
             facingRight = false;
 
-            sprites = GlobalVariables.E_BossWalk;
+            sprites[0] = GlobalVariables.E_BossWalk;
 
-            //animation.SetFrames(sprites);
+            animation.SetFrames(sprites);
             animation.SetDelay(4);
 
             Random r = new Random();

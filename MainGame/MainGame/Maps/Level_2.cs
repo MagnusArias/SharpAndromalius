@@ -7,8 +7,8 @@ namespace MainGame.Maps
     class Level_2 : GameState
     {
         public Level_2(GameStateManager gsm) : base(gsm) => Init(
-                GlobalVariables.BACKGROUND,
-                GlobalVariables.TILESET_L2,
+                GlobalVariables.Background,
+                GlobalVariables.Tileset_2,
                 GlobalVariables.MAP_2,
                 new Vector2(200, 300),
                 new Vector2(1500,200));       

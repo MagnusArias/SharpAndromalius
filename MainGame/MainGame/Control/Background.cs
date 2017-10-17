@@ -15,32 +15,32 @@ namespace MainGame.Control
         public int width;
         public int height;
 
-        public Background(String s) => Setup(s, 0.1f, 0.1f);
+        public Background(Texture2D s) => Setup(s, 0.1f, 0.1f);
 
-        public Background(String s, float d) => Setup(s, d, d);
+        public Background(Texture2D s, float d) => Setup(s, d, d);
 
-        public Background(String s, float d1, float d2) => Setup(s, d1, d2);
+        public Background(Texture2D s, float d1, float d2) => Setup(s, d1, d2);
 
-        //public Background(String s, float ms, int x, int y, int w, int h) => SetupExtended(s, ms, x, y, w, h);
+        //public Background(Texture2D s, float ms, int x, int y, int w, int h) => SetupExtended(s, ms, x, y, w, h);
 
-        public void Setup(String s, float s1, float s2)
+        public void Setup(Texture2D s, float s1, float s2)
         {
-            image = GlobalVariables.Background;
+            image = s;
             width = image.Width;
             height = image.Height;
             scale.X = s1;
             scale.Y = s2;
         }
 
-      /*  public void SetupExtended(String s, float ms, int x, int y, int w, int h)
-        {
-            image = GlobalVariables.Background;
-            image = image.getSubimage(x, y, w, h);
-            width = image.Width;
-            height = image.Height;
-            scale.X = ms;
-            scale.Y = ms;
-        }*/
+        /*  public void SetupExtended(Texture2D s, float ms, int x, int y, int w, int h)
+          {
+              image = GlobalVariables.Background;
+              image = image.getSubimage(x, y, w, h);
+              width = image.Width;
+              height = image.Height;
+              scale.X = ms;
+              scale.Y = ms;
+          }*/
 
         public void SetPosition(float x, float y)
         {

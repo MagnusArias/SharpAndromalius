@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-
 namespace MainGame.Maps
 {
     class PauseState : GameState
@@ -23,7 +22,10 @@ namespace MainGame.Maps
         {
             Color myColour = new Color(0, 0, 0, 32);
 
-            g.Draw(GlobalVariables.blackRect, new Rectangle(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT), myColour);
+            g.Draw(
+                GlobalVariables.blackRect, 
+                new Rectangle(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT), 
+                myColour);
 
             // draw menu options
             for (int i = 0; i < options.Length; i++)
@@ -40,9 +42,15 @@ namespace MainGame.Maps
                     0.0f);
             }
 
-
             // draw point
-            g.Draw(GlobalVariables.whiteRect, new Rectangle(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 130, (GlobalVariables.GAME_WINDOW_HEIGHT / 2) + (currentChoice * 30 * GlobalVariables.GAME_WINDOW_SCALE), 15, 15), Color.White);
+            g.Draw(
+                GlobalVariables.whiteRect, 
+                new Rectangle(
+                    GlobalVariables.GAME_WINDOW_WIDTH / 2 - 130, 
+                    (GlobalVariables.GAME_WINDOW_HEIGHT / 2) + (currentChoice * 30 * GlobalVariables.GAME_WINDOW_SCALE), 
+                    15,
+                    15), 
+                Color.White);
 
         }
 

@@ -1,9 +1,17 @@
-﻿using MainGame.Control;
+﻿#region Using statements and file description
+//-----------------------------------------------------------------------------
+// MenuState.cs
+//
+// Originally created: 10.07.2016, 14:45 by Przemysław Dębiec
+// 
+// Main menu of the game, the first visible screen after starting
+//-----------------------------------------------------------------------------
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-
+#endregion
 
 namespace MainGame.Maps
 {
@@ -41,7 +49,10 @@ namespace MainGame.Maps
 
         public override void _Draw(SpriteBatch g)
         {
-            g.Draw(GlobalVariables.blackRect, new Rectangle(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT), Color.Black);
+            g.Draw(
+                GlobalVariables.blackRect, 
+                new Rectangle(0, 0, GlobalVariables.GAME_WINDOW_WIDTH, GlobalVariables.GAME_WINDOW_HEIGHT), 
+                Color.Black);
 
             // draw title
             g.DrawString(
@@ -72,10 +83,21 @@ namespace MainGame.Maps
 
 
             // draw point
-            g.Draw(GlobalVariables.whiteRect, new Rectangle(GlobalVariables.GAME_WINDOW_WIDTH / 2 - 130, (GlobalVariables.GAME_WINDOW_HEIGHT / 2) + (currentChoice*30*GlobalVariables.GAME_WINDOW_SCALE), 15, 15), Color.White);
+            g.Draw(
+                GlobalVariables.whiteRect, 
+                new Rectangle(
+                    GlobalVariables.GAME_WINDOW_WIDTH / 2 - 130, 
+                    (GlobalVariables.GAME_WINDOW_HEIGHT / 2) + (currentChoice*30*GlobalVariables.GAME_WINDOW_SCALE), 
+                    15, 
+                    15), 
+                Color.White);
 
             // other
-            g.DrawString(GlobalVariables.fontSimple, "2017, Copyright (r) Przemyslaw Debiec", new Vector2(10, GlobalVariables.GAME_WINDOW_HEIGHT - 50), Color.White);
+            g.DrawString(
+                GlobalVariables.fontSimple, 
+                "2017, Copyright (r) Przemyslaw Debiec", 
+                new Vector2(10, GlobalVariables.GAME_WINDOW_HEIGHT - 50), 
+                Color.White);
         }
 
         public override void Select()

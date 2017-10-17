@@ -1,4 +1,13 @@
-﻿using MainGame.Control;
+﻿#region Using statements and file description
+//-----------------------------------------------------------------------------
+// Animation.cs
+//
+// Originally created: 10.07.2016, 20:43 by Przemysław Dębiec
+// 
+// Main controller for animations
+//-----------------------------------------------------------------------------
+
+using MainGame.Control;
 using MainGame.Maps.Tiles;
 using MainGame.Objects;
 using MainGame.Objects.Enemies;
@@ -9,7 +18,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-
+#endregion
 namespace MainGame.Maps
 {
     abstract class GameState
@@ -50,7 +59,7 @@ namespace MainGame.Maps
 
         public GameState(GameStateManager gsm) => this.gsm = gsm;
 
-        public void Init(String background, String tileset, String map, Vector2 player_pos, Vector2 teleport_pos)
+        public void Init(Texture2D background, Texture2D tileset, String map, Vector2 player_pos, Vector2 teleport_pos)
         {
             blockInput = false;
             back = new Background(background, 0.5f);

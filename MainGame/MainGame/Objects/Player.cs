@@ -19,11 +19,6 @@ namespace MainGame.Objects
         private List<P_Player> energyParticles;
         private List<Item> items;
 
-        public const String PLAYERSPRITEMAP = "/Game/Src/Assets/player-spritemap.png";
-        public const String ARMORSPRITEMAP = "/Game/Src/Assets/armor05-spritemap.png";
-        public const String ROBESPRITEMAP = "/Game/Src/Assets/robe02-spritemap.png";
-        public const String SWORDSPRITEMAP = "/Game/Src/Assets/sword-slash.png";
-
         // dostepne ruchy
         protected Boolean hi_attack;
         protected Boolean attack;
@@ -59,10 +54,10 @@ namespace MainGame.Objects
         private int maxDashCooldown;
 
         // ANIMACJE
-        private List<Texture2D>[] sprites;
-        private List<Texture2D>[] armorSprites;
-        private List<Texture2D>[] robeSprites;
-        private List<Texture2D>[] swordSprites;
+        private List<Texture2D[]> sprites;
+        private List<Texture2D[]> armorSprites;
+        private List<Texture2D[]> robeSprites;
+        private List<Texture2D[]> swordSprites;
 
 
         private readonly int[] NUMFRAMES = { 1, 1, 1, 8, 4, 4, 4, 1, 8, 1, 6 };
@@ -407,18 +402,16 @@ namespace MainGame.Objects
         {
             currentAction = i;
 
-            //bodyAnimation.SetFrames(sprites[currentAction]);
+            bodyAnimation.SetFrames(sprites[currentAction]);
             bodyAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
-            //armorAnimation.SetFrames(armorSprites.get(currentAction));
+            armorAnimation.SetFrames(armorSprites[currentAction]);
             armorAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
-            // Testing new environment - VS 2015 Comunity on Win7
-
-           // robeAnimation.SetFrames(robeSprites.GetValue(currentAction));
+            robeAnimation.SetFrames(robeSprites[currentAction]);
             robeAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
-            //swordAnimation.SetFrames(swordSprites.get(currentAction));
+            swordAnimation.SetFrames(swordSprites[currentAction]);
             swordAnimation.SetDelay(swordSPRITEDELAYS[currentAction]);
 
             width = FRAMEWIDTHS[currentAction];
@@ -621,63 +614,10 @@ namespace MainGame.Objects
 
         private void LoadGraphics()
         {
-            try
-            {
-
-                /*Texture2D spritesheet = ImageIO.read(getClass().getResourceAsStream(PLAYERSPRITEMAP));
-                Texture2D spritesheet2 = ImageIO.read(getClass().getResourceAsStream(ARMORSPRITEMAP));
-                Texture2D spritesheet3 = ImageIO.read(getClass().getResourceAsStream(SWORDSPRITEMAP));
-                Texture2D spritesheet4 = ImageIO.read(getClass().getResourceAsStream(ROBESPRITEMAP));
-
-                //tutaj częśc dla człowieczka
-                int count = 0;
-                sprites = new List<Texture2D>[8];
-                for (int i = 0; i < NUMFRAMES.Length; i++)
-                {
-                    Texture2D[] bi = new Texture2D[NUMFRAMES[i]];
-                    for (int j = 0; j < NUMFRAMES[i]; j++) { bi[j] = spritesheet.getSubimage(j * FRAMEWIDTHS[i], count, FRAMEWIDTHS[i], FRAMEHEIGHTS[i]); }
-                    sprites.Add(bi);
-
-                    count += FRAMEHEIGHTS[i];
-                }
-
-                // tutaj część dla zbroi
-                count = 0;
-                armorSprites = new List<Texture2D>[8];
-                for (int i = 0; i < NUMFRAMES.Length; i++)
-                {
-                    Texture2D[] bi = new Texture2D[NUMFRAMES[i]];
-                    for (int j = 0; j < NUMFRAMES[i]; j++) { bi[j] = spritesheet2.getSubimage(j * FRAMEWIDTHS[i], count, FRAMEWIDTHS[i], FRAMEHEIGHTS[i]); }
-                    armorSprites.Add(bi);
-                    count += FRAMEHEIGHTS[i];
-                }
-
-                // tutaj czesc dla miecza
-                count = 0;
-                swordSprites = new List<Texture2D>[8];
-                for (int i = 0; i < swordNUMFRAMES.Length; i++)
-                {
-                    Texture2D[] bi = new Texture2D[swordNUMFRAMES[i]];
-                    for (int j = 0; j < swordNUMFRAMES[i]; j++) { bi[j] = spritesheet3.getSubimage(j * swordFRAMEWIDTHS[i], count, swordFRAMEWIDTHS[i], swordFRAMEHEIGHTS[i]); }
-                    swordSprites.Add(bi);
-                    count += swordFRAMEHEIGHTS[i];
-                }
-
-                count = 0;
-                robeSprites = new List<Texture2D>[8];
-                for (int i = 0; i < NUMFRAMES.Length; i++)
-                {
-                    Texture2D[] bi = new Texture2D[NUMFRAMES[i]];
-                    for (int j = 0; j < NUMFRAMES[i]; j++) { bi[j] = spritesheet4.getSubimage(j * FRAMEWIDTHS[i], count, FRAMEWIDTHS[i], FRAMEHEIGHTS[i]); }
-                    robeSprites.Add(bi);
-                    count += FRAMEHEIGHTS[i];
-                }*/
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("\nStackTrace ---\n{0}", e.StackTrace);
-                Environment.Exit(0);
-            }
+            LoadSubImages(GlobalVariables.Player_Main, sprites);
+            LoadSubImages(GlobalVariables.Armor_Red, armorSprites);
+            LoadSubImages(GlobalVariables.Skill_Sword, swordSprites);
+            LoadSubImages(GlobalVariables.Robe_Black, robeSprites);
         }
 
         private void CheckItemCollision()
@@ -843,6 +783,46 @@ namespace MainGame.Objects
             else if (currentAction != STAND)
             {
                 SetAnimation(STAND);
+            }
+        }
+
+        public Color[] GetSubImage(Color[] colorData, int width, Rectangle rec)
+        {
+            Color[] color = new Color[rec.Width * rec.Height];
+            for (int x = 0; x < rec.Width; x++)
+            {
+                for (int y = 0; y < rec.Height; y++)
+                {
+                    color[x + y * rec.Width] = colorData[x + rec.X + (y + rec.Y) * width];
+                }
+            }
+            return color;
+        }
+
+        public void LoadSubImages(Texture2D sourceSpritesheet, List<Texture2D[]> destinationSprites)
+        {
+            int count = 0;
+            Color[] imageData = new Color[sourceSpritesheet.Width * sourceSpritesheet.Height];
+            Texture2D subImage;
+            Rectangle sourceRec;
+
+            destinationSprites = new List<Texture2D[]>();
+
+            for (int i = 0; i < this.NUMFRAMES.Length; i++)
+            {
+                Texture2D[] bi = new Texture2D[this.NUMFRAMES[i]];
+
+                for (int j = 0; j < this.NUMFRAMES[i]; j++)
+                {
+                    sourceRec = new Rectangle(j * this.FRAMEWIDTHS[i], count, this.FRAMEWIDTHS[i], this.FRAMEHEIGHTS[i]);
+                    Color[] imagePiece = this.GetSubImage(imageData, sourceSpritesheet.Width, sourceRec);
+                    subImage = new Texture2D(Game1.Instance.GraphicsDevice, sourceRec.Width, sourceRec.Height);
+                    subImage.SetData<Color>(imagePiece);
+                    bi[j] = subImage;
+                }
+
+                destinationSprites.Add(bi);
+                count += this.FRAMEHEIGHTS[i];
             }
         }
     }

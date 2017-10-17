@@ -12,15 +12,15 @@ namespace MainGame
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
         GameStateManager gsm;
+        public static Game1 Instance;
 
         public Game1()
         {
+            Instance = this;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             Window.AllowUserResizing = false;
-            
         }
 
         /// <summary>
@@ -31,18 +31,19 @@ namespace MainGame
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-            graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
-            graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
-            graphics.ToggleFullScreen();
+            // These are general bounds of game window. You can assing constant values 
+            // or use the GraphicsDevice display mode which in that case will be 1920x1080
+            graphics.PreferredBackBufferWidth = 1280; //GraphicsDevice.DisplayMode.Width;
+            graphics.PreferredBackBufferHeight = 720; //GraphicsDevice.DisplayMode.Height;
+            //graphics.ToggleFullScreen();
             graphics.ApplyChanges();
 
             base.Initialize();
+
             GraphicsDevice.Viewport = new Viewport(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
             GlobalVariables.GAME_WINDOW_WIDTH = graphics.PreferredBackBufferWidth;
             GlobalVariables.GAME_WINDOW_HEIGHT = graphics.PreferredBackBufferHeight;
             GlobalVariables.GAME_WINDOW_SCALE = (graphics.PreferredBackBufferWidth * graphics.PreferredBackBufferHeight) / (1280 * 720);
-
 
             gsm = new GameStateManager();
         }
@@ -53,10 +54,17 @@ namespace MainGame
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
             GlobalVariables.fontTitle = this.Content.Load<SpriteFont>(GlobalVariables.FONT_TITLE);
             GlobalVariables.fontSimple = this.Content.Load<SpriteFont>(GlobalVariables.FONT_SIMPLE);
+            GlobalVariables.Background = this.Content.Load<Texture2D>(GlobalVariables.BACKGROUND);
+            GlobalVariables.Tileset_1 = this.Content.Load<Texture2D>(GlobalVariables.TILESET_L1);
+
+            GlobalVariables.Player_Main = this.Content.Load<Texture2D>(GlobalVariables.PLAYER_MAIN);
+            GlobalVariables.Armor_Red = this.Content.Load<Texture2D>(GlobalVariables.ARMOR_RED);
+            GlobalVariables.Robe_Black = this.Content.Load<Texture2D>(GlobalVariables.ROBE_BLACK);
+            GlobalVariables.Skill_Sword = this.Content.Load<Texture2D>(GlobalVariables.SKILL_SWORD);
             //GlobalVariables.Background = this.Content.Load<Texture2D>(GlobalVariables.BACKGROUND);
             //GlobalVariables.E_SkeletonGreenWalk = Content.Load<Texture2D>(GlobalVariables.SKELETON_GREEN_WALK);
             //GlobalVariables.E_SkeletonGreenDead = Content.Load<Texture2D>(GlobalVariables.SKELETON_GREEN_DEAD);
@@ -69,7 +77,6 @@ namespace MainGame
             GlobalVariables.whiteRect.SetData(new[] { Color.White });
 
         }
-        // TODO: use this.Content to load your game content here
     
 
         /// <summary>
@@ -88,7 +95,6 @@ namespace MainGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // TODO: Add your update logic here
             gsm._Update(gameTime);
             base.Update(gameTime);
         }

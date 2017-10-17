@@ -46,80 +46,64 @@ namespace MainGame.Maps.Tiles
             tween = 0.07F;
         }
 
-        public void LoadTiles(String s)
+        public void LoadTiles(Texture2D s)
         {
-            tileset = GlobalVariables.Tileset_1;
+            tileset = s;
 
             numTilesAcross = tileset.Width / tileSize;
             tiles = new Tile[6, numTilesAcross];
 
             Color[] imageData = new Color[tileset.Width * tileset.Height];
             tileset.GetData<Color>(imageData);
-            Texture2D subimage;
-            Color[] imagePiece;
-            Rectangle sourceRec;
 
             for (int col = 0; col < numTilesAcross; col++)
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    sourceRec = new Rectangle(col * tileSize, tileSize * i, tileSize, tileSize);
-                    imagePiece = GetSubImage(imageData, tileset.Width, sourceRec);
-                    subimage = new Texture2D(GraphicsDevice, width: sourceRec.Width, height: sourceRec.Height);
+                    Rectangle sourceRec = new Rectangle(col * tileSize, tileSize * i, tileSize, tileSize);
+                    Color[] imagePiece = this.GetSubImage(imageData, tileset.Width, sourceRec);
+                    Texture2D subimage = new Texture2D(Game1.Instance.GraphicsDevice, sourceRec.Width, sourceRec.Height);
                     subimage.SetData<Color>(imagePiece);
                     tiles[0, col] = new Tile(subimage, Tile.AIR);
                 }
 
                 for (int i = 2; i < 6; i++)
                 {
-                    sourceRec = new Rectangle(col * tileSize, tileSize * i, tileSize, tileSize);
-                    imagePiece = GetSubImage(imageData, tileset.Width, sourceRec);
-                    subimage = new Texture2D(GraphicsDevice, width: sourceRec.Width, height: sourceRec.Height);
+                    Rectangle sourceRec = new Rectangle(col * tileSize, tileSize * i, tileSize, tileSize);
+                    Color[] imagePiece = this.GetSubImage(imageData, tileset.Width, sourceRec);
+                    Texture2D subimage = new Texture2D(Game1.Instance.GraphicsDevice, width: sourceRec.Width, height: sourceRec.Height);
                     subimage.SetData<Color>(imagePiece);
                     tiles[0, col] = new Tile(subimage, Tile.SOLID);
                 }
             }
-
-
-
         }
 
         public void LoadMap(String s)
         {
+            StreamReader ins = new StreamReader(File.OpenRead(s));
 
-            try
+            numCols = Int32.Parse(ins.ReadLine());
+            numRows = Int32.Parse(ins.ReadLine());
+
+            map = new int[numRows, numCols];
+            width = numCols * tileSize;
+            height = numRows * tileSize;
+
+
+            xy_min.X = GlobalVariables.GAME_WINDOW_WIDTH - width;
+            xy_max.X = 0;
+            xy_min.Y = GlobalVariables.GAME_WINDOW_HEIGHT - height;
+            xy_max.Y = 0;
+
+            String[] delims = new String[]{"  ", "\n"};
+            for (int row = 0; row < numRows; row++)
             {
-                StreamReader ins = new StreamReader(File.OpenRead(s));
-
-
-                numCols = int.Parse(ins.ReadLine());
-                numRows = int.Parse(ins.ReadLine());
-
-                map = new int[numRows, numCols];
-                width = numCols * tileSize;
-                height = numRows * tileSize;
-
-
-                xy_min.X = GlobalVariables.GAME_WINDOW_WIDTH - width;
-                xy_max.X = 0;
-                xy_min.Y = GlobalVariables.GAME_WINDOW_HEIGHT - height;
-                xy_max.Y = 0;
-
-                char delims = ' ';
-                for (int row = 0; row < numRows; row++)
+                String line = ins.ReadLine();
+                String[] tokens = line.Split(delims, StringSplitOptions.None);
+                for (int col = 0; col < numCols; col++)
                 {
-                    String line = ins.ReadLine();
-                    String[] tokens = line.Split(delims);
-                    for (int col = 0; col < numCols; col++)
-                    {
-                        map[row, col] = int.Parse(tokens[col]);
-                    }
+                    map[row, col] = Int32.Parse(tokens[col]);
                 }
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("\nStackTrace ---\n{0}", e.StackTrace);
             }
         }
 

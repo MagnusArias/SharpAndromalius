@@ -1,6 +1,4 @@
 ﻿#region Using statements and file description
-using Microsoft.Xna.Framework.Graphics;
-using System;
 //-----------------------------------------------------------------------------
 // Animation.cs
 //
@@ -8,6 +6,9 @@ using System;
 // 
 // Main controller for animations
 //-----------------------------------------------------------------------------
+
+using Microsoft.Xna.Framework.Graphics;
+using System;
 #endregion
 
 namespace MainGame.Control

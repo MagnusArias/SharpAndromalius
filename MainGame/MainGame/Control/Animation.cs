@@ -15,9 +15,9 @@ namespace MainGame.Control
 {
     class Animation
     {
-        private Texture2D[] frames;
-        private int currentFrame;
-        private int numFrames;
+        public Texture2D[] frames;
+        protected int currentFrame;
+        protected int numFrames;
 
         private int count;
         private int delay;
@@ -28,7 +28,7 @@ namespace MainGame.Control
 
         public void SetFrames(Texture2D[] f)
         {
-            this.frames = f;
+            frames = f;
             currentFrame = 0;
             count = 0;
             timesPlayed = 0;
@@ -60,5 +60,7 @@ namespace MainGame.Control
         public Boolean HasPlayedOnce() => timesPlayed > 0;
 
         public Boolean HasPlayed(int i) => timesPlayed == i;
+
+        public Texture2D[] GetFrames() => frames;
     }
 }

@@ -8,12 +8,15 @@ namespace MainGame.Control
     {
         private Texture2D image;
 
-        private Vector2 xy;
-        private Vector2 d_xy;
+        private Vector2 XY;
+        private Vector2 D_XY;
         private Vector2 scale;
 
-        public int width;
-        public int height;
+        private int width;
+        private int height;
+
+        public int Width { get => width; set => width = value; }
+        public int Height { get => height; set => height = value; }
 
         public Background(Texture2D s) => Setup(s, 0.1f, 0.1f);
 
@@ -26,8 +29,8 @@ namespace MainGame.Control
         public void Setup(Texture2D s, float s1, float s2)
         {
             image = s;
-            width = image.Width;
-            height = image.Height;
+            Width = image.Width;
+            Height = image.Height;
             scale.X = s1;
             scale.Y = s2;
         }
@@ -42,57 +45,42 @@ namespace MainGame.Control
               scale.Y = ms;
           }*/
 
-        public void SetPosition(float x, float y)
+        public void SetPosition(float x, float y) => XY = new Vector2((x * scale.X) % Width, (y * scale.Y) % Height);
+
+        public void SetVector(float dx, float dy) => D_XY = new Vector2(dx, dy);
+
+        public void SetScale(float xscale, float yscale) => new Vector2(xscale, yscale);
+
+        public void SetDimensions(int w, int h)
         {
-            this.xy.X = (x * scale.X) % width;
-            this.xy.Y = (y * scale.Y) % height;
+            Width = w;
+            Height = h;
         }
-
-        public void SetVector(float dx, float dy)
-        {
-            this.d_xy.X = (float)dx;
-            this.d_xy.Y = (float)dy;
-        }
-
-        public void SetScale(float xscale, float yscale)
-        {
-            scale.X = xscale;
-            scale.Y = yscale;
-        }
-
-        public void SetDimensions(int i1, int i2)
-        {
-            width = i1;
-            height = i2;
-        }
-
-        public double GetX() => xy.X;
-
-        public double GetY() => xy.Y;
 
         public void Update()
         {
-            xy.X += d_xy.X;
-            while (xy.X <= -width) xy.X += width;
-            while (xy.X >= width) xy.X -= width;
+            
+            XY.X += D_XY.X;
+            while (XY.X <= -Width) XY.X += Width;
+            while (XY.X >= Width) XY.X -= Width;
 
-            xy.Y += d_xy.Y;
-            while (xy.Y <= -height) d_xy.Y += height;
-            while (xy.Y >= height) d_xy.Y -= height;
+            XY.Y += D_XY.Y;
+            while (XY.Y <= -Height) D_XY.Y += Height;
+            while (XY.Y >= Height) D_XY.Y -= Height;
         }
 
         public void Draw(SpriteBatch g)
         {
-            for (int i = 0; i < GlobalVariables.GAME_WINDOW_WIDTH / width * GlobalVariables.GAME_WINDOW_SCALE; i++)
+            for (int i = 0; i < GlobalVariables.GAME_WINDOW_WIDTH / Width * GlobalVariables.GAME_WINDOW_SCALE; i++)
             {
-                for (int j = 0; j < GlobalVariables.GAME_WINDOW_HEIGHT / height * GlobalVariables.GAME_WINDOW_SCALE; j++)
+                for (int j = 0; j < GlobalVariables.GAME_WINDOW_HEIGHT / Height * GlobalVariables.GAME_WINDOW_SCALE; j++)
                 {
                     g.Draw(
                         image, 
-                        new Vector2(xy.X + width * i, xy.Y + height * j), 
-                        new Rectangle(0, 0, width, height), 
+                        new Vector2(XY.X + Width * i, XY.Y + Height * j), 
+                        new Rectangle(0, 0, Width, Height), 
                         Color.White, 0.0f, 
-                        new Vector2(width / 2, height / 2), 
+                        new Vector2(Width / 2, Height / 2), 
                         1.0f, 
                         SpriteEffects.None, 
                         0.0f);

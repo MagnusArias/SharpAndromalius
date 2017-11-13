@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace MainGame.Maps.Tiles
@@ -26,7 +27,7 @@ namespace MainGame.Maps.Tiles
         // tileset jako obrazek
         private Texture2D tileset;
         private int numTilesAcross;
-        private Tile[,] tiles;
+        protected Tile[,] tiles;
 
         // do rysowania
         private int rowOffset;
@@ -64,7 +65,7 @@ namespace MainGame.Maps.Tiles
                     Color[] imagePiece = this.GetSubImage(imageData, tileset.Width, sourceRec);
                     Texture2D subimage = new Texture2D(Game1.Instance.GraphicsDevice, sourceRec.Width, sourceRec.Height);
                     subimage.SetData<Color>(imagePiece);
-                    tiles[0, col] = new Tile(subimage, Tile.AIR);
+                    tiles[i, col] = new Tile(subimage, Tile.AIR);
                 }
 
                 for (int i = 2; i < 6; i++)
@@ -73,7 +74,7 @@ namespace MainGame.Maps.Tiles
                     Color[] imagePiece = this.GetSubImage(imageData, tileset.Width, sourceRec);
                     Texture2D subimage = new Texture2D(Game1.Instance.GraphicsDevice, width: sourceRec.Width, height: sourceRec.Height);
                     subimage.SetData<Color>(imagePiece);
-                    tiles[0, col] = new Tile(subimage, Tile.SOLID);
+                    tiles[i, col] = new Tile(subimage, Tile.SOLID);
                 }
             }
         }
@@ -192,10 +193,10 @@ namespace MainGame.Maps.Tiles
 
         public void Draw(SpriteBatch g)
         {
+            int rc, r, c;
 
             for (int row = rowOffset; row < rowOffset + numRowsToDraw; row++)
             {
-
                 if (row >= numRows) break;
 
                 for (int col = colOffset; col < colOffset + numColsToDraw; col++)
@@ -204,13 +205,13 @@ namespace MainGame.Maps.Tiles
                     if (col >= numCols) break;
                     if (map[row, col] == 0) continue;
 
-                    int rc = map[row, col];
-                    int r = rc / numTilesAcross;
-                    int c = rc % numTilesAcross;
+                    rc = map[row, col];
+                    r = rc / numTilesAcross;
+                    c = rc % numTilesAcross;
 
                     // tile, position as V2_Xy, scale as tileSize
                     g.Draw(
-                        tiles[r, c].GetImage(),
+                        tiles[r,c].GetImage(),
                         new Vector2(V2_xy.X + col * tileSize, V2_xy.Y + row * tileSize),
                         new Rectangle(0, 0, width, height),
                         Color.White,
@@ -223,7 +224,6 @@ namespace MainGame.Maps.Tiles
 
                     Rectangle rec = new Rectangle((int)V2_xy.X + col * tileSize, (int)V2_xy.Y + row * tileSize, 30, 30);
                     if (GlobalVariables.DEBUG_READY && rc > 59) g.Draw(GlobalVariables.blackRect, rec, Color.Black);
-
                 }
             }
         }

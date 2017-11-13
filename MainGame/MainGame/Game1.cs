@@ -1,7 +1,6 @@
 ﻿using MainGame.Maps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace MainGame
 {
@@ -60,16 +59,16 @@ namespace MainGame
             GlobalVariables.fontSimple = this.Content.Load<SpriteFont>(GlobalVariables.FONT_SIMPLE);
             GlobalVariables.Background = this.Content.Load<Texture2D>(GlobalVariables.BACKGROUND);
             GlobalVariables.Tileset_1 = this.Content.Load<Texture2D>(GlobalVariables.TILESET_L1);
+            GlobalVariables.Teleport = this.Content.Load<Texture2D>(GlobalVariables.PORTALSPRITEMAP);
 
             GlobalVariables.Player_Main = this.Content.Load<Texture2D>(GlobalVariables.PLAYER_MAIN);
             GlobalVariables.Armor_Red = this.Content.Load<Texture2D>(GlobalVariables.ARMOR_RED);
             GlobalVariables.Robe_Black = this.Content.Load<Texture2D>(GlobalVariables.ROBE_BLACK);
             GlobalVariables.Skill_Sword = this.Content.Load<Texture2D>(GlobalVariables.SKILL_SWORD);
-            //GlobalVariables.Background = this.Content.Load<Texture2D>(GlobalVariables.BACKGROUND);
-            //GlobalVariables.E_SkeletonGreenWalk = Content.Load<Texture2D>(GlobalVariables.SKELETON_GREEN_WALK);
-            //GlobalVariables.E_SkeletonGreenDead = Content.Load<Texture2D>(GlobalVariables.SKELETON_GREEN_DEAD);
-            //GlobalVariables.E_GhostBlueWalk = Content.Load<Texture2D>(GlobalVariables.GHOST_BLUE_WALK);
-            //GlobalVariables.E_BossWalk = Content.Load<Texture2D>(GlobalVariables.BOSS_WALK);
+            GlobalVariables.E_SkeletonGreenWalk = Content.Load<Texture2D>(GlobalVariables.SKELETON_GREEN_WALK);
+            GlobalVariables.E_SkeletonGreenDead = Content.Load<Texture2D>(GlobalVariables.SKELETON_GREEN_DEAD);
+            GlobalVariables.E_GhostBlueWalk = Content.Load<Texture2D>(GlobalVariables.GHOST_BLUE_WALK);
+            GlobalVariables.E_BossWalk = Content.Load<Texture2D>(GlobalVariables.BOSS_WALK);
             GlobalVariables.blackRect = new Texture2D(GraphicsDevice, 1, 1);
             GlobalVariables.blackRect.SetData(new[] { Color.Black } );
 
@@ -108,10 +107,10 @@ namespace MainGame
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
             gsm._Draw(spriteBatch);
-            spriteBatch.End();
+           
 
             base.Draw(gameTime);
-
+            spriteBatch.End();
         }
     }
 }

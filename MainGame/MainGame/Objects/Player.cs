@@ -71,13 +71,13 @@ namespace MainGame.Objects
         private readonly int[] swordSPRITEDELAYS = { -1, -1, -1, -1, 5, 5, 5, -1, -1, -1, -1 };
 
         //klasy animacji
-        protected Animation bodyAnimation = new Animation();
-        protected Animation armorAnimation = new Animation();
-        protected Animation robeAnimation = new Animation();
-        protected Animation swordAnimation = new Animation();
+        protected Animation bodyAnimation;
+        protected Animation armorAnimation;
+        protected Animation robeAnimation;
+        protected Animation swordAnimation;
+        protected Animation arm = new Animation();
 
         private Rectangle attackRect;
-        private Rectangle aur;
         private Rectangle alr;
 
         // akcje animacji, spojrz na obrazek
@@ -95,6 +95,11 @@ namespace MainGame.Objects
 
         public Player(TileMap tm) : base(tm)
         {
+            bodyAnimation = new Animation();
+            armorAnimation = new Animation();
+            robeAnimation = new Animation();
+            swordAnimation = new Animation();
+
             boost = 1;
             skill_doubleJump = skill_sword = skill_dash = skill_fireball = false;
 
@@ -405,11 +410,22 @@ namespace MainGame.Objects
             bodyAnimation.SetFrames(sprites[currentAction]);
             bodyAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
-            armorAnimation.SetFrames(armorSprites[currentAction]);
-            armorAnimation.SetDelay(SPRITEDELAYS[currentAction]);
+            //armorAnimation.SetFrames(armorSprites[currentAction]);
+            //armorAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
-            robeAnimation.SetFrames(robeSprites[currentAction]);
-            robeAnimation.SetDelay(SPRITEDELAYS[currentAction]);
+            if (skill_doubleJump && !skill_dash)
+            {
+                arm.SetFrames(armorSprites[currentAction]);
+                arm.SetDelay(SPRITEDELAYS[currentAction]);
+            }
+            else if (skill_dash)
+            {
+                arm.SetFrames(robeSprites[currentAction]);
+                arm.SetDelay(SPRITEDELAYS[currentAction]);
+            }
+
+           // robeAnimation.SetFrames(robeSprites[currentAction]);
+            //robeAnimation.SetDelay(SPRITEDELAYS[currentAction]);
 
             swordAnimation.SetFrames(swordSprites[currentAction]);
             swordAnimation.SetDelay(swordSPRITEDELAYS[currentAction]);
@@ -453,6 +469,7 @@ namespace MainGame.Objects
             GetNextPosition();
             CheckTileMapCollision();
             SetPosition(xy_temp.X, xy_temp.Y);
+
 
             if (GlobalVariables.DEBUG_READY)
             {
@@ -523,8 +540,9 @@ namespace MainGame.Objects
 
             bodyAnimation.Update();
             armorAnimation.Update();
-            robeAnimation.Update();
-            swordAnimation.Update();
+            //robeAnimation.Update();
+            //swordAnimation.Update();
+            arm.Update();
 
             // ustawienie kierunku
             if (!attack && !hi_attack && !low_attack && !knockback && !dashing)
@@ -546,9 +564,6 @@ namespace MainGame.Objects
 
             if (flinching && !knockback && flinchCount % 10 < 5) return;
 
-            Animation arm = new Animation();
-            if (skill_doubleJump && !skill_dash) arm = armorAnimation;
-            else if (skill_dash) arm = robeAnimation;
 
             // drawing body 
             g.Draw(
@@ -565,9 +580,9 @@ namespace MainGame.Objects
                  );
 
             // drawing armor
-            g.Draw(
+          /*  g.Draw(
                  arm.GetImage(),                                                                                 // image
-                 new Vector2(V2_xy.X + V2_mapxy.X - (width / 2.0f), V2_xy.Y + V2_mapxy.Y - (height / 2.0f)),     // position
+        /         new Vector2(V2_xy.X + V2_mapxy.X - (width / 2.0f), V2_xy.Y + V2_mapxy.Y - (height / 2.0f)),     // position
                  null,                                                                                           // destination rectangle
                  new Rectangle(0, 0, arm.GetImage().Width, arm.GetImage().Height),                               // source - if null draws
                  new Vector2(width / 2.0f, height / 2.0f),                                                       // origin
@@ -576,7 +591,7 @@ namespace MainGame.Objects
                  Color.White,                                                                                    // color
                  spriteEffect,                                                                                   // effects
                  0.0f                                                                                            // layerDepth
-                 );
+                 );*/
 
             // draw sword
             if (!fireballShooted)
@@ -614,10 +629,10 @@ namespace MainGame.Objects
 
         private void LoadGraphics()
         {
-            LoadSubImages(GlobalVariables.Player_Main, sprites);
-            LoadSubImages(GlobalVariables.Armor_Red, armorSprites);
-            LoadSubImages(GlobalVariables.Skill_Sword, swordSprites);
-            LoadSubImages(GlobalVariables.Robe_Black, robeSprites);
+            sprites = LoadSubImages(GlobalVariables.Player_Main);
+            armorSprites = LoadSubImages(GlobalVariables.Armor_Red);
+            swordSprites = LoadSubImages(GlobalVariables.Skill_Sword);
+            robeSprites = LoadSubImages(GlobalVariables.Robe_Black);
         }
 
         private void CheckItemCollision()
@@ -789,24 +804,25 @@ namespace MainGame.Objects
         public Color[] GetSubImage(Color[] colorData, int width, Rectangle rec)
         {
             Color[] color = new Color[rec.Width * rec.Height];
-            for (int x = 0; x < rec.Width; x++)
+
+            for (int y = 0; y < rec.Height; y++)
             {
-                for (int y = 0; y < rec.Height; y++)
+                for (int x = 0; x < rec.Width; x++)
                 {
-                    color[x + y * rec.Width] = colorData[x + rec.X + (y + rec.Y) * width];
+                    color[x + y * rec.Width] = colorData[x + rec.X + ((y + rec.Y) * rec.Width)];
                 }
             }
             return color;
         }
 
-        public void LoadSubImages(Texture2D sourceSpritesheet, List<Texture2D[]> destinationSprites)
+        public List<Texture2D[]> LoadSubImages(Texture2D sourceSpritesheet)
         {
             int count = 0;
             Color[] imageData = new Color[sourceSpritesheet.Width * sourceSpritesheet.Height];
             Texture2D subImage;
             Rectangle sourceRec;
 
-            destinationSprites = new List<Texture2D[]>();
+            List<Texture2D[]> destinationSprites = new List<Texture2D[]>();
 
             for (int i = 0; i < this.NUMFRAMES.Length; i++)
             {
@@ -824,6 +840,8 @@ namespace MainGame.Objects
                 destinationSprites.Add(bi);
                 count += this.FRAMEHEIGHTS[i];
             }
+
+            return destinationSprites;
         }
     }
 }

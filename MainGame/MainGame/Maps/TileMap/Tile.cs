@@ -10,10 +10,10 @@ namespace MainGame.Maps.Tiles
         public const int AIR = 0;
         public const int SOLID = 1;
 
-        public Tile(Texture2D image, int type)
+        public Tile(Texture2D i, int t)
         {
-            this.image = image;
-            this.type = type;
+            image = i;
+            type = t;
         }
 
         public Texture2D GetImage() => image;

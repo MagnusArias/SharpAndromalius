@@ -13,7 +13,7 @@ namespace MainGame.Maps
                 new Vector2(100, 100),
                 new Vector2(200, 200));
 
-        private new void PlaceItems()
+        /*private new void PlaceItems()
         {
             items.Clear();
 
@@ -104,6 +104,6 @@ namespace MainGame.Maps
             eb = new E_Boss(tileMap, player);
             eb.SetPosition(2550, 1750);
             enemies.Add(eb);
-        }
+        }*/
     }
 }
